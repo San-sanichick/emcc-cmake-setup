@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/sansanichick/emsdk/upstream/emscripten/system/include"
+            ],
+            "defines": [],
+            "cStandard": "c17",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-clang-x64",
+            "compilerPath": "/home/sansanichick/emsdk/upstream/emscripten/em++.py"
+        }
+    ],
+    "version": 4
+}
