@@ -10,7 +10,7 @@
             "cStandard": "c17",
             "cppStandard": "c++14",
             "intelliSenseMode": "linux-clang-x64",
-            "compilerPath": "/home/sansanichick/emsdk/upstream/emscripten/em++.py"
+            "compilerPath": "/home/sansanichick/emsdk/upstream/emscripten/emcc.py"
         }
     ],
     "version": 4

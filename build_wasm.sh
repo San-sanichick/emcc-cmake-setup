@@ -3,4 +3,5 @@
 # emcmake cmake .
 cd build
 emcmake cmake ..
-make hello
+emmake make
+make index
