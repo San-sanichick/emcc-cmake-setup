@@ -9,8 +9,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/target)
 # file(GLOB_RECURSE CORE_SRC src/*.cpp)
 file(GLOB_RECURSE CORE_SRC src/math.cpp)
 
+message(${CMAKE_SYSTEM_NAME})
+
 add_executable(index ${CORE_SRC})
-# add_library(hello ${CORE_SRC})
 if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
     set(CMAKE_EXECUTABLE_SUFFIX .js)
 

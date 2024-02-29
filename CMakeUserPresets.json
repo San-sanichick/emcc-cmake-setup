@@ -10,7 +10,7 @@
             "name": "default",
             "displayName": "Emscripten",
             "binaryDir": "build",
-            "toolchainFile": "/home/sansanichick/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake"
+            "toolchainFile": "${sourceDir}/vendors/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake"
         }
     ],
     "buildPresets": [

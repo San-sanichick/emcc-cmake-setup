@@ -1,3 +1,7 @@
 {
-    "C_Cpp.default.compilerPath": "/home/sansanichick/emsdk/upstream/emscripten/emcc.py"
+    "C_Cpp.default.compilerPath": "${workspaceFolder}/vendors/emsdk/upstream/emscripten/em++.py",
+    "files.associations": {
+        "iostream": "cpp",
+        "functional": "cpp"
+    }
 }
