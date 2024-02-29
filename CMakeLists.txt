@@ -6,15 +6,12 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/target)
 
-# file(GLOB_RECURSE CORE_SRC src/*.cpp)
-file(GLOB_RECURSE CORE_SRC src/math.cpp)
-
-message(${CMAKE_SYSTEM_NAME})
+file(GLOB_RECURSE CORE_SRC src/*.cpp)
+# file(GLOB_RECURSE CORE_SRC src/math.cpp)
 
 add_executable(index ${CORE_SRC})
 if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
     set(CMAKE_EXECUTABLE_SUFFIX .js)
 
-    set_target_properties(index PROPERTIES LINK_FLAGS "-O3 -s DEMANGLE_SUPPORT=1 -sMODULARIZE=1 -sEXPORT_ES6=1 --bind")
-    # set_target_properties(index PROPERTIES COMPILE_FLAGS "--embind-emit-tsd index.d.ts")
+    set_target_properties(index PROPERTIES LINK_FLAGS "-lembind -O3 -sMODULARIZE=1 -sEXPORT_ES6=1 --bind --embind-emit-tsd index.d.ts")
 endif()
