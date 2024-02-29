@@ -6,5 +6,15 @@ Clone using
 git clone --recurse-submodules https://github.com/San-sanichick/emcc-cmake-setup.git
 ```
 
-## Run
-Run bash build.sh to build
+Then run
+
+```
+bash setup.sh
+```
+
+## Build
+To build
+
+```
+bash build.sh
+```
