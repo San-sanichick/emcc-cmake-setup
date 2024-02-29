@@ -7,4 +7,4 @@ git clone --recurse-submodules https://github.com/San-sanichick/emcc-cmake-setup
 ```
 
 ## Run
-Run bash build_wasm.sh to build
+Run bash build.sh to build
