@@ -1,16 +1,14 @@
 #include <emscripten/bind.h>
-
-#ifdef DEBUG
-#include <iostream>
-#endif
+#include "logger.h"
 
 using namespace emscripten;
 
+
+
 float lerp(float a, float b, float t)
 {
-#ifdef DEBUG
-    std::cout << "hello" << std::endl;
-#endif
+    LOG("Hello");
+    ERR("OH NO");
     return (1 - t) * a + t * b;
 }
 
