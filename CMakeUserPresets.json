@@ -15,6 +15,11 @@
     ],
     "buildPresets": [
         {
+            "name": "Debug",
+            "configurePreset": "default",
+            "configuration": "Debug"
+        },
+        {
             "name": "Release",
             "configurePreset": "default",
             "configuration": "Release"

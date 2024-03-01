@@ -7,9 +7,10 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/target)
 
 file(GLOB_RECURSE CORE_SRC src/*.cpp)
-# file(GLOB_RECURSE CORE_SRC src/math.cpp)
 
 add_executable(index ${CORE_SRC})
+target_compile_definitions(index PRIVATE $<$<CONFIG:Debug>:DEBUG>)
+
 if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
     set(CMAKE_EXECUTABLE_SUFFIX .js)
 

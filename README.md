@@ -13,11 +13,18 @@ bash setup.sh
 ```
 
 ## Build
-To build
+To build Release
 
 ```bash
 bash build.sh
 ```
+
+To build Debug
+
+```bash
+bash build_debug.sh
+```
+
 
 ## Test
 To test, create an index.html file in the "target" folder, and add these lines into it
