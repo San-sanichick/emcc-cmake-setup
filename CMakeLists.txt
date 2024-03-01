@@ -15,5 +15,10 @@ target_compile_definitions(index PRIVATE $<$<CONFIG:Debug>:DEBUG>)
 if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
     set(CMAKE_EXECUTABLE_SUFFIX .js)
 
-    set_target_properties(index PROPERTIES LINK_FLAGS "-lembind -O3 -sMODULARIZE=1 -sEXPORT_ES6=1 --bind --embind-emit-tsd index.d.ts")
+    if (CMAKE_BUILD_TYPE STREQUAL Release)
+        set_target_properties(index PROPERTIES LINK_FLAGS "-lembind -O3 -g0 -sMODULARIZE=1 -sEXPORT_ES6=1 --bind --embind-emit-tsd index.d.ts")
+    elseif(CMAKE_BUILD_TYPE STREQUAL Debug)
+        set_target_properties(index PROPERTIES LINK_FLAGS "-lembind -O3 -g3 -sMODULARIZE=1 -sEXPORT_ES6=1 --bind --embind-emit-tsd index.d.ts")
+    endif()
+
 endif()

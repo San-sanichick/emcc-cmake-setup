@@ -2,6 +2,13 @@
     "C_Cpp.default.compilerPath": "${workspaceFolder}/vendors/emsdk/upstream/emscripten/em++.py",
     "files.associations": {
         "iostream": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "bitset": "cpp",
+        "set": "cpp",
+        "__bit_reference": "cpp",
+        "complex": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "valarray": "cpp"
     }
 }
