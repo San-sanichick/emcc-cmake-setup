@@ -18,7 +18,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
     if (CMAKE_BUILD_TYPE STREQUAL Release)
         set_target_properties(index PROPERTIES LINK_FLAGS "-lembind -O3 -g0 -sMODULARIZE=1 -sEXPORT_ES6=1 --bind --embind-emit-tsd index.d.ts")
     elseif(CMAKE_BUILD_TYPE STREQUAL Debug)
-        set_target_properties(index PROPERTIES LINK_FLAGS "-lembind -O3 -g3 -sMODULARIZE=1 -sEXPORT_ES6=1 --bind --embind-emit-tsd index.d.ts")
+        set_target_properties(index PROPERTIES LINK_FLAGS "-lembind -g3 -sMODULARIZE=1 -sEXPORT_ES6=1 --bind --embind-emit-tsd index.d.ts")
     endif()
 
 endif()

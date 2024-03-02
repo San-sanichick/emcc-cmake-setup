@@ -4,3 +4,9 @@ CMakeFiles
 build
 Makefile
 target
+test/*
+
+# Except
+!test
+!test/*.html
+!test/test.js
