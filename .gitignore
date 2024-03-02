@@ -6,7 +6,7 @@ Makefile
 target
 test/*
 
-# Except
+# Exclude from ignore
 !test
 !test/*.html
 !test/test.js
