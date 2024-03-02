@@ -8,8 +8,11 @@ module.getCanvas(canvas);
 const v = new module.Vec2(1, 2);
 console.log(v.toString());
 
+const vClone = v.clone();
+console.log(vClone.toString());
+
 v.delete();
-console.log(v.toString());
+vClone.delete();
 
 // const v2 = new module.Vec2();
 // console.log(v2.X, v2.Y);
