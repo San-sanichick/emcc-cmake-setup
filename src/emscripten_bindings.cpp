@@ -30,5 +30,6 @@ EMSCRIPTEN_BINDINGS(math)
         .constructor<math::Vec2>()
         .property("X", &math::Vec2::X)
         .property("Y", &math::Vec2::Y)
-        .function("set", &math::Vec2::set);
+        .function("set", &math::Vec2::set)
+        .function("toString", &math::Vec2::toString);
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 
 namespace math
 {
@@ -32,5 +34,7 @@ namespace math
 
         Vec2 &operator-=(const Vec2 &rhs);
         friend Vec2 operator-(Vec2 lhs, const Vec2 &rhs);
+
+        const std::string toString();
     };
 }

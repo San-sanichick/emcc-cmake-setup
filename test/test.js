@@ -4,9 +4,12 @@ const module = await Module();
 
 const canvas = document.querySelector("#canvas");
 module.getCanvas(canvas);
-// const v = new module.Vec2(1, 2);
-// console.log(v.X, v.Y);
 
+const v = new module.Vec2(1, 2);
+console.log(v.toString());
+
+v.delete();
+console.log(v.toString());
 
 // const v2 = new module.Vec2();
 // console.log(v2.X, v2.Y);

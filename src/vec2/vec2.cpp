@@ -1,4 +1,5 @@
-#include "vec2.h"
+#include "vec2/vec2.h"
+#include <format>
 
 namespace math
 {
@@ -47,5 +48,11 @@ namespace math
     Vec2 operator-(Vec2 lhs, const Vec2 &rhs)
     {
         return Vec2(lhs.x + rhs.x, lhs.y + rhs.y);
+    }
+
+
+    const std::string Vec2::toString()
+    {
+        return std::format("({}, {})", x, y);
     }
 }
