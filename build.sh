@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# clear target dir
+rm -rf target/*
+
+# clear test dir
+cd test
+GLOBIGNORE=index.html:test.js
+rm -rf *
+unset GLOBIGNORE
+cd ..
+
 # activate emscripten variables
 export EMSDK_QUIET=1
 source ./vendors/emsdk/emsdk_env.sh
