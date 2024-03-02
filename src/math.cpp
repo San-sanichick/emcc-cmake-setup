@@ -1,9 +1,9 @@
 #include <emscripten/bind.h>
+#include <emscripten/val.h>
 #include "logger.h"
 #include "vec2/vec2.h"
 
 using namespace emscripten;
-
 
 
 float lerp(float a, float b, float t)
@@ -13,9 +13,17 @@ float lerp(float a, float b, float t)
     return (1 - t) * a + t * b;
 }
 
+void getCanvas(val canvas)
+{
+    val ctx = canvas.call<val, std::string>("getContext", "2d");
+    ctx.set("fillStyle", "red");
+    ctx.call<void>("fillRect", 10, 10, 150, 100);
+}
+
 EMSCRIPTEN_BINDINGS(math)
 {
     function("lerp", &lerp);
+    function("getCanvas", &getCanvas);
     class_<math::Vec2>("Vec2")
         .constructor()
         .constructor<float, float>()
