@@ -14,6 +14,8 @@ console.log(vClone.toString());
 v.delete();
 vClone.delete();
 
+console.log(module.lerp(1, 4, 0.8));
+
 // const v2 = new module.Vec2();
 // console.log(v2.X, v2.Y);
 

@@ -11,6 +11,7 @@ file(GLOB_RECURSE CORE_SRC src/*.cpp)
 add_executable(index ${CORE_SRC})
 target_include_directories(index PUBLIC include)
 target_compile_definitions(index PRIVATE $<$<CONFIG:Debug>:DEBUG>)
+target_compile_options(index PUBLIC "-ffile-prefix-map=${CMAKE_SOURCE_DIR}=.")
 
 if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
     set(CMAKE_EXECUTABLE_SUFFIX .js)
