@@ -1,6 +1,7 @@
 #include <emscripten/bind.h>
 #include <emscripten/val.h>
 #include "logger.h"
+#include "debug.h"
 #include "vec2/vec2.h"
 
 using namespace emscripten;
@@ -10,6 +11,9 @@ float lerp(float a, float b, float t)
 {
     LOG("Hello");
     ERR("OH NO");
+    DEBUG_BLOCK({
+        std::cout << "hello" << std::endl;
+    })
     return (1 - t) * a + t * b;
 }
 

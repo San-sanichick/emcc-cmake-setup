@@ -1,6 +1,6 @@
 
 #ifdef DEBUG
-    #define D(x) x
+    #define DEBUG_BLOCK(x) x
 #else
-    #define D(x)
+    #define DEBUG_BLOCK(x)
 #endif
