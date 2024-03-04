@@ -1,10 +1,10 @@
 param(
     [switch]$r,
-    [switch]$d,
+    [switch]$d
 )
 
 # activate emscripten variables
-emsdk_env.bat
+.\vendors\emsdk\emsdk_env.bat
 
 
 # setup and run cmake and make
