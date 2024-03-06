@@ -3,16 +3,6 @@
 
 namespace math
 {
-    const float Vec2::X() const
-    {
-        return this->x;
-    }
-
-    const float Vec2::Y() const
-    {
-        return this->y;
-    }
-
     const Vec2& Vec2::set(float x, float y)
     {
         this->x = x;

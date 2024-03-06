@@ -7,7 +7,7 @@ namespace math
 {
     class Vec2
     {
-    private:
+    public:
         float x, y;
 
     public:
@@ -22,9 +22,6 @@ namespace math
 
         Vec2(const Vec2 &o) : x(o.x), y(o.y)
         {}
-
-        const float X() const;
-        const float Y() const;
 
         const Vec2& set(float x, float y);
         // const Vec2& set(const Vec2 &o);

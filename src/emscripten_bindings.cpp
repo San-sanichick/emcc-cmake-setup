@@ -20,6 +20,18 @@ float lerp(float a, float b, float t)
     LogAlert("Alert log");
     LogWarning("Warn log");
 
+    math::Vec2 v1(1, 2);
+    math::Vec2 v2(4, 2);
+
+    auto res = v1 + v2;
+
+    LOG(v1.toString());
+    LOG(v2.toString());
+    
+    LOG(res.toString());
+    res += v1;
+    LOG(res.toString());
+
     return (1 - t) * a + t * b;
 }
 
@@ -38,8 +50,8 @@ EMSCRIPTEN_BINDINGS(math)
         .constructor()
         .constructor<float, float>()
         .constructor<math::Vec2>()
-        .property("X", &math::Vec2::X)
-        .property("Y", &math::Vec2::Y)
+        .property("X", &math::Vec2::x)
+        .property("Y", &math::Vec2::y)
         .function("set", &math::Vec2::set)
         .function("toString", &math::Vec2::toString);
 }
