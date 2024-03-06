@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/include/**",
-                "${workspaceFolder}/vendors/emsdk/upstream/emscripten/system/include"
+                "${workspaceFolder}/vendors/emsdk/upstream/emscripten/system/include",
+                "${workspaceFolder}/vendors/simple-cpp-logger/include"
             ],
             "defines": [],
             "cStandard": "c17",

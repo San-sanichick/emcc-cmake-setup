@@ -1,3 +1,6 @@
 [submodule "vendors/emsdk"]
 	path = vendors/emsdk
 	url = https://github.com/emscripten-core/emsdk.git
+[submodule "vendors/simple-cpp-logger"]
+	path = vendors/simple-cpp-logger
+	url = https://github.com/nadrino/simple-cpp-logger.git

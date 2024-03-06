@@ -1,6 +1,7 @@
 #include <emscripten/bind.h>
 #include <emscripten/val.h>
 #include "logger.h"
+#include <Logger.h>
 #include "debug.h"
 #include "vec2/vec2.h"
 
@@ -13,7 +14,12 @@ float lerp(float a, float b, float t)
     ERR("OH NO");
     DEBUG_BLOCK({
         std::cout << "hello from debug mode" << std::endl;
-    })
+    });
+
+    LogInfo("Info log from lib");
+    LogAlert("Alert log");
+    LogWarning("Warn log");
+
     return (1 - t) * a + t * b;
 }
 
