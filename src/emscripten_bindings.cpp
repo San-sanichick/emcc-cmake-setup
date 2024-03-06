@@ -4,7 +4,7 @@
 #include "debug.h"
 #include "vec2/vec2.h"
 
-using namespace emscripten;
+namespace emsc = emscripten;
 
 
 float lerp(float a, float b, float t)
@@ -12,23 +12,23 @@ float lerp(float a, float b, float t)
     LOG("Hello");
     ERR("OH NO");
     DEBUG_BLOCK({
-        std::cout << "hello" << std::endl;
+        std::cout << "hello from debug mode" << std::endl;
     })
     return (1 - t) * a + t * b;
 }
 
-void getCanvas(val canvas)
+void getCanvas(emsc::val canvas)
 {
-    val ctx = canvas.call<val, std::string>("getContext", "2d");
+    emsc::val ctx = canvas.call<emsc::val, std::string>("getContext", "2d");
     ctx.set("fillStyle", "red");
     ctx.call<void>("fillRect", 10, 10, 150, 100);
 }
 
 EMSCRIPTEN_BINDINGS(math)
 {
-    function("lerp", &lerp);
-    function("getCanvas", &getCanvas);
-    class_<math::Vec2>("Vec2")
+    emsc::function("lerp", &lerp);
+    emsc::function("getCanvas", &getCanvas);
+    emsc::class_<math::Vec2>("Vec2")
         .constructor()
         .constructor<float, float>()
         .constructor<math::Vec2>()
