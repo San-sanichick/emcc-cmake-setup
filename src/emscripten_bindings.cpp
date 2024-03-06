@@ -32,6 +32,13 @@ float lerp(float a, float b, float t)
     res += v1;
     LOG(res.toString());
 
+    std::array<math::Vec2, 4> v;
+
+    for (auto el : v)
+    {
+        LOG(el.toString());
+    }
+
     return (1 - t) * a + t * b;
 }
 

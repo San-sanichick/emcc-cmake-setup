@@ -26,11 +26,22 @@ namespace math
         const Vec2& set(float x, float y);
         // const Vec2& set(const Vec2 &o);
 
-        Vec2 &operator+=(const Vec2 &rhs);
-        friend Vec2 operator+(Vec2 lhs, const Vec2 &rhs);
+        inline Vec2& operator+=(const Vec2& rhs)
+        {
+            this->x += rhs.x;
+            this->y += rhs.y;
+            return *this;
+        }
 
-        Vec2 &operator-=(const Vec2 &rhs);
-        friend Vec2 operator-(Vec2 lhs, const Vec2 &rhs);
+        inline Vec2& operator-=(const Vec2 &rhs)
+        {
+            this->x += rhs.x;
+            this->y += rhs.y;
+            return *this;
+        }
+
+        friend Vec2 operator+(Vec2 lhs, const Vec2& rhs);
+        friend Vec2 operator-(Vec2 lhs, const Vec2& rhs);
 
         const std::string toString();
     };
