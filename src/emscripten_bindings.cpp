@@ -20,25 +20,6 @@ float lerp(float a, float b, float t)
     LogAlert("Alert log");
     LogWarning("Warn log");
 
-    math::Vec2 v1(1, 2);
-    math::Vec2 v2(4, 2);
-
-    auto res = v1 + v2;
-
-    LOG(v1.toString());
-    LOG(v2.toString());
-    
-    LOG(res.toString());
-    res += v1;
-    LOG(res.toString());
-
-    std::array<math::Vec2, 4> v;
-
-    for (auto el : v)
-    {
-        LOG(el.toString());
-    }
-
     return (1 - t) * a + t * b;
 }
 
