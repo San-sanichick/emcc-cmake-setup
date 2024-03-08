@@ -1,5 +1,5 @@
 #include "vec2/vec2.h"
-#include <format>
+// #include <format>
 
 namespace math
 {
@@ -24,6 +24,7 @@ namespace math
 
     const std::string Vec2::toString()
     {
-        return std::format("({}, {})", x, y);
+        // return std::format("({}, {})", x, y);
+        return "(" + std::to_string(x) + "," + std::to_string(y) + ")";
     }
 }

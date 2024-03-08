@@ -5,17 +5,23 @@
 bold=$(tput bold)
 normal=$(tput sgr0)
 
-
-
-
-# activate emscripten variables
-export EMSDK_QUIET=1
-source ./vendors/emsdk/emsdk_env.sh
-
+help()
+{
+    echo "Build this project with CMAKE."
+    echo
+    echo "Syntax: build.sh -r|d [-c] [-n]"
+    echo "options:"
+    echo "r|release     Build for release."
+    echo "d|debug       Build for debug."
+    echo "c|clean       Clean CMAKE cache files."
+    echo "n|native      Build native Linux binary."
+}
 
 # setup and run cmake and make
 release=false
 debug=false
+clean=false
+native=false
 
 while [[ $# -gt 0 ]];
 do
@@ -26,16 +32,53 @@ do
         -d|--debug)
             debug=true
             ;;
-        \?)
-
+        -c|--clean)
+            clean=true
+            ;;
+        -n|--native)
+            native=true
+            ;;
+        \?|-h|--help)
+            help
+            exit 1
             ;;
     esac
     shift
 done
 
+if [ "${clean}" = true ]; then
+    echo "${bold}Clearing CMAKE files...${normal}"
+    rm -rf build
+    rm -rf CMakeFiles
+    rm -f cmake_install.cmake
+    rm -f CMakeCache.txt
+    rm -f Makefile
+    echo "${bold}Cleared${normal}"
+
+    if [ "$release" = false ] && [ "$debug" = false ]; then
+        exit 1
+    fi
+fi
+
+if  [ "$native" = false ]; then
+    # activate emscripten variables
+    export EMSDK_QUIET=1
+    source ./vendors/emsdk/emsdk_env.sh
+fi
+
 if ([ "$release" = true ] && [ "$debug" = true ]) || ([ "$release" = false ] && [ "$debug" = false ]); then
     echo "Incorrect flags set"
     exit 126
+
+elif [ "$native" = true ] && [ "$release" = true ]; then
+    echo "${bold}Building for release${normal}"
+    tput dim
+    cmake . -DCMAKE_BUILD_TYPE=Release
+elif [ "$native" = true ] && [ "$debug" = true ]; then
+    echo "${bold}Building for debug${normal}"
+    tput dim
+    cmake . -DCMAKE_BUILD_TYPE=Debug
+
 elif [ "$release" = true ]; then
     echo "${bold}Building for release${normal}"
     tput dim
@@ -65,11 +108,16 @@ cd ..
 tput sgr0
 
 # run make
-emmake make index
+if [ "$native" = true ]; then
+    make index
+else
+    emmake make index
+fi
 
-
-# copy files into test/
-echo "${bold}Copying files to /test${normal}"
-cp -R target/. test/
+if [ "$native" = false ]; then
+    # copy files into test/
+    echo "${bold}Copying files to /test${normal}"
+    cp -R target/. test/
+fi
 
 echo "${bold}Done.${normal}"
