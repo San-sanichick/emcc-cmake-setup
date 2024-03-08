@@ -32,6 +32,4 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
     elseif (CMAKE_BUILD_TYPE STREQUAL Debug)
         set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-g3 -sASSERTIONS=2 --memoryprofiler")
     endif()
-
-    set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS " --embind-emit-tsd index.d.ts")
 endif()

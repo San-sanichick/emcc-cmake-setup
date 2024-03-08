@@ -1,13 +1,55 @@
 #!/bin/bash
 
+# tput is for fancy printing
+# print vars
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+
+# activate emscripten variables
+export EMSDK_QUIET=1
+source ./vendors/emsdk/emsdk_env.sh
+
+
+# setup and run cmake and make
+release=false
+debug=false
+
+while [[ $# -gt 0 ]];
+do
+    case "$1" in
+        -r|--release)
+            release=true
+            ;;
+        -d|--debug)
+            debug=true
+            ;;
+    esac
+    shift
+done
+
+if ([ "$release" = true ] && [ "$debug" = true ]) || ([ "$release" = false ] && [ "$debug" = false ]); then
+    echo "What are you doing?"
+    exit 126
+elif [ "$release" = true ]; then
+    echo "${bold}Building for release${normal}"
+    tput dim
+    emcmake cmake . -DCMAKE_BUILD_TYPE=Release
+elif [ "$debug" = true ]; then
+    echo "${bold}Building for debug${normal}"
+    tput dim
+    emcmake cmake . -DCMAKE_BUILD_TYPE=Debug
+fi
+
+tput sgr0
+
 # clear target dir
-echo "Clearing /target dir"
+echo "${bold}Clearing /target dir${normal}"
 rm -rf target/*
 
 
-
 # clear test dir
-echo "Clearing /test dir"
+echo "${bold}Clearing /test dir${normal}"
 
 cd test
 GLOBIGNORE=index.html:test.js
@@ -16,31 +58,12 @@ unset GLOBIGNORE
 cd ..
 
 
-
-# activate emscripten variables
-export EMSDK_QUIET=1
-source ./vendors/emsdk/emsdk_env.sh
-
-# setup and run cmake and make
-while [[ $# -gt 0 ]];
-do
-    case "$1" in
-        -r|--release)
-            emcmake cmake . -DCMAKE_BUILD_TYPE=Release
-            echo "Building for release"
-            ;;
-        -d|--debug)
-            emcmake cmake . -DCMAKE_BUILD_TYPE=Debug
-            echo "Building for debug"
-            ;;
-    esac
-    shift
-done
-
+# run make
 emmake make index
 
 
-echo "Copying files to /test"
+# copy files into test/
+echo "${bold}Copying files to /test${normal}"
 cp -R target/. test/
 
-echo "Done."
+echo "${bold}Done.${normal}"
