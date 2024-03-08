@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "Linux",
+            "name": "Emscripten",
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/include/**",
