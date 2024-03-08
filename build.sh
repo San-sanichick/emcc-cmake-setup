@@ -6,6 +6,8 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 
 
+
+
 # activate emscripten variables
 export EMSDK_QUIET=1
 source ./vendors/emsdk/emsdk_env.sh
@@ -24,12 +26,15 @@ do
         -d|--debug)
             debug=true
             ;;
+        \?)
+
+            ;;
     esac
     shift
 done
 
 if ([ "$release" = true ] && [ "$debug" = true ]) || ([ "$release" = false ] && [ "$debug" = false ]); then
-    echo "What are you doing?"
+    echo "Incorrect flags set"
     exit 126
 elif [ "$release" = true ]; then
     echo "${bold}Building for release${normal}"
@@ -57,6 +62,7 @@ rm -rf *
 unset GLOBIGNORE
 cd ..
 
+tput sgr0
 
 # run make
 emmake make index
