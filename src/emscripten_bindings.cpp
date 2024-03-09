@@ -30,6 +30,8 @@ void getCanvas(emsc::val canvas)
     ctx.call<void>("fillRect", 10, 10, 150, 100);
 }
 
+
+
 EMSCRIPTEN_BINDINGS(math)
 {
     emsc::function("lerp", &lerp);
