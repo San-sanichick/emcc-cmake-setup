@@ -77,26 +77,32 @@ fi
 
 
 # Run CMAKE
+build="Release"
+
 if [ "$native" = true ]; then
+
     if [ "$release" = true ]; then
         echo "${bold}Building for release${normal}"
-        tput dim
-        cmake . -DCMAKE_BUILD_TYPE=Release
+        build="Release"
     elif [ "$debug" = true ]; then
         echo "${bold}Building for debug${normal}"
-        tput dim
-        cmake . -DCMAKE_BUILD_TYPE=Debug
+        build="Debug"
     fi
+    
+    tput dim
+    cmake . -DCMAKE_BUILD_TYPE=$build
 else
+
     if [ "$release" = true ]; then
         echo "${bold}Building for release${normal}"
-        tput dim
-        emcmake cmake . -DCMAKE_BUILD_TYPE=Release
+        build="Release"
     elif [ "$debug" = true ]; then
         echo "${bold}Building for debug${normal}"
-        tput dim
-        emcmake cmake . -DCMAKE_BUILD_TYPE=Debug
+        build="Debug"
     fi
+
+    tput dim
+    emcmake cmake . -DCMAKE_BUILD_TYPE=$build
 fi
 
 tput sgr0
