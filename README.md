@@ -50,7 +50,7 @@ or
 bash build.sh --debug --native
 ```
 
-### Clean
+## Clean
 Depending on whether or not CMAKE has generated any cache files previously, 
 you may have to add -c or --clean flag to clear CMAKE cache.
 
