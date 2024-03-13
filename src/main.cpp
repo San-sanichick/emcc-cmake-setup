@@ -28,6 +28,11 @@ int main()
     v.push_back(std::move(v1));
     v.push_back(std::move(v2));
 
+    for (auto vec : v)
+    {
+        std::cout << vec.toString() << std::endl;
+    }
+
     // v.push_back(v1);
     // v.push_back(v2);
     

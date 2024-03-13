@@ -1,4 +1,4 @@
-import Module from "./index.js";
+import Module from "./index.mjs";
 
 const module = await Module();
 

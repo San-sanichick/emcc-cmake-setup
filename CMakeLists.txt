@@ -45,7 +45,7 @@ target_compile_options(index PUBLIC "-ffile-prefix-map=${CMAKE_SOURCE_DIR}=.")
 
 if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
 
-    set(CMAKE_EXECUTABLE_SUFFIX .js)
+    set(CMAKE_EXECUTABLE_SUFFIX .mjs)
 
     # set base link flags
     set_property(TARGET index PROPERTY LINK_FLAGS "-lembind -sMODULARIZE=1 -sEXPORT_ES6=1 --bind ")
@@ -53,7 +53,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
     if (CMAKE_BUILD_TYPE STREQUAL Release)
         set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-O3 -g0")
     elseif (CMAKE_BUILD_TYPE STREQUAL Debug)
-        set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-g3 -sASSERTIONS=2 --memoryprofiler")
+        set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-Og -g3 -sASSERTIONS=2 --memoryprofiler")
     endif()
 
 else ()
@@ -61,7 +61,7 @@ else ()
     if (CMAKE_BUILD_TYPE STREQUAL Release)
         set_property(TARGET index PROPERTY LINK_FLAGS "-O3 -g0")
     elseif (CMAKE_BUILD_TYPE STREQUAL Debug)
-        set_property(TARGET index PROPERTY LINK_FLAGS "-g3")
+        set_property(TARGET index PROPERTY LINK_FLAGS "-Og -g3")
     endif()
 
 endif()
