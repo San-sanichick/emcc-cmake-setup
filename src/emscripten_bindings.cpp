@@ -1,9 +1,9 @@
 #include <emscripten/bind.h>
 #include <emscripten/val.h>
-#include "logger.h"
+#include "logger.hpp"
 #include <Logger.h>
-#include "debug.h"
-#include "vec2/vec2.h"
+#include "debug.hpp"
+#include "vec2/vec2.hpp"
 
 namespace emsc = emscripten;
 

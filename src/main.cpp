@@ -1,10 +1,10 @@
 #include <iostream>
-#include "logger.h"
 #include <Logger.h>
 #include <vector>
 #include <result.hpp>
-#include "debug.h"
-#include "vec2/vec2.h"
+#include "logger.hpp"
+#include "debug.hpp"
+#include "vec2/vec2.hpp"
 
 
 auto divide(int32_t a, int32_t b) -> cpp::result<int32_t, std::errc>

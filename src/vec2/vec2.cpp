@@ -1,4 +1,4 @@
-#include "vec2/vec2.h"
+#include "vec2/vec2.hpp"
 // #include <format>
 
 namespace math
