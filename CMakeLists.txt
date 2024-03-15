@@ -32,9 +32,15 @@ add_executable(index ${CORE_SRC})
 # add local includes
 target_include_directories(index PUBLIC include)
 
-# add libs
+# !add libs
 target_include_directories(index PUBLIC vendors/simple-cpp-logger/include)
+add_subdirectory(vendors/result)
 
+target_link_libraries(
+    index PRIVATE  
+    Result::Result
+)
+# !end add libs
 
 # define DEBUG_BUILD macro
 target_compile_definitions(index PRIVATE $<$<CONFIG:Debug>:DEBUG_BUILD>)
