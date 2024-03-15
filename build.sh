@@ -91,6 +91,7 @@ if [ "$native" = true ]; then
     
     tput dim
     cmake . -DCMAKE_BUILD_TYPE=$build
+    #  -DCMAKE_CXX_COMPILER=/usr/bin/clang
 else
 
     if [ "$release" = true ]; then
