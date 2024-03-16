@@ -1,5 +1,6 @@
 # Setup project
-This is starter project that can cross-compile both to WASM with Emscripten and a native Linux binary with gcc.
+This is starter project that can cross-compile both to WASM with Emscripten
+and a native Linux executable with gcc.
 
 ## Clone
 Clone using
@@ -32,7 +33,7 @@ or
 bash build.sh --debug
 ```
 
-## Build native Linux binary
+## Build native Linux executable
 
 ### Build Release
 
@@ -58,7 +59,9 @@ you may have to add -c or --clean flag to clear CMAKE cache.
 ## Test
 
 ### WASM
-To test, build and run a server in the "test" directory.
+```bash
+bash test.sh
+```
 
-### Native binary
-Run the "index" binary in the "target/native" directory.
+### Native executable
+Run the "index" executable in the "target/native" directory.

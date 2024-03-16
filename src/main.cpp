@@ -25,7 +25,7 @@ int main()
 
     if (res2.has_error())
     {
-        std::cout << "oh no" << std::endl;
+        LogAlert("Divide by zero happened lmao");
     }
 
     // LOG("Hello");
