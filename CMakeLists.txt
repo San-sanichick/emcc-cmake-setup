@@ -54,7 +54,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
     set(CMAKE_EXECUTABLE_SUFFIX .mjs)
 
     # set base link flags
-    set_property(TARGET index PROPERTY LINK_FLAGS "-lembind -sMODULARIZE=1 -sEXPORT_ES6=1 --bind ")
+    set_property(TARGET index PROPERTY LINK_FLAGS "-lembind -sMODULARIZE=1 -sEXPORT_ES6=1 -sENVIRONMENT='web' --bind ")
     
     if (CMAKE_BUILD_TYPE STREQUAL Release)
         set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-O3 -g0")
