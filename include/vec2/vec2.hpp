@@ -19,8 +19,8 @@ namespace math
         Vec2() : x(0), y(0)
         {}
 
-        // Vec2(float v) : x(v), y(v)
-        // {}
+        Vec2(float v) : x(v), y(v)
+        {}
 
         Vec2(T x, T y) : x(x), y(y)
         {}
@@ -37,8 +37,8 @@ namespace math
         ~Vec2()
         {}
 
-        const Vec2& set(T x, T y);
-        // const Vec2& set(const Vec2 &o);
+        inline const Vec2& set(T x, T y);
+        inline const Vec2& set(const Vec2 &o);
 
         inline Vec2& operator+=(const Vec2& rhs)
         {
@@ -54,23 +54,23 @@ namespace math
             return *this;
         }
 
-        friend Vec2<T> operator+(Vec2<T> lhs, const Vec2<T>& rhs)
+        inline friend Vec2<T> operator+(Vec2<T> lhs, const Vec2<T>& rhs)
         {
             return Vec2(lhs.x + rhs.x, lhs.y + rhs.y);
         }
 
-        friend Vec2<T> operator-(Vec2<T> lhs, const Vec2<T>& rhs)
+        inline friend Vec2<T> operator-(Vec2<T> lhs, const Vec2<T>& rhs)
         {
             return Vec2(lhs.x + rhs.x, lhs.y + rhs.y);
         }
         
-        friend std::ostream& operator<<(std::ostream& out, const Vec2<T>& o)
+        inline friend std::ostream& operator<<(std::ostream& out, const Vec2<T>& o)
         {
             out << '(' << o.x << ',' << o.y << ')';
             return out;
         }
         
-        operator std::string() const
+        inline operator std::string() const
         {
             return '(' + std::to_string(this->x) + ',' + std::to_string(this->y) + ')';
         }

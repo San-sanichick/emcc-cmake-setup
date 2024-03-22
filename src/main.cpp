@@ -7,13 +7,13 @@
 #include "vec2/vec2.hpp"
 
 
-// auto divide(int32_t a, int32_t b) -> cpp::result<int32_t, std::errc>
-// {
-//     if (b == 0)
-//         return cpp::fail(static_cast<std::errc>(0));
+auto divide(int32_t a, int32_t b) -> cpp::result<int32_t, std::errc>
+{
+    if (b == 0)
+        return cpp::fail(static_cast<std::errc>(0));
 
-//     return a / b;
-// }
+    return a / b;
+}
 
 
 int main()
@@ -25,17 +25,21 @@ int main()
     
     std::string str = v1;
 
-    LogInfo << str << '+' << v2 << '=' << res;
+    LogInfo << str << '+' << v2 << '=' << res << std::endl;
 
-    // auto res1 = divide(6, 2);
-    // auto res2 = divide(6, 0);
+    auto res1 = divide(6, 2);
+    auto res2 = divide(6, 0);
     
-    // std::cout << std::to_string(res1.value_or(0)) << std::endl;
+    LogInfo << std::to_string(res1.value()) << std::endl;
 
-    // if (res2.has_error())
-    // {
-    //     LogAlert("Divide by zero happened lmao");
-    // }
+    if (res2.has_error())
+    {
+        LogAlert << "Divide by zero happened lmao" << std::endl;
+    }
+    
+    DEBUG_BLOCK({
+        LogDebug << "This is debug only" << std::endl;
+    });
 
     // LOG("Hello");
     // ERR("OH NO");

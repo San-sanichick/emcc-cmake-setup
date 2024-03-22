@@ -3,7 +3,6 @@
 #include <Logger.h>
 #include <result.hpp>
 #include "debug.hpp"
-// #include "logger.hpp"
 #include "vec2/vec2.hpp"
 
 namespace emsc = emscripten;
@@ -18,17 +17,21 @@ auto divide(int32_t a, int32_t b) -> cpp::result<int32_t, std::errc>
     return a / b;
 }
 
-void test()
+auto test() -> void
 {
     auto res1 = divide(6, 2);
     auto res2 = divide(6, 0);
     
-    std::cout << std::to_string(res1.value_or(0)) << std::endl;
+    LogInfo << std::to_string(res1.value());
 
     if (res2.has_error())
     {
         LogAlert("Divide by zero happened lmao");
     }
+    
+    DEBUG_BLOCK({
+        LogInfo << "This is debug only" << std::endl;
+    });
 }
 
 /* float lerp(float a, float b, float t)
