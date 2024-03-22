@@ -57,7 +57,7 @@ if [ "$clean" = true ]; then
     echo "${bold}Cleared${normal}"
 
     if [ "$release" = false ] && [ "$debug" = false ]; then
-        exit 1
+        exit 0
     fi
 fi
 
