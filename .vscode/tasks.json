@@ -1,0 +1,55 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build native debug",
+            "type": "shell",
+            "command": "bash build.sh -n -d",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Build native release",
+            "type": "shell",
+            "command": "bash build.sh -n -r",
+            
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Clear build",
+            "type": "shell",
+            "command": "bash clean.sh",
+
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Build WASM debug",
+            "type": "shell",
+            "command": "bash build.sh -d",
+
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Build WASM release",
+            "type": "shell",
+            "command": "bash build.sh -r",
+            
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
