@@ -60,12 +60,12 @@ EMSCRIPTEN_BINDINGS(math)
     emsc::function("test", &test);
     // emsc::function("lerp", &lerp);
     // emsc::function("getCanvas", &getCanvas);
-    emsc::class_<math::Vec2>("Vec2")
-        .constructor()
-        .constructor<float, float>()
-        .constructor<math::Vec2>()
-        .property("X", &math::Vec2::x)
-        .property("Y", &math::Vec2::y)
-        .function("set", &math::Vec2::set)
-        .function("toString", &math::Vec2::toString);
+    // emsc::class_<math::Vec2>("Vec2")
+    //     .constructor()
+    //     .constructor<float, float>()
+    //     .constructor<math::Vec2>()
+    //     .property("X", &math::Vec2::x)
+    //     .property("Y", &math::Vec2::y)
+    //     .function("set", &math::Vec2::set)
+    //     .function("toString", &math::Vec2::toString);
 }
