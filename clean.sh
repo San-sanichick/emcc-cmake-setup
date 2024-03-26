@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "${bold}Clearing CMAKE files...${normal}"
 rm -rf build
 rm -rf CMakeFiles
