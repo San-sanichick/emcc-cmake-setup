@@ -64,4 +64,7 @@ bash test.sh
 ```
 
 ### Native executable
-Run the "index" executable in the "target/native" directory.
+Run the "index" executable in the "target/native" directory, or
+```bash
+bash run.sh
+```
