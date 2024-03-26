@@ -37,8 +37,19 @@ namespace math
         ~Vec2()
         {}
 
-        inline const Vec2& set(T x, T y);
-        inline const Vec2& set(const Vec2 &o);
+        inline const Vec2& set(T x, T y)
+        {
+            this->x = x;
+            this->y = y;
+
+            return *this;
+        }
+
+        inline const Vec2& set(const Vec2 &o)
+        {
+            this->x = o.x;
+            this->y = o.y;
+        }
 
         inline Vec2& operator+=(const Vec2& rhs)
         {

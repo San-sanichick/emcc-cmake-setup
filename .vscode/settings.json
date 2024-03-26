@@ -64,6 +64,7 @@
         "vector": "cpp",
         "map": "cpp",
         "memory": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "fstream": "cpp"
     }
 }
