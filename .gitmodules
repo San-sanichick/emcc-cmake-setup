@@ -7,3 +7,4 @@
 [submodule "vendors/result"]
 	path = vendors/result
 	url = https://github.com/bitwizeshift/result.git
+    ignore = dirty
