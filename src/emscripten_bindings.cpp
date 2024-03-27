@@ -26,7 +26,7 @@ auto test() -> void
 
     if (res2.has_error())
     {
-        LogAlert("Divide by zero happened lmao");
+        LogAlert("Divide by zero happened");
     }
     
     DEBUG_BLOCK({

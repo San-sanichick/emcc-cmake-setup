@@ -7,8 +7,11 @@
 template<typename T>
 concept arithmetic = std::integral<T> or std::floating_point<T>;
 
+/// @brief Namespace for mathematical constructs
 namespace math
 {
+    /// @brief 2D Vector class
+    /// @tparam T type to be used internally
     template<arithmetic T>
     class Vec2
     {
@@ -19,12 +22,22 @@ namespace math
         Vec2() : x(0), y(0)
         {}
 
+        /// @brief 
+        /// @param v 
         Vec2(float v) : x(v), y(v)
         {}
 
+        /// @brief
+        /// @param x
+        /// @param y
         Vec2(T x, T y) : x(x), y(y)
         {}
 
+        /**
+         * @brief
+         * @param o
+         * @
+        */
         Vec2(const Vec2& o) : x(o.x), y(o.y)
         {}
 
