@@ -2,6 +2,25 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Run native",
+            "type":"shell",
+            "command": "bash run.sh",
+
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Run server",
+            "type": "shell",
+            "command": "bash test.sh",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
             "label": "Build native debug",
             "type": "shell",
             "command": "bash build.sh -n -d",
@@ -18,17 +37,7 @@
             
             "group": {
                 "kind": "build",
-                "isDefault": false
-            }
-        },
-        {
-            "label": "Clear build",
-            "type": "shell",
-            "command": "bash clean.sh",
-
-            "group": {
-                "kind": "build",
-                "isDefault": false
+                "isDefault": true
             }
         },
         {
@@ -38,7 +47,7 @@
 
             "group": {
                 "kind": "build",
-                "isDefault": false
+                "isDefault": true
             }
         },
         {
@@ -48,7 +57,17 @@
             
             "group": {
                 "kind": "build",
-                "isDefault": false
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Clear build",
+            "type": "shell",
+            "command": "bash clean.sh",
+
+            "group": {
+                "kind": "build",
+                "isDefault": true
             }
         }
     ]
