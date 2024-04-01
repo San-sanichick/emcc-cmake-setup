@@ -56,6 +56,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
     # set base link flags
     set_property(TARGET index PROPERTY LINK_FLAGS "-lembind -sMODULARIZE=1 -sEXPORT_ES6=1 -sENVIRONMENT='web' --bind ")
     set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-sNODEJS_CATCH_EXIT=0 -sMAX_WEBGL_VERSION=2 -sUSE_WEBGL2=1 -EXPORTED_RUNTIME_METHODS=GL ")
+    set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-sALLOW_MEMORY_GROWTH ")
     
     if (CMAKE_BUILD_TYPE STREQUAL Release)
         set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-O3 -g0")
@@ -66,9 +67,9 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
 else ()
 
     if (CMAKE_BUILD_TYPE STREQUAL Release)
-        set_property(TARGET index PROPERTY LINK_FLAGS "-O3 -g0")
+        set_property(TARGET index PROPERTY LINK_FLAGS "-O3 -g0 -fno-exceptions -fmodules-ts")
     elseif (CMAKE_BUILD_TYPE STREQUAL Debug)
-        set_property(TARGET index PROPERTY LINK_FLAGS "-Og -g3")
+        set_property(TARGET index PROPERTY LINK_FLAGS "-Og -g3 -fno-exceptions -fmodules-ts")
     endif()
 
 endif()
