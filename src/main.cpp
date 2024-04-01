@@ -46,18 +46,32 @@ int main()
         buffer[i] = i;
     }
     
-    DynArrayWrapper<uint8_t> bufWrapper(buffer, BUFSIZE);
-    std::cout << sizeof(bufWrapper) << std::endl;
-    std::cout << sizeof(std::span<uint8_t>) << std::endl;
+    ReadonlyDynArrayWrapper<uint8_t> bufWrapper(buffer, BUFSIZE);
+    ReadonlyDynArrayWrapper<uint8_t> moved(std::move(bufWrapper));
     
-    printBuf(buffer, BUFSIZE);
-    printBuf(bufWrapper.data(), bufWrapper.size());
-
-    buffer[5] = 69;
-
+    // std::span sp(moved);
+    
+    for (auto el : moved)
+    {
+        std::cout << unsigned(el) << ' ';
+    }
     std::cout << std::endl;
-    printBuf(buffer, BUFSIZE);
     
-    delete[] buffer;
-    printBuf(bufWrapper.data(), bufWrapper.size());
+    // printBuf(buffer, BUFSIZE);
+    
+    // if (bufWrapper.data() == nullptr)
+    // {
+    //     std::cout << "null" << std::endl;
+    // }
+
+    // printBuf(bufWrapper.data(), bufWrapper.size());
+    // printBuf(moved.data(), moved.size());
+
+    // buffer[5] = 69;
+
+    // std::cout << std::endl;
+    // printBuf(buffer, BUFSIZE);
+    
+    // // printBuf(bufWrapper.data(), bufWrapper.size());
+    // printBuf(moved.data(), moved.size());
 }
