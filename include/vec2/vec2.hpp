@@ -13,24 +13,24 @@ namespace math
     /// @brief 2D Vector class
     /// @tparam T type to be used internally
     template<arithmetic T>
-    class Vec2
+    struct Vec2
     {
     public:
         T x, y;
 
     public:
-        Vec2() : x(0), y(0)
+        inline constexpr Vec2() : x(0), y(0)
         {}
 
         /// @brief 
         /// @param v 
-        Vec2(float v) : x(v), y(v)
+        inline constexpr Vec2(float v) : x(v), y(v)
         {}
 
         /// @brief
         /// @param x
         /// @param y
-        Vec2(T x, T y) : x(x), y(y)
+        inline constexpr Vec2(T x, T y) : x(x), y(y)
         {}
 
         /**
@@ -38,10 +38,10 @@ namespace math
          * @param o
          * @
         */
-        Vec2(const Vec2& o) : x(o.x), y(o.y)
+        inline constexpr Vec2(const Vec2& o) : x(o.x), y(o.y)
         {}
 
-        Vec2(Vec2&& o) noexcept : x(o.x), y(o.y) 
+        inline constexpr Vec2 (Vec2&& o) noexcept : x(o.x), y(o.y) 
         {
             o.x = 0;
             o.y = 0;
@@ -49,6 +49,8 @@ namespace math
 
         ~Vec2()
         {}
+
+
 
         inline const Vec2& set(T x, T y)
         {
@@ -64,6 +66,15 @@ namespace math
             this->y = o.y;
         }
 
+        
+        inline constexpr Vec2& operator=(const Vec2& rhs)
+        {
+            this->x = rhs.x;
+            this->y = rhs.y;
+            
+            return *this;
+        }
+        
         inline Vec2& operator+=(const Vec2& rhs)
         {
             this->x += rhs.x;
