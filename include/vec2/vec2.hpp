@@ -33,6 +33,9 @@ namespace math
         inline constexpr Vec2(T x, T y) : x(x), y(y)
         {}
 
+        Vec2(std::initializer_list<T> l) : x(l.begin()[0]), y(l.begin()[1])
+        {}
+
         /**
          * @brief
          * @param o
