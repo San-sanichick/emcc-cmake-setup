@@ -33,7 +33,7 @@ namespace math
         inline constexpr Vec2(T x, T y) : x(x), y(y)
         {}
 
-        Vec2(std::initializer_list<T> l) : x(l.begin()[0]), y(l.begin()[1])
+        inline Vec2(std::initializer_list<T> l) : x(l.begin()[0]), y(l.begin()[1])
         {}
 
         /**
@@ -70,7 +70,7 @@ namespace math
         }
 
         
-        inline constexpr Vec2& operator=(const Vec2& rhs)
+        inline Vec2& operator=(const Vec2& rhs)
         {
             this->x = rhs.x;
             this->y = rhs.y;
@@ -101,6 +101,9 @@ namespace math
         {
             return Vec2(lhs.x + rhs.x, lhs.y + rhs.y);
         }
+        
+        inline constexpr auto operator<=>(const Vec2& rhs) const = default;
+
         
         inline friend std::ostream& operator<<(std::ostream& out, const Vec2<T>& o)
         {
