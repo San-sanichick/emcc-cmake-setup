@@ -3,9 +3,9 @@
 
 if type python &> /dev/null;
 then
-    # python server.py
-    python -m http.server 5000 --directory test
+    python server.py
+    # python -m http.server 5000 --cors --directory test
 else
-    # python3 server.py
-    python3 -m http.server 5000 --directory test
+    python3 server.py
+    # python3 -m http.server 5000 --cors --directory test
 fi
