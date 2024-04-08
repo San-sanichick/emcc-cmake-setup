@@ -45,10 +45,11 @@ target_link_libraries(
 # define DEBUG_BUILD macro
 target_compile_definitions(index PRIVATE $<$<CONFIG:Debug>:DEBUG_BUILD>)
 # make paths relative
-target_compile_options(index PUBLIC "-ffile-prefix-map=${CMAKE_SOURCE_DIR}=.")
+# target_compile_options(index PUBLIC "-ffile-prefix-map=${CMAKE_SOURCE_DIR}=.")
 
 
 target_compile_options(index PRIVATE 
+    -ffile-prefix-map=${CMAKE_SOURCE_DIR}=.
     -pedantic 
     # -Wall 
     # -Wextra 
