@@ -24,7 +24,7 @@ namespace math
 
         /// @brief 
         /// @param v 
-        inline constexpr Vec2(float v) : x(v), y(v)
+        inline constexpr Vec2(T v) : x(v), y(v)
         {}
 
         /// @brief
