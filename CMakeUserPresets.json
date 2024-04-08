@@ -9,8 +9,13 @@
         {
             "name": "default",
             "displayName": "Emscripten",
-            "binaryDir": "build",
+            "binaryDir": "${sourceDir}/target/wasm",
             "toolchainFile": "${sourceDir}/vendors/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake"
+        },
+        {
+            "name": "native",
+            "displayName": "Native",
+            "binaryDir": "${sourceDir}/target/native"
         }
     ],
     "buildPresets": [

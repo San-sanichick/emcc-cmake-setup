@@ -57,16 +57,16 @@ target_compile_options(index PRIVATE
     -Wctor-dtor-privacy 
     -Wformat=2 
     -Winit-self 
-    -Wlogical-op 
+    # -Wlogical-op 
     -Wmissing-declarations 
     -Wmissing-include-dirs 
-    -Wnoexcept 
+    # -Wnoexcept 
     # -Wold-style-cast 
     -Woverloaded-virtual 
     -Wredundant-decls 
     # -Wsign-conversion 
     -Wsign-promo 
-    -Wstrict-null-sentinel 
+    # -Wstrict-null-sentinel 
     -Wstrict-overflow=5 
     -Wundef 
     -Werror
@@ -77,21 +77,28 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
     set(CMAKE_EXECUTABLE_SUFFIX .mjs)
 
     # set base link flags
+    # target_link_options(index PUBLIC -lembind -sMODULARIZE=1 -sEXPORT_ES6=1 -sENVIRONMENT='web' --bind)
+    # target_link_options(index PUBLIC -sNODEJS_CATCH_EXIT=0 -sMAX_WEBGL_VERSION=2 -sUSE_WEBGL2=1 -EXPORTED_RUNTIME_METHODS=GL)
+    # target_link_options(index PUBLIC -sALLOW_MEMORY_GROWTH)
     set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-lembind -sMODULARIZE=1 -sEXPORT_ES6=1 -sENVIRONMENT='web' --bind ")
     set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-sNODEJS_CATCH_EXIT=0 -sMAX_WEBGL_VERSION=2 -sUSE_WEBGL2=1 -EXPORTED_RUNTIME_METHODS=GL ")
     set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-sALLOW_MEMORY_GROWTH ")
     
     if (CMAKE_BUILD_TYPE STREQUAL Release)
+        # target_link_options(index PUBLIC -O3 -g0)
         set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-O3 -g0")
     elseif (CMAKE_BUILD_TYPE STREQUAL Debug)
+        # target_link_options(index PUBLIC -Og -g3 -sASSERTIONS=2 --memoryprofiler)
         set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-Og -g3 -sASSERTIONS=2 --memoryprofiler")
     endif()
-
+        
 else ()
-
+        
     if (CMAKE_BUILD_TYPE STREQUAL Release)
+        # target_link_options(index PUBLIC -O3 -g0 -fno-exceptions -fmodules-ts)
         set_property(TARGET index PROPERTY LINK_FLAGS "-O3 -g0 -fno-exceptions -fmodules-ts")
     elseif (CMAKE_BUILD_TYPE STREQUAL Debug)
+        # target_link_options(index PUBLIC -Og -g3 -fno-exceptions -fmodules-ts)
         set_property(TARGET index PROPERTY LINK_FLAGS "-Og -g3 -fno-exceptions -fmodules-ts")
     endif()
 
