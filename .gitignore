@@ -9,4 +9,6 @@ test/*
 # Exclude from ignore
 !test
 !test/*.html
+!test/allocator.js
+!test/index.d.ts
 !test/test.js

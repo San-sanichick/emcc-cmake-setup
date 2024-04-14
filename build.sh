@@ -121,11 +121,12 @@ fi
 if [ "$native" = false ]; then
     echo "${bold}Clearing /test dir${normal}"
 
-    cd test
-    GLOBIGNORE=index.html:test.js
-    rm -rf *
-    unset GLOBIGNORE
-    cd ..
+    rm -f test/index.mjs test/index.wasm
+    # cd test
+    # GLOBIGNORE=index.html:test.js
+    # rm -rf *
+    # unset GLOBIGNORE
+    # cd ..
 fi
 
 tput sgr0
