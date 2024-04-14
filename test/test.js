@@ -1,27 +1,47 @@
 import Module from "./index.mjs";
 
-const module = await Module();
+/**
+ * @typedef {Object} Module
+ * @property {(size: number) => number} _malloc
+ * @property {(ptr: number, size: number) => void} getBuffer
+ */
 
-function malloc(buffer)
+
+class Allocator
 {
-    const bytes = buffer.length * buffer.BYTES_PER_ELEMENT;
-    const ptr = module._malloc(bytes);
-    const heapData = new Uint8Array(module.HEAPU8.buffer, ptr, bytes);
-    heapData.set(buffer);
-    
-    return [ptr, buffer.length];
+    /**
+     * 
+     * @param {Module} module 
+     * @param {Uint8Array} buffer 
+     * @returns {[ number, number ]}
+     */
+    static malloc(module, buffer)
+    {
+        const bytes = buffer.length * buffer.BYTES_PER_ELEMENT;
+        /**
+         * @type {number}
+         */
+        const ptr = module._malloc(bytes);
+        const heapData = new Uint8Array(module.HEAPU8.buffer, ptr, bytes);
+        heapData.set(buffer);
+        
+        return [ptr, buffer.length];
+    }
 }
 
-// const buffer = new Uint8Array([21, 32]);
+
+/**
+ * @type {Module}
+ */
+const module = await Module();
 const buffer = new Uint8Array(100);
+
 
 for (let i = 0; i < 100; i++)
 {
     buffer[i] = Math.floor(Math.random() * 255);
 }
 
-const [ptr, size] = malloc(buffer);
+const [ptr, size] = Allocator.malloc(module, buffer);
 
-// module.getBuffer(new Uint8Array([21, 32]));
-module.getBuffer_(buffer);
 module.getBuffer(ptr, size);
