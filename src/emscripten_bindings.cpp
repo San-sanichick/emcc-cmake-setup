@@ -1,74 +1,50 @@
 #include <emscripten/bind.h>
-#include <emscripten/val.h>
-#include <Logger.h>
-#include <result.hpp>
-#include "debug.hpp"
-#include "vec2/vec2.hpp"
+// #include <emscripten/val.h>
+#include <iostream>
+#include "dyn_array_wrapper.hpp"
+#include "timer.hpp"
+
+// #include <Logger.h>
+// #include <result.hpp>
+// #include "debug.hpp"
+// #include "vec2/vec2.hpp"
 
 namespace emsc = emscripten;
 
-
-
-auto divide(int32_t a, int32_t b) -> cpp::result<int32_t, std::errc>
+void getBuffer(const intptr_t data, size_t size)
 {
-    if (b == 0)
-        return cpp::fail(static_cast<std::errc>(0));
+    Timer timer;
+    const auto ptr = reinterpret_cast<uint8_t*>(data);
 
-    return a / b;
-}
-
-auto test() -> void
-{
-    auto res1 = divide(6, 2);
-    auto res2 = divide(6, 0);
+    utils::ReadonlyDynArrayWrapper buffer(ptr, size);
     
-    LogInfo << std::to_string(res1.value());
-
-    if (res2.has_error())
+    for (auto el : buffer)
     {
-        LogAlert("Divide by zero happened");
+        std::cout << unsigned(el) << ' ';
     }
-    
-    DEBUG_BLOCK({
-        LogInfo << "This is debug only" << std::endl;
-    });
+    std::cout << std::endl;
 }
 
-/* float lerp(float a, float b, float t)
+void getBuffer_(const emsc::val &v)
 {
-    LOG("Hello");
-    ERR("OH NO");
-    DEBUG_BLOCK({
-        std::cout << "hello from debug mode" << std::endl;
-    });
+    Timer timer;
+    std::vector<uint8_t> rv;
+    const auto len = v["length"].as<unsigned>();
+    rv.resize(len);
 
-    LogInfo("Info log from lib");
-    LogAlert("Alert log");
-    LogWarning("Warn log");
+    emsc::val view(emsc::typed_memory_view(len, rv.data()));
+    view.call<void>("set", v);
 
-    return (1 - t) * a + t * b;
+    for (auto el : rv)
+    {
+        std::cout << unsigned(el) << ' ';
+    }
+    std::cout << std::endl;
 }
-
-void getCanvas(emsc::val canvas)
-{
-    emsc::val ctx = canvas.call<emsc::val, std::string>("getContext", "2d");
-    ctx.set("fillStyle", "red");
-    ctx.call<void>("fillRect", 10, 10, 150, 100);
-} */
-
 
 
 EMSCRIPTEN_BINDINGS(math)
 {
-    emsc::function("test", &test);
-    // emsc::function("lerp", &lerp);
-    // emsc::function("getCanvas", &getCanvas);
-    // emsc::class_<math::Vec2>("Vec2")
-    //     .constructor()
-    //     .constructor<float, float>()
-    //     .constructor<math::Vec2>()
-    //     .property("X", &math::Vec2::x)
-    //     .property("Y", &math::Vec2::y)
-    //     .function("set", &math::Vec2::set)
-    //     .function("toString", &math::Vec2::toString);
+    emsc::function("getBuffer", &getBuffer);
+    emsc::function("getBuffer_", &getBuffer_);
 }

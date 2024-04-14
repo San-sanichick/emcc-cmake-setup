@@ -2,32 +2,26 @@ import Module from "./index.mjs";
 
 const module = await Module();
 
-module.test();
-// const canvas = document.querySelector("#canvas");
-// module.getCanvas(canvas);
+function malloc(buffer)
+{
+    const bytes = buffer.length * buffer.BYTES_PER_ELEMENT;
+    const ptr = module._malloc(bytes);
+    const heapData = new Uint8Array(module.HEAPU8.buffer, ptr, bytes);
+    heapData.set(buffer);
+    
+    return [ptr, buffer.length];
+}
 
-// const v = new module.Vec2(1, 2);
-// console.log(v.toString());
+// const buffer = new Uint8Array([21, 32]);
+const buffer = new Uint8Array(100);
 
-// const vClone = v.clone();
-// console.log(vClone.toString());
+for (let i = 0; i < 100; i++)
+{
+    buffer[i] = Math.floor(Math.random() * 255);
+}
 
-// v.delete();
-// vClone.delete();
+const [ptr, size] = malloc(buffer);
 
-// console.log(module.lerp(1, 4, 0.8));
-
-// const v2 = new module.Vec2();
-// console.log(v2.X, v2.Y);
-
-// v2.set(v.X, v.Y);
-// console.log(v2.X, v2.Y);
-
-
-// v.set(69, 420);
-// const v3 = new module.Vec2(v);
-// console.log(v3.X, v3.Y);
-
-// v.delete();
-// v2.delete();
-// v3.delete();
+// module.getBuffer(new Uint8Array([21, 32]));
+module.getBuffer_(buffer);
+module.getBuffer(ptr, size);
