@@ -2,7 +2,7 @@
 // #include <emscripten/val.h>
 #include <iostream>
 #include "dyn_array_wrapper.hpp"
-#include "timer.hpp"
+// #include "timer.hpp"
 
 // #include <Logger.h>
 // #include <result.hpp>
@@ -13,7 +13,7 @@ namespace emsc = emscripten;
 
 void getBuffer(const intptr_t data, size_t size)
 {
-    Timer timer;
+    // Timer timer;
     const auto ptr = reinterpret_cast<uint8_t*>(data);
 
     utils::ReadonlyDynArrayWrapper buffer(ptr, size);
@@ -27,7 +27,7 @@ void getBuffer(const intptr_t data, size_t size)
 
 void getBuffer_(const emsc::val &v)
 {
-    Timer timer;
+    // Timer timer;
     std::vector<uint8_t> rv;
     const auto len = v["length"].as<unsigned>();
     rv.resize(len);
