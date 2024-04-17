@@ -10,5 +10,6 @@ test/*
 !test
 !test/*.html
 !test/allocator.js
+!test/canvas.js
 !test/index.d.ts
 !test/test.js
