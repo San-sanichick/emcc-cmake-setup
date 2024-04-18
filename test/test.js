@@ -48,13 +48,13 @@ const attrs = {
 }
 
 const canvas1 = new CanvasWrapper("#canvas-1", attrs);
-// const canvas2 = new CanvasWrapper("#canvas-2", attrs);
-// const canvas3 = new CanvasWrapper("#canvas-3", attrs);
+const canvas2 = new CanvasWrapper("#canvas-2", attrs);
+const canvas3 = new CanvasWrapper("#canvas-3", attrs);
 
 canvas1.render(1, 0, 0);
-// canvas2.render(0, 1, 0);
-// canvas3.render(0, 0, 1);
+canvas2.render(0, 1, 0);
+canvas3.render(0, 0, 1);
 
 canvas1.delete();
-// canvas2.delete();
-// canvas3.delete();
+canvas2.delete();
+canvas3.delete();
