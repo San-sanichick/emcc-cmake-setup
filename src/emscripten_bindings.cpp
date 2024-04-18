@@ -3,7 +3,7 @@
 // #include <emscripten/val.h>
 #include <iostream>
 #include "dyn_array_wrapper.hpp"
-#include "Canvas.hpp"
+#include "gl/canvas.hpp"
 // #include "timer.hpp"
 
 
