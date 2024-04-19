@@ -41,15 +41,12 @@ void getBufferVector(const emsc::val &v)
 }
 
 
-
-
-
-EMSCRIPTEN_BINDINGS(math)
+EMSCRIPTEN_BINDINGS(module)
 {
     emsc::function("getBuffer", &getBuffer);
     emsc::function("getBufferVector", &getBufferVector);
     
-    emsc::class_<Canvas>("Canvas")
+    emsc::class_<gl::Canvas>("Canvas")
         .constructor<uint32_t, int32_t, int32_t>()
-        .function("render", &Canvas::render);
+        .function("render", &gl::Canvas::render);
 }

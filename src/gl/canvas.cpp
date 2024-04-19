@@ -1,6 +1,26 @@
 #include "gl/canvas.hpp"
 
-Canvas::Canvas(uint32_t id, int32_t w, int32_t h)
+
+const char* vertSh = 
+    "#version 300 es\n"
+    "layout (location = 0) in vec3 position;\n"
+    "void main()\n"
+    "{\n"
+    "gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
+    "}";
+
+
+const char* fracSh =
+    "#version 300 es\n"
+    "precision mediump float;\n"
+    "out vec4 color;\n"
+    "void main()\n"
+    "{\n"
+    "color = vec4(1.0f, 1.0f, 0.0f, 1.0f);\n"
+    "}";
+
+
+gl::Canvas::Canvas(uint32_t id, int32_t w, int32_t h)
 {
     this->programId = glCreateProgram();
     
@@ -24,7 +44,7 @@ Canvas::Canvas(uint32_t id, int32_t w, int32_t h)
 }
 
 
-Canvas::~Canvas()
+gl::Canvas::~Canvas()
 {
     glDeleteShader(vShader);
     glDeleteShader(fShader);
@@ -35,7 +55,7 @@ Canvas::~Canvas()
 }
 
 // https://groups.google.com/g/skia-discuss/c/P4GO92rxIaM
-void Canvas::render(GLfloat r, GLfloat g, GLfloat b)
+void gl::Canvas::render(GLfloat r, GLfloat g, GLfloat b)
 {
     glViewport(0, 0, this->w, this->h);
     glDisable(GL_DEPTH_TEST);
