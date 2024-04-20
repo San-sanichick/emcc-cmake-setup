@@ -1,3 +1,5 @@
+"use strict"
+
 import Module from "./index.mjs";
 import CanvasWrapper from "./canvas.js";
 // import Allocator from "./allocator.js";

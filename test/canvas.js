@@ -1,3 +1,5 @@
+"use strict"
+
 /**
  * @typedef {import("./index").Canvas} Canvas
  * @typedef {import("./index").Module} Module
@@ -116,6 +118,17 @@ export default class CanvasWrapper
     {
         if (!canvas) throw new Error("Canvas is null!");
         const handle = CanvasWrapper.#module.GL.createContext(canvas, attrs);
+        
+        //* fixes the "invalid parameter name, WEBGL_debug_renderer_info not enabled" error
+        const ctx = CanvasWrapper.#module.GL.getContext(handle);
+        if (ctx)
+        {
+            /** @type {WebGL2RenderingContext} */
+            const gl = ctx.GLctx;
+            gl.getExtension('WEBGL_debug_renderer_info');
+            gl.getParameter(gl.RENDERER);
+        }
+        
         CanvasWrapper.#module.GL.makeContextCurrent(handle);
         return handle;
     }
