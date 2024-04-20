@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(helloworld)
+project(emcc-cmake-setup)
 
 message("Enviroment: ${CMAKE_SYSTEM_NAME}")
 
