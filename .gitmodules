@@ -8,3 +8,6 @@
 	path = vendors/result
 	url = https://github.com/bitwizeshift/result.git
     ignore = dirty
+[submodule "vendors/skia"]
+	path = vendors/skia
+	url = https://skia.googlesource.com/skia.git

@@ -1,6 +1,8 @@
 #include "gl/canvas.hpp"
 
 
+
+
 const char* vertSh = 
     "#version 300 es\n"
     "layout (location = 0) in vec3 position;\n"
@@ -41,6 +43,39 @@ gl::Canvas::Canvas(uint32_t id, int32_t w, int32_t h)
     glAttachShader(this->programId, vShader);
     glAttachShader(this->programId, fShader);
     glLinkProgram(this->programId);
+
+
+    auto interface = GrGLInterfaces::MakeWebGL();
+    auto context = GrDirectContexts::MakeGL();
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glClearColor(0, 0, 0, 0);
+    glClearStencil(0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    context->resetContext(kRenderTarget_GrGLBackendState | kMisc_GrGLBackendState);
+    
+    GrGLFramebufferInfo info;
+    info.fFBOID = 0;
+
+    auto colorSpace = SkColorSpace::MakeSRGB();
+    const auto colorSettings = ColorSettings(colorSpace);
+    info.fFormat = colorSettings.pixFormat;
+    
+    GrGLint sampleCount;
+    GrGLint stencil;
+
+    glGetIntegerv(GL_SAMPLES, &sampleCount);
+    glGetIntegerv(GL_STENCIL_BITS, &stencil);
+
+    auto target = GrBackendRenderTargets::MakeGL(w, h, sampleCount, stencil, info);
+    
+    this->surface = SkSurfaces::WrapBackendRenderTarget(
+        context.get(),
+        target,
+        kBottomLeft_GrSurfaceOrigin,
+        colorSettings.colorType,
+        colorSpace,
+        nullptr
+    );
 }
 
 
@@ -83,6 +118,12 @@ void gl::Canvas::render(GLfloat r, GLfloat g, GLfloat b)
         glClear(GL_COLOR_BUFFER_BIT);
         glUseProgram(this->programId);
         glDrawArrays(GL_TRIANGLES, 0, 3);
+        
+        SkPaint p;
+        p.setAntiAlias(true);
+        p.setColor(SK_ColorCYAN);
+        auto canvas = this->surface->getCanvas();
+        canvas->drawCircle({ this->w / 2.0f, this->h / 2.0f }, 20, p);
     }
 
     glDeleteBuffers(1, &VBO);

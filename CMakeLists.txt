@@ -33,7 +33,15 @@ add_executable(index ${CORE_SRC})
 target_include_directories(index PUBLIC include)
 
 # !add libs
-target_include_directories(index PUBLIC vendors/simple-cpp-logger/include)
+target_include_directories(index PUBLIC 
+    vendors/simple-cpp-logger/include 
+    vendors/skia 
+    vendors/skia/src
+    vendors/skia/include 
+    vendors/skia/include/config
+    vendors/skia/include/gpu
+    vendors/skia/include/core
+)
 add_subdirectory(vendors/result)
 
 target_link_libraries(
@@ -50,37 +58,38 @@ target_compile_definitions(index PRIVATE $<$<CONFIG:Debug>:DEBUG_BUILD>)
 
 target_compile_options(index PRIVATE 
     -ffile-prefix-map=${CMAKE_SOURCE_DIR}=.
-    -pedantic 
+    # -pedantic 
     # -Wall 
     # -Wextra 
-    -Wcast-align 
-    -Wcast-qual 
-    -Wctor-dtor-privacy 
-    -Wformat=2 
-    -Winit-self 
+    # -Wcast-align 
+    # -Wcast-qual 
+    # -Wctor-dtor-privacy 
+    # -Wformat=2 
+    # -Winit-self 
     # -Wlogical-op 
-    -Wmissing-declarations 
-    -Wmissing-include-dirs 
+    # -Wmissing-declarations 
+    # -Wmissing-include-dirs 
     # -Wnoexcept 
     # -Wold-style-cast 
-    -Woverloaded-virtual 
-    -Wredundant-decls 
+    # -Woverloaded-virtual 
+    # -Wredundant-decls 
     # -Wsign-conversion 
-    -Wsign-promo 
+    # -Wsign-promo 
     # -Wstrict-null-sentinel 
-    -Wstrict-overflow=5 
-    -Wundef 
-    -Werror
+    # -Wstrict-overflow=5 
+    # -Wundef 
+    # -Werror
 )
 
 if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
 
     set(CMAKE_EXECUTABLE_SUFFIX .mjs)
-
+    
     # set base link flags
     set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-lembind -sMODULARIZE=1 -sEXPORT_ES6=1 --bind ")
     set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-sNODEJS_CATCH_EXIT=0 -sMAX_WEBGL_VERSION=2 -sMIN_WEBGL_VERSION=1 -sUSE_WEBGL2=1 -sFULL_ES2 -sFULL_ES3 ")
     set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-sALLOW_MEMORY_GROWTH=1 -sEXPORTED_FUNCTIONS=['_malloc'] -sEXPORTED_RUNTIME_METHODS=['GL'] ")
+    set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "vendors/skia/out/wasm/libskia.a ")
     # set_property(TARGET index APPEND_STRING PROPERTY LINK_FLAGS "-pthread -sPTHREAD_POOL_SIZE=1 ")
     
     if (CMAKE_BUILD_TYPE STREQUAL Release)

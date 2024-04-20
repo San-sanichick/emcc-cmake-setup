@@ -3,9 +3,45 @@
 #include <emscripten/html5.h>
 #include <GLES2/gl2.h>
 
+#include <gpu/ganesh/SkSurfaceGanesh.h>
+#include <gpu/GrBackendSurface.h>
+#include <GrTypes.h>
+#include <gpu/GrDirectContext.h>
+#include <SkColorSpace.h>
+#include <ganesh/gl/GrGLBackendSurface.h>
+#include <ganesh/gl/GrGLDirectContext.h>
+#include <ganesh/gl/GrGLMakeWebGLInterface.h>
+#include <gl/GrGLInterface.h>
+#include <gl/GrGLTypes.h>
+#include <src/gpu/RefCntedCallback.h>
+#include <src/gpu/ganesh/GrProxyProvider.h>
+#include <src/gpu/ganesh/gl/GrGLDefines.h>
+#include <SkSurface.h>
+#include <SkCanvas.h>
 
 namespace gl
 {
+    struct ColorSettings
+    {
+        ColorSettings(sk_sp<SkColorSpace> colorSpace)
+        {
+            if (colorSpace == nullptr || colorSpace->isSRGB())
+            {
+                colorType = kRGBA_8888_SkColorType;
+                pixFormat = GR_GL_RGBA8;
+            }
+            else
+            {
+                colorType = kRGBA_F16_SkColorType;
+                pixFormat = GR_GL_RGBA16F;
+            }
+        }
+
+        SkColorType colorType;
+        GrGLenum pixFormat;
+    };
+    
+
     class Canvas
     {
     public:
@@ -21,5 +57,7 @@ namespace gl
         
         int32_t w, h;
         GLuint vb;
+        
+        sk_sp<SkSurface> surface;
     };
 }
