@@ -1,5 +1,6 @@
 #include "gl/canvas.hpp"
 
+// #include"debug.hpp"
 
 
 
@@ -31,6 +32,9 @@ gl::Canvas::Canvas(uint32_t id, int32_t w, int32_t h)
     
     this->w = w;
     this->h = h;
+
+    // CORE_ASSERT(this->w == 0, "Width doesn't equal zero");
+
     this->vShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vShader, 1, &vertSh, NULL);
     glCompileShader(vShader);
@@ -84,9 +88,6 @@ gl::Canvas::~Canvas()
     glDeleteShader(vShader);
     glDeleteShader(fShader);
     glDeleteProgram(this->programId);
-    
-    delete[] vertSh;
-    delete[] fracSh;
 }
 
 // https://groups.google.com/g/skia-discuss/c/P4GO92rxIaM
