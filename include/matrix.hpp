@@ -45,8 +45,8 @@ namespace math
 
         void set(size_t i, size_t j, T val)
         {
-            ASSERT(i < R, "Too many rows");
-            ASSERT(j < C, "Too many columns");
+            CORE_ASSERT(i < R, "Too many rows");
+            CORE_ASSERT(j < C, "Too many columns");
             this->matrix[R * i + j] = val;
         }
 

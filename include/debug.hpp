@@ -1,14 +1,17 @@
 #pragma once
 
+#include <stdlib.h>
 #include "logger.hpp"
 
 
 #ifdef DEBUG_BUILD
-    #define DEBUG_BLOCK(...) do { __VA_ARGS__; } while(0)
+    #define CORE_DEBUG_BLOCK(...) do { __VA_ARGS__; } while(0)
+    #define CORE_ABORT() abort()
 
-    #define ASSERT(x, message) do { if (!(x)) { ASSERT_LOG(#x, message); } } while(0)
+    #define CORE_ASSERT(x, message) do { if (!(x)) { CORE_ASSERT_LOG(#x, message); CORE_ABORT(); } } while(0)
 #else
-    #define DEBUG_BLOCK(...)
+    #define CORE_DEBUG_BLOCK(...)
+    #define CORE_ABORT()
 
-    #define ASSERT(x, message)
+    #define CORE_ASSERT(x, message)
 #endif
