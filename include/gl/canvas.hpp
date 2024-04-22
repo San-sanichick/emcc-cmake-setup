@@ -1,7 +1,7 @@
 #pragma once
 
 #include <emscripten/html5.h>
-#include <GLES2/gl2.h>
+#include <GLES3/gl3.h>
 
 #include <gpu/ganesh/SkSurfaceGanesh.h>
 #include <gpu/GrBackendSurface.h>
