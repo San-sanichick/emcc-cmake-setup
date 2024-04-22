@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <array>
-#include <assert.h>
+#include "debug.hpp"
 #include <Logger.h>
 
 
@@ -45,8 +45,8 @@ namespace math
 
         void set(size_t i, size_t j, T val)
         {
-            assert(i < R);
-            assert(j < C);
+            ASSERT(i < R, "Too many rows");
+            ASSERT(j < C, "Too many columns");
             this->matrix[R * i + j] = val;
         }
 
