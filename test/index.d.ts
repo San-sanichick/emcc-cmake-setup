@@ -32,9 +32,11 @@ export interface Canvas
 }
 
 
+export type Pointer = number;
+
 export interface Module
 {
-    _malloc(size: number): number;
+    _malloc(size: number): Pointer;
     getBuffer(ptr: number, size: number): void;
     getBufferVector<T>(arr: ArrayLike<T>): void;
     GL: GL;
