@@ -33,15 +33,21 @@ add_executable(index ${CORE_SRC})
 target_include_directories(index PUBLIC include)
 
 # !add libs
-target_include_directories(index PUBLIC 
-    vendors/simple-cpp-logger/include 
-    vendors/skia 
-    vendors/skia/src
-    vendors/skia/include 
-    vendors/skia/include/config
-    vendors/skia/include/gpu
-    vendors/skia/include/core
-)
+if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
+    target_include_directories(index PUBLIC 
+        vendors/simple-cpp-logger/include 
+        vendors/skia 
+        vendors/skia/src
+        vendors/skia/include 
+        vendors/skia/include/config
+        vendors/skia/include/gpu
+        vendors/skia/include/core
+    )
+else ()
+    target_include_directories(index PUBLIC 
+        vendors/simple-cpp-logger/include 
+    )
+endif()
 add_subdirectory(vendors/result)
 
 target_link_libraries(
@@ -52,10 +58,8 @@ target_link_libraries(
 
 # define DEBUG_BUILD macro
 target_compile_definitions(index PRIVATE $<$<CONFIG:Debug>:DEBUG_BUILD>)
+
 # make paths relative
-# target_compile_options(index PUBLIC "-ffile-prefix-map=${CMAKE_SOURCE_DIR}=.")
-
-
 target_compile_options(index PRIVATE 
     -ffile-prefix-map=${CMAKE_SOURCE_DIR}=.
     # -pedantic 
