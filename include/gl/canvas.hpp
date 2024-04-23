@@ -21,6 +21,7 @@
 #include <include/core/SkCanvas.h>
 
 #include "gl/shader.hpp"
+#include "gl/program.hpp"
 
 
 namespace gl
@@ -56,8 +57,7 @@ namespace gl
 
     private:
         EMSCRIPTEN_WEBGL_CONTEXT_HANDLE ctx;
-        GLuint programId;
-        GLuint vShader, fShader;
+        gl::GLProgram* program;
         
         int32_t w, h;
         GLuint vb;

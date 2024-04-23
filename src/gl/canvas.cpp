@@ -4,51 +4,36 @@
 #ifdef __EMSCRIPTEN__
 
 
-
-gl::GLShader vertSh = 
-    "#version 300 es\n"
-    "layout (location = 0) in vec3 position;\n"
-    "void main()\n"
-    "{\n"
-    "gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
-    "}";
-
-
-gl::GLShader fragSh =
-    "#version 300 es\n"
-    "precision mediump float;\n"
-    "out vec4 color;\n"
-    "void main()\n"
-    "{\n"
-    "color = vec4(1.0f, 1.0f, 0.0f, 1.0f);\n"
-    "}";
-
-
 gl::Canvas::Canvas(uint32_t id, int32_t w, int32_t h)
 {
-    this->programId = glCreateProgram();
-    
     this->vb = id;
     this->ctx = id;
     
     this->w = w;
     this->h = h;
 
+    gl::GLShader vertSh(
+        "#version 300 es\n"
+        "layout (location = 0) in vec3 position;\n"
+        "void main()\n"
+        "{\n"
+        "gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
+        "}",
+        gl::VERTEX
+    );
 
-    this->vShader = glCreateShader(GL_VERTEX_SHADER);
-    const auto vs = vertSh.get_c_str();
-    glShaderSource(vShader, 1, &vs, NULL);
-    glCompileShader(vShader);
-    
+    gl::GLShader fragSh(
+        "#version 300 es\n"
+        "precision mediump float;\n"
+        "out vec4 color;\n"
+        "void main()\n"
+        "{\n"
+        "color = vec4(1.0f, 1.0f, 0.0f, 1.0f);\n"
+        "}",
+        gl::FRAGMENT
+    );
 
-    this->fShader = glCreateShader(GL_FRAGMENT_SHADER);
-    const auto fs = fragSh.get_c_str();
-    glShaderSource(fShader, 1, &fs, NULL);
-    glCompileShader(fShader);
-    
-    glAttachShader(this->programId, this->vShader);
-    glAttachShader(this->programId, this->fShader);
-    glLinkProgram(this->programId);
+    this->program = new gl::GLProgram("test", { vertSh, fragSh });
 
 
     auto interface = GrGLInterfaces::MakeWebGL();
@@ -87,9 +72,7 @@ gl::Canvas::Canvas(uint32_t id, int32_t w, int32_t h)
 
 gl::Canvas::~Canvas()
 {
-    glDeleteShader(vShader);
-    glDeleteShader(fShader);
-    glDeleteProgram(this->programId);
+    delete this->program;
 }
 
 // https://groups.google.com/g/skia-discuss/c/P4GO92rxIaM
@@ -119,7 +102,7 @@ void gl::Canvas::render(GLfloat r, GLfloat g, GLfloat b)
     {
         glClearColor(r, g, b, 1);
         glClear(GL_COLOR_BUFFER_BIT);
-        glUseProgram(this->programId);
+        glUseProgram(this->program->get_id());
         glDrawArrays(GL_TRIANGLES, 0, 3);
         
         SkPaint p;

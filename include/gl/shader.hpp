@@ -1,38 +1,66 @@
 #pragma once
 
-#include <string>
-
 
 #ifdef __EMSCRIPTEN__
+#include <GLES3/gl3.h>
+#include <string_view>
 
 namespace gl 
 {
-    enum class ShaderType
+    enum ShaderType
     {
-        VERTEX,
-        FRAGMENT
+        VERTEX = GL_VERTEX_SHADER,
+        FRAGMENT = GL_FRAGMENT_SHADER
     };
 
     class GLShader
     {
-    private:
-        std::string shaderText;
     public:
-        GLShader(std::string text) : shaderText(text)
-        {}
+        GLShader(std::string_view text, const ShaderType type) : shaderText(text)
+        {
+            this->shaderText = text;
+            this->id = glCreateShader(type);
+            this->compile(this->shaderText.data());
+        }
         
-        GLShader(const char text[]) : shaderText(text)
-        {}
-
-        std::string& get()
+        GLShader(const GLShader&) = default;
+        GLShader(GLShader&&) = default;
+        
+        ~GLShader()
+        {
+            if (this->id != 0)
+            {
+                glDeleteShader(this->id);
+                this->id = 0;
+            }
+        }
+        
+        const std::string_view& get() const
         {
             return this->shaderText;
         }
-
-        const char* get_c_str()
+        
+        const GLuint get_id() const
         {
-            return this->shaderText.c_str();
+            return this->id;
         }
+
+        const char* get_c_str() const
+        {
+            return this->shaderText.data();
+        }
+        
+    private:
+    
+        void compile(const GLchar* text)
+        {
+            glShaderSource(this->id, 1, &text, nullptr);
+            glCompileShader(this->id);
+        }
+        
+    private:
+        std::string_view shaderText;
+        GLuint id = 0;
     };
 }
 
