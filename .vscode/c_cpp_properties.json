@@ -3,14 +3,13 @@
         {
             "name": "Emscripten",
             "includePath": [
-                "${workspaceFolder}/**",
+                "${workspaceFolder}/src/**",
                 "${workspaceFolder}/include/**",
                 "${workspaceFolder}/vendors/emsdk/upstream/emscripten/system/include",
                 "${workspaceFolder}/vendors/simple-cpp-logger/include",
                 "${workspaceFolder}/vendors/result/include",
-                "${workspaceFolder}/vendors/skia/include/core",
-                "${workspaceFolder}/vendors/skia/include/gpu",
-                "${workspaceFolder}/vendors/skia/src"
+                "${workspaceFolder}/vendors/skia/include/**",
+                "${workspaceFolder}/vendors/skia/src/**"
             ],
             "defines": [],
             "cStandard": "c17",

@@ -11,6 +11,7 @@ help()
     echo
     echo "Syntax: build.sh -r|d [-c] [-n]"
     echo "options:"
+    echo
     echo "-r, --release     Build for release."
     echo "-d, --debug       Build for debug."
     echo "-c, --clean       Clean CMAKE cache files."
@@ -40,7 +41,7 @@ do
             ;;
         \?|-h|--help)
             help
-            exit 1
+            exit 0
             ;;
     esac
     shift
