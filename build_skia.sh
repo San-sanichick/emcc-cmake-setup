@@ -2,8 +2,10 @@
 
 # build skia for wasm
 cd vendors/skia
-cd out
-rm -rf wasm/*
+if [ -d out ]; then
+    cd out
+    rm -rf wasm/*
+fi
 
 cd ..
 
