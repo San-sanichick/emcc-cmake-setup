@@ -1,23 +1,27 @@
 #pragma once
 
+#ifdef __EMSCRIPTEN__
 #include <emscripten/html5.h>
 #include <GLES3/gl3.h>
 
-#include <gpu/ganesh/SkSurfaceGanesh.h>
-#include <gpu/GrBackendSurface.h>
-#include <GrTypes.h>
-#include <gpu/GrDirectContext.h>
-#include <SkColorSpace.h>
-#include <ganesh/gl/GrGLBackendSurface.h>
-#include <ganesh/gl/GrGLDirectContext.h>
-#include <ganesh/gl/GrGLMakeWebGLInterface.h>
-#include <gl/GrGLInterface.h>
-#include <gl/GrGLTypes.h>
+#include <include/gpu/ganesh/SkSurfaceGanesh.h>
+#include <include/gpu/GrBackendSurface.h>
+#include <include/gpu/GrTypes.h>
+#include <include/gpu/GrDirectContext.h>
+#include <include/core/SkColorSpace.h>
+#include <include/gpu/ganesh/gl/GrGLBackendSurface.h>
+#include <include/gpu/ganesh/gl/GrGLDirectContext.h>
+#include <include/gpu/ganesh/gl/GrGLMakeWebGLInterface.h>
+#include <include/gpu/gl/GrGLInterface.h>
+#include <include/gpu/gl/GrGLTypes.h>
 #include <src/gpu/RefCntedCallback.h>
 #include <src/gpu/ganesh/GrProxyProvider.h>
 #include <src/gpu/ganesh/gl/GrGLDefines.h>
-#include <SkSurface.h>
-#include <SkCanvas.h>
+#include <include/core/SkSurface.h>
+#include <include/core/SkCanvas.h>
+
+#include "gl/shader.hpp"
+
 
 namespace gl
 {
@@ -61,3 +65,5 @@ namespace gl
         sk_sp<SkSurface> surface;
     };
 }
+
+#endif

@@ -1,10 +1,11 @@
 #include "gl/canvas.hpp"
-
 // #include"debug.hpp"
 
+#ifdef __EMSCRIPTEN__
 
 
-const char* vertSh = 
+
+gl::GLShader vertSh = 
     "#version 300 es\n"
     "layout (location = 0) in vec3 position;\n"
     "void main()\n"
@@ -13,7 +14,7 @@ const char* vertSh =
     "}";
 
 
-const char* fracSh =
+gl::GLShader fragSh =
     "#version 300 es\n"
     "precision mediump float;\n"
     "out vec4 color;\n"
@@ -33,19 +34,20 @@ gl::Canvas::Canvas(uint32_t id, int32_t w, int32_t h)
     this->w = w;
     this->h = h;
 
-    // CORE_ASSERT(this->w == 0, "Width doesn't equal zero");
 
     this->vShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vShader, 1, &vertSh, NULL);
+    const auto vs = vertSh.get_c_str();
+    glShaderSource(vShader, 1, &vs, NULL);
     glCompileShader(vShader);
     
 
     this->fShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fShader, 1, &fracSh, NULL);
+    const auto fs = fragSh.get_c_str();
+    glShaderSource(fShader, 1, &fs, NULL);
     glCompileShader(fShader);
     
-    glAttachShader(this->programId, vShader);
-    glAttachShader(this->programId, fShader);
+    glAttachShader(this->programId, this->vShader);
+    glAttachShader(this->programId, this->fShader);
     glLinkProgram(this->programId);
 
 
@@ -129,3 +131,5 @@ void gl::Canvas::render(GLfloat r, GLfloat g, GLfloat b)
 
     glDeleteBuffers(1, &VBO);
 }
+
+#endif

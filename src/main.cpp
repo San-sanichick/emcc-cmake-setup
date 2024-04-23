@@ -46,8 +46,8 @@ int main()
         buffer[i] = i;
     }
     
-    ReadonlyDynArrayWrapper<uint8_t> bufWrapper(buffer, BUFSIZE);
-    ReadonlyDynArrayWrapper<uint8_t> moved(std::move(bufWrapper));
+    utils::ReadonlyDynArrayWrapper<uint8_t> bufWrapper(buffer, BUFSIZE);
+    utils::ReadonlyDynArrayWrapper<uint8_t> moved(std::move(bufWrapper));
     
     // std::span sp(moved);
     
