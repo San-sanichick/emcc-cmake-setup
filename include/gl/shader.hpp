@@ -16,47 +16,18 @@ namespace gl
     class GLShader
     {
     public:
-        GLShader(std::string_view text, const ShaderType type) : shaderText(text)
-        {
-            this->shaderText = text;
-            this->id = glCreateShader(type);
-            this->compile(this->shaderText.data());
-        }
-        
+        GLShader(std::string_view text, const ShaderType type);
         GLShader(const GLShader&) = default;
         GLShader(GLShader&&) = default;
+        ~GLShader();
         
-        ~GLShader()
-        {
-            if (this->id != 0)
-            {
-                glDeleteShader(this->id);
-                this->id = 0;
-            }
-        }
         
-        const std::string_view& get() const
-        {
-            return this->shaderText;
-        }
-        
-        const GLuint get_id() const
-        {
-            return this->id;
-        }
-
-        const char* get_c_str() const
-        {
-            return this->shaderText.data();
-        }
+        const std::string_view& get() const;
+        const GLuint get_id() const;
+        const char* get_c_str() const;
         
     private:
-    
-        void compile(const GLchar* text)
-        {
-            glShaderSource(this->id, 1, &text, nullptr);
-            glCompileShader(this->id);
-        }
+        void compile(const GLchar* text);
         
     private:
         std::string_view shaderText;
