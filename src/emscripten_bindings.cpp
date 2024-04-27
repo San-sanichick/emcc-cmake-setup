@@ -3,7 +3,7 @@
 // #include <emscripten/val.h>
 #include <iostream>
 #include "dyn_array_wrapper.hpp"
-#include "gl/canvas.hpp"
+#include "gl/glcanvas.hpp"
 // #include "timer.hpp"
 
 
@@ -40,13 +40,29 @@ void getBufferVector(const emsc::val &v)
     std::cout << std::endl;
 }
 
+class SkiaCanvas
+{
+private:
+    gl::GLCanvas<render::SkiaLowLevelRenderer> canvas;
+    
+public:
+    SkiaCanvas(uint32_t id, int32_t w, int32_t h)
+        : canvas(gl::GLCanvas<render::SkiaLowLevelRenderer>(id, w, h))
+    {}
+    
+    void render(float r, float g, float b)
+    {
+        this->canvas.render(r, g, b);
+    }
+};
+
 
 EMSCRIPTEN_BINDINGS(module)
 {
     emsc::function("getBuffer", &getBuffer);
     emsc::function("getBufferVector", &getBufferVector);
     
-    emsc::class_<gl::Canvas>("Canvas")
+    emsc::class_<SkiaCanvas>("Canvas")
         .constructor<uint32_t, int32_t, int32_t>()
-        .function("render", &gl::Canvas::render);
+        .function("render", &SkiaCanvas::render);
 }
