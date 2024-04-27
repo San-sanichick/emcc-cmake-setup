@@ -43,11 +43,11 @@ void getBufferVector(const emsc::val &v)
 class SkiaCanvas
 {
 private:
-    gl::GLCanvas<render::SkiaLowLevelRenderer> canvas;
+    gl::GLCanvas<renderer::SkiaLowLevelRenderer> canvas;
     
 public:
     SkiaCanvas(uint32_t id, int32_t w, int32_t h)
-        : canvas(gl::GLCanvas<render::SkiaLowLevelRenderer>(id, w, h))
+        : canvas(gl::GLCanvas<renderer::SkiaLowLevelRenderer>(id, w, h))
     {}
     
     void render(float r, float g, float b)

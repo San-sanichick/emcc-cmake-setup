@@ -21,7 +21,7 @@
 #include <include/core/SkCanvas.h>
 
 
-namespace render
+namespace renderer
 {
     class ILowLevelRenderer
     {

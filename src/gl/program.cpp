@@ -18,6 +18,12 @@ gl::GLProgram::GLProgram(std::string_view name, const std::initializer_list<gl::
     this->link();
 }
 
+gl::GLProgram::GLProgram(std::string_view name)
+{
+    this->id = glCreateProgram();
+    this->link();
+}
+
 
 gl::GLProgram::~GLProgram()
 {

@@ -1,7 +1,7 @@
 #include "render/renderer.hpp"
 
 
-render::SkiaLowLevelRenderer::ColorSettings::ColorSettings(sk_sp<SkColorSpace> colorSpace)
+renderer::SkiaLowLevelRenderer::ColorSettings::ColorSettings(sk_sp<SkColorSpace> colorSpace)
 {
     if (colorSpace == nullptr || colorSpace->isSRGB())
     {
@@ -17,7 +17,7 @@ render::SkiaLowLevelRenderer::ColorSettings::ColorSettings(sk_sp<SkColorSpace> c
 
 
 
-render::SkiaLowLevelRenderer::SkiaLowLevelRenderer(uint32_t w, uint32_t h)
+renderer::SkiaLowLevelRenderer::SkiaLowLevelRenderer(uint32_t w, uint32_t h)
 {
     auto interface = GrGLInterfaces::MakeWebGL();
     auto context = GrDirectContexts::MakeGL();
@@ -53,7 +53,7 @@ render::SkiaLowLevelRenderer::SkiaLowLevelRenderer(uint32_t w, uint32_t h)
 }
 
 
-void render::SkiaLowLevelRenderer::render(uint32_t w, uint32_t h)
+void renderer::SkiaLowLevelRenderer::render(uint32_t w, uint32_t h)
 {
     SkPaint p;
     p.setAntiAlias(true);

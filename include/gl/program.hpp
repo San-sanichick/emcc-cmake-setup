@@ -15,6 +15,7 @@ namespace gl
     {
     public:
         GLProgram(std::string_view name, const std::initializer_list<gl::GLShader>& shaders);
+        GLProgram(std::string_view name);
         ~GLProgram();
         
         const GLuint get_id() const { return this->id; }
