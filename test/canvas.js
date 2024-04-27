@@ -11,9 +11,7 @@
 
 export default class CanvasWrapper
 {
-    /**
-     * @type {Module}
-     */
+    /** @type {Module} */
     static #module;
 
     /**
@@ -26,17 +24,11 @@ export default class CanvasWrapper
     }
 
 
-    /**
-     * @type {Canvas}
-     */
+    /** @type {Canvas} */
     #canvasInstance;
-    /**
-     * @type {WebGLContextHandle}
-     */
+    /** @type {WebGLContextHandle} */
     #ctxHandle;
-    /**
-     * @type {HTMLCanvasElement}
-     */
+    /** @type {HTMLCanvasElement} */
     #canvas;
 
 
@@ -123,7 +115,6 @@ export default class CanvasWrapper
         const ctx = CanvasWrapper.#module.GL.getContext(handle);
         if (ctx)
         {
-            /** @type {WebGL2RenderingContext} */
             const gl = ctx.GLctx;
             gl.getExtension('WEBGL_debug_renderer_info');
             gl.getParameter(gl.RENDERER);

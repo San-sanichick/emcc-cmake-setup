@@ -5,9 +5,7 @@
 
 export default class Allocator
 {
-    /**
-     * @type {Module}
-     */
+    /** @type {Module} */
     static #module;
 
     /**
@@ -28,10 +26,10 @@ export default class Allocator
     static malloc(buffer)
     {
         const bytes = buffer.length * buffer.BYTES_PER_ELEMENT;
-        /**
-         * @type {number}
-         */
+
+        /** @type {number} */
         const ptr = Allocator.#module._malloc(bytes);
+
         const heapData = new Uint8Array(Allocator.#module.HEAPU8.buffer, ptr, bytes);
         heapData.set(buffer);
         
