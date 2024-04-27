@@ -1,3 +1,5 @@
+#pragma once
+
 #include <concepts>
 
 template<class T, class Base>

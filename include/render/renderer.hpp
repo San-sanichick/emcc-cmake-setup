@@ -1,3 +1,6 @@
+#pragma once
+
+#ifdef __EMSCRIPTEN__
 #include <emscripten/html5.h>
 #include <GLES3/gl3.h>
 
@@ -47,3 +50,5 @@ namespace render
         void render(uint32_t w, uint32_t h) override;
     };
 }
+
+#endif
