@@ -73,6 +73,7 @@ fi
 
 # Run CMAKE
 build="Release"
+cd build
 
 if [ "$native" = true ]; then
 
@@ -85,7 +86,7 @@ if [ "$native" = true ]; then
     fi
     
     tput dim
-    cmake . -DCMAKE_BUILD_TYPE=$build
+    cmake .. -DCMAKE_BUILD_TYPE=$build
     #  -DCMAKE_CXX_COMPILER=/usr/bin/clang
 else
 
@@ -98,12 +99,12 @@ else
     fi
 
     tput dim
-    emcmake cmake . -DCMAKE_BUILD_TYPE=$build
+    emcmake cmake .. -DCMAKE_BUILD_TYPE=$build
 fi
 
 tput sgr0
 
-
+cd ..
 # clear target dir
 echo "${bold}Clearing /target dir${normal}"
 if [ "$native" = true ]; then
@@ -111,6 +112,7 @@ if [ "$native" = true ]; then
 else
     rm -rf target/wasm/*
 fi
+
 
 # clear test dir
 if [ "$native" = false ]; then
@@ -126,7 +128,7 @@ fi
 
 tput sgr0
 
-
+cd build
 # run make
 if [ "$native" = true ]; then
     make index
@@ -134,7 +136,7 @@ else
     emmake make index
 fi
 
-
+cd ..
 # copy files into test/
 if [ "$native" = false ]; then
     echo "${bold}Copying files to /test${normal}"
