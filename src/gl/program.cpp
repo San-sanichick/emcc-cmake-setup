@@ -1,9 +1,11 @@
 #include "gl/program.hpp"
+#include <iostream>
 
 #ifdef __EMSCRIPTEN__
 
 
 gl::GLProgram::GLProgram(std::string_view name, const std::initializer_list<gl::GLShader>& shaders)
+    : name(name)
 {
     this->id = glCreateProgram();
     
@@ -19,6 +21,7 @@ gl::GLProgram::GLProgram(std::string_view name, const std::initializer_list<gl::
 }
 
 gl::GLProgram::GLProgram(std::string_view name)
+    : name(name)
 {
     this->id = glCreateProgram();
     this->link();

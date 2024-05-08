@@ -46,7 +46,7 @@ namespace gl
             // );
 
             // this->program = new gl::GLProgram("test", { vertSh, fragSh });
-            this->program = new gl::GLProgram("test");
+            // this->program = new gl::GLProgram("test");
 
             this->renderer = new R(this->w, this->h);
         }
@@ -54,7 +54,7 @@ namespace gl
         ~GLCanvas()
         {
             delete this->renderer;
-            delete this->program;
+            // delete this->program;
         }
         
         void render(GLfloat r, GLfloat g, GLfloat b)
@@ -83,7 +83,7 @@ namespace gl
             {
                 glClearColor(r, g, b, 1);
                 glClear(GL_COLOR_BUFFER_BIT);
-                glUseProgram(this->program->get_id());
+                // glUseProgram(this->program->get_id());
                 // glDrawArrays(GL_TRIANGLES, 0, 3);
                 
                 this->renderer->render(this->w, this->h);
@@ -98,7 +98,7 @@ namespace gl
         int32_t w, h;
         GLuint vb;
         
-        gl::GLProgram* program;
+        // gl::GLProgram* program;
         R* renderer;
     };
 }

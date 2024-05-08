@@ -33,8 +33,16 @@ namespace renderer
 
     class SkiaLowLevelRenderer : public ILowLevelRenderer
     {
+    public:
+        SkiaLowLevelRenderer(uint32_t w, uint32_t h);
+        virtual ~SkiaLowLevelRenderer();
+        
+        void render(uint32_t w, uint32_t h) override;
+        
     private:
         sk_sp<SkSurface> surface;
+        GLuint FBO1;
+        GLuint FBO2;
 
         struct ColorSettings
         {
@@ -43,11 +51,6 @@ namespace renderer
             SkColorType colorType;
             GrGLenum pixFormat;
         };
-
-    public:
-        SkiaLowLevelRenderer(uint32_t w, uint32_t h);
-        
-        void render(uint32_t w, uint32_t h) override;
     };
 }
 

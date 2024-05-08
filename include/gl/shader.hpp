@@ -23,7 +23,7 @@ namespace gl
         
         
         const std::string_view& get() const;
-        const GLuint get_id() const;
+        GLuint get_id() const;
         const char* get_c_str() const;
         
     private:

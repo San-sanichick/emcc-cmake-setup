@@ -18,7 +18,7 @@ namespace gl
         GLProgram(std::string_view name);
         ~GLProgram();
         
-        const GLuint get_id() const { return this->id; }
+        GLuint get_id() const { return this->id; }
 
     private:
         void link() const;

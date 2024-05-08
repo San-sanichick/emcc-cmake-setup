@@ -56,7 +56,7 @@ namespace utils
             return this->buf;
         }
         
-        const inline constexpr size_t size() const
+        inline constexpr size_t size() const
         {
             return this->bufSize;
         }
@@ -122,7 +122,7 @@ namespace utils
             return this->buf;
         }
         
-        const inline constexpr size_t size() const
+        inline constexpr size_t size() const
         {
             return this->bufSize;
         }
