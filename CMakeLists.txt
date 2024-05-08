@@ -4,7 +4,7 @@ project(emcc-cmake-setup)
 message("Enviroment: ${CMAKE_SYSTEM_NAME}")
 
 
-add_definitions(-std=c++20)
+add_definitions(-std=c++20 -fexperimental-library)
 set(CMAKE_CXX_STANDARD 20)
 
 
