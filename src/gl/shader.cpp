@@ -24,7 +24,7 @@ const std::string_view& gl::GLShader::get() const
     return this->shaderText;
 }
 
-GLuint gl::GLShader::get_id() const
+uint32_t gl::GLShader::get_id() const
 {
     return this->id;
 }

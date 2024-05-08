@@ -41,8 +41,7 @@ namespace renderer
         
     private:
         sk_sp<SkSurface> surface;
-        GLuint FBO1;
-        GLuint FBO2;
+        uint32_t FBO;
 
         struct ColorSettings
         {

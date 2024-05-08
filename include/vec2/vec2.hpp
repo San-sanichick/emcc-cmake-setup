@@ -1,8 +1,11 @@
 #pragma once
 
 #include <string>
+#include <format>
 #include <iostream>
 #include <concepts>
+
+
 
 template<typename T>
 concept arithmetic = std::integral<T> or std::floating_point<T>;
@@ -113,7 +116,7 @@ namespace math
         
         inline operator std::string() const
         {
-            return '(' + std::to_string(this->x) + ',' + std::to_string(this->y) + ')';
+            return std::format("({}, {})", this->x, this->y);
         }
     };
 }

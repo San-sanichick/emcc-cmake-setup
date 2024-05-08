@@ -69,7 +69,7 @@ namespace gl
             //     0.0f, 0.5f, 0.0f
             // };
             
-            // GLuint VBO;
+            // uint32_t VBO;
             // glGenBuffers(1, &VBO);
 
             // glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -96,7 +96,7 @@ namespace gl
         EMSCRIPTEN_WEBGL_CONTEXT_HANDLE ctx;
         
         int32_t w, h;
-        GLuint vb;
+        uint32_t vb;
         
         // gl::GLProgram* program;
         R* renderer;

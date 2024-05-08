@@ -18,14 +18,14 @@ namespace gl
         GLProgram(std::string_view name);
         ~GLProgram();
         
-        GLuint get_id() const { return this->id; }
+        uint32_t get_id() const { return this->id; }
 
     private:
         void link() const;
         
     private:
         std::string_view name;
-        GLuint id = 0;
+        uint32_t id = 0;
         
         std::vector<GLShader> shaders;
     };

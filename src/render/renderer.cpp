@@ -23,15 +23,14 @@ renderer::SkiaLowLevelRenderer::SkiaLowLevelRenderer(uint32_t w, uint32_t h)
     auto interface = GrGLInterfaces::MakeWebGL();
     auto context = GrDirectContexts::MakeGL();
     
-    glGenRenderbuffers(1, &this->FBO1);
-    glGenRenderbuffers(1, &this->FBO2);
+    glGenRenderbuffers(1, &this->FBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, this->FBO);
 
-    glBindFramebuffer(GL_FRAMEBUFFER, this->FBO2);
 
     context->resetContext(kRenderTarget_GrGLBackendState | kMisc_GrGLBackendState);
     
     GrGLFramebufferInfo info;
-    info.fFBOID = this->FBO2;
+    info.fFBOID = this->FBO;
 
     auto colorSpace = SkColorSpace::MakeSRGB();
     const auto colorSettings = ColorSettings(colorSpace);
@@ -60,6 +59,8 @@ renderer::SkiaLowLevelRenderer::~SkiaLowLevelRenderer() {}
 
 void renderer::SkiaLowLevelRenderer::render(uint32_t w, uint32_t h)
 {
+    glGenFramebuffers(1, &this->FBO);
+
     SkPaint p;
     p.setAntiAlias(true);
     p.setColor(SK_ColorCYAN);
@@ -69,5 +70,9 @@ void renderer::SkiaLowLevelRenderer::render(uint32_t w, uint32_t h)
 
     uint8_t pixel[4];
     glReadPixels(w / 2, h / 2, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &pixel);
-    CORE_LOG("R:" + std::to_string(pixel[0]) + " G:" + std::to_string(pixel[1]) + " B:" + std::to_string(pixel[2]));
+
+    CORE_LOG("R: {}, G: {}, B: {}", pixel[0], pixel[1], pixel[2]);
+
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

@@ -23,7 +23,7 @@ namespace gl
         
         
         const std::string_view& get() const;
-        GLuint get_id() const;
+        uint32_t get_id() const;
         const char* get_c_str() const;
         
     private:
@@ -31,7 +31,7 @@ namespace gl
         
     private:
         std::string_view shaderText;
-        GLuint id = 0;
+        uint32_t id = 0;
     };
 }
 
