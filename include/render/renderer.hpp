@@ -26,6 +26,9 @@ namespace renderer
     class ILowLevelRenderer
     {
     public:
+        virtual void updateWidth(uint32_t w) = 0;
+        virtual void updateHeight(uint32_t h) = 0;
+        virtual void resize() = 0;
         virtual void render(uint32_t w, uint32_t h) = 0;
     };
 
@@ -37,19 +40,30 @@ namespace renderer
         SkiaLowLevelRenderer(uint32_t w, uint32_t h);
         virtual ~SkiaLowLevelRenderer();
         
+        void updateWidth(uint32_t w) override;
+        void updateHeight(uint32_t h) override;
+        void resize() override;
+        
         void render(uint32_t w, uint32_t h) override;
+        void draw(SkCanvas* canvas);
+        
+    private:
+        void remakeSurface();
         
     private:
         sk_sp<SkSurface> surface;
         uint32_t FBO;
+        uint32_t width;
+        uint32_t height;
 
         struct ColorSettings
         {
+            ColorSettings();
             ColorSettings(sk_sp<SkColorSpace> colorSpace);
 
             SkColorType colorType;
             GrGLenum pixFormat;
-        };
+        } colorSettings;
     };
 }
 
