@@ -50,9 +50,9 @@ public:
         : canvas(gl::GLCanvas<renderer::SkiaLowLevelRenderer>(id, w, h))
     {}
     
-    void render(float r, float g, float b)
+    void render()
     {
-        this->canvas.render(r, g, b);
+        this->canvas.render();
     }
 };
 

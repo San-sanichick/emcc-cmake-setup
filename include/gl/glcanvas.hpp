@@ -3,6 +3,7 @@
 #ifdef __EMSCRIPTEN__
 #include <emscripten/html5.h>
 #include <GLES3/gl3.h>
+#include <memory>
 
 #include "render/renderer.hpp"
 #include "gl/shader.hpp"
@@ -17,13 +18,11 @@ namespace gl
     {
     public:
         GLCanvas(uint32_t id, int32_t w, int32_t h)
+            : ctx(id),
+            width(w),
+            height(h),
+            vb(id)
         {
-            this->vb = id;
-            this->ctx = id;
-            
-            this->w = w;
-            this->h = h;
-
             // gl::GLShader vertSh(
             //     "#version 300 es\n"
             //     "layout (location = 0) in vec3 position;\n"
@@ -48,18 +47,18 @@ namespace gl
             // this->program = new gl::GLProgram("test", { vertSh, fragSh });
             // this->program = new gl::GLProgram("test");
 
-            this->renderer = new R(this->w, this->h);
+            // this->renderer = new R(this->w, this->h);
+            this->renderer = std::make_unique<R>(this->width, this->height);
         }
 
         ~GLCanvas()
         {
-            delete this->renderer;
             // delete this->program;
         }
         
-        void render(GLfloat r, GLfloat g, GLfloat b)
+        void render()
         {
-            glViewport(0, 0, this->w, this->h);
+            glViewport(0, 0, this->width, this->height);
             glDisable(GL_DEPTH_TEST);
             
             // static const GLfloat vBuffer[] =
@@ -81,12 +80,12 @@ namespace gl
             // glBindBuffer(GL_ARRAY_BUFFER, 0);
 
             {
-                glClearColor(r, g, b, 1);
+                glClearColor(0, 0, 0, 1);
                 glClear(GL_COLOR_BUFFER_BIT);
                 // glUseProgram(this->program->get_id());
                 // glDrawArrays(GL_TRIANGLES, 0, 3);
                 
-                this->renderer->render(this->w, this->h);
+                this->renderer->render();
             }
 
             // glDeleteBuffers(1, &VBO);
@@ -95,11 +94,11 @@ namespace gl
     private:
         EMSCRIPTEN_WEBGL_CONTEXT_HANDLE ctx;
         
-        int32_t w, h;
+        uint32_t width, height;
         uint32_t vb;
         
+        std::unique_ptr<R> renderer;
         // gl::GLProgram* program;
-        R* renderer;
     };
 }
 

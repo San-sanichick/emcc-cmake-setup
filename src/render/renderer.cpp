@@ -120,6 +120,8 @@ void renderer::SkiaLowLevelRenderer::remakeSurface()
 
 void renderer::SkiaLowLevelRenderer::draw(SkCanvas* canvas)
 {
+    canvas->clear(SK_ColorBLACK);
+
     SkPaint p;
     p.setAntiAlias(true);
     p.setColor(SK_ColorCYAN);
@@ -128,20 +130,25 @@ void renderer::SkiaLowLevelRenderer::draw(SkCanvas* canvas)
 }
 
 
-void renderer::SkiaLowLevelRenderer::render(uint32_t w, uint32_t h)
+void renderer::SkiaLowLevelRenderer::render()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, this->FBO);
 
     auto canvas = this->surface->getCanvas();
     this->draw(canvas);
     
-    glFlush();
-
+    // flush the surface so we have all the pixels available for reading
+    auto surfacePtr = this->surface.get();
+    skgpu::ganesh::FlushAndSubmit(surfacePtr);
+    
+    
+    auto x = this->width / 4;
+    auto y = this->height / 2;
     uint8_t pixel[4];
-    glReadPixels(w / 2, h / 2, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &pixel);
 
-    CORE_LOG("R: {}, G: {}, B: {}", pixel[0], pixel[1], pixel[2]);
+    glReadPixels(x, y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &pixel);
 
+    CORE_LOG("({}, {}): R {}, G {}, B {}", x, y, pixel[0], pixel[1], pixel[2]);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

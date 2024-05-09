@@ -29,7 +29,7 @@ namespace renderer
         virtual void updateWidth(uint32_t w) = 0;
         virtual void updateHeight(uint32_t h) = 0;
         virtual void resize() = 0;
-        virtual void render(uint32_t w, uint32_t h) = 0;
+        virtual void render() = 0;
     };
 
 
@@ -44,7 +44,7 @@ namespace renderer
         void updateHeight(uint32_t h) override;
         void resize() override;
         
-        void render(uint32_t w, uint32_t h) override;
+        void render() override;
         void draw(SkCanvas* canvas);
         
     private:

@@ -50,13 +50,18 @@ const attrs = {
 }
 
 const canvas1 = new CanvasWrapper("#canvas-1", attrs);
-const canvas2 = new CanvasWrapper("#canvas-2", attrs);
-const canvas3 = new CanvasWrapper("#canvas-3", attrs);
+const offscreen = new OffscreenCanvas(400, 400);
+const canvas2 = new CanvasWrapper(offscreen, attrs);
 
-canvas1.render(1, 0, 0);
-canvas2.render(0, 1, 0);
-canvas3.render(0, 0, 1);
+canvas1.render();
+canvas2.render();
+
+const image = await offscreen.convertToBlob({ type: "image/png" });
+const uri = URL.createObjectURL(image);
+
+const img = document.createElement("img");
+img.src = uri;
+document.body.appendChild(img);
 
 canvas1.delete();
 canvas2.delete();
-canvas3.delete();

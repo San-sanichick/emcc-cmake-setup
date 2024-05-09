@@ -28,18 +28,26 @@ export default class CanvasWrapper
     #canvasInstance;
     /** @type {WebGLContextHandle} */
     #ctxHandle;
-    /** @type {HTMLCanvasElement} */
+    /** @type {HTMLCanvasElement | OffscreenCanvas} */
     #canvas;
 
 
     /**
      * 
-     * @param {string} id 
+     * @param {string | HTMLCanvasElement | OffscreenCanvas} canvas 
      * @param {WebGLContextAttributes} attrs
      */
-    constructor(id, attrs)
+    constructor(canvas, attrs)
     {
-        this.#canvas    = this.#getCanvas(id);
+        if (typeof canvas === "string")
+        {
+            this.#canvas = this.#getCanvas(canvas);
+        }
+        else
+        {
+            this.#canvas = canvas;
+        }
+        
         this.#ctxHandle = this.#makeContext(this.#canvas, attrs);
         this.#setContextActive(this.#ctxHandle);
         this.#canvasInstance = new CanvasWrapper.#module.Canvas(this.#ctxHandle, this.#canvas.width, this.#canvas.height);
@@ -59,17 +67,15 @@ export default class CanvasWrapper
 
     /**
      * 
-     * @param {number} r 
-     * @param {number} g 
-     * @param {number} b 
      * @returns {void}
      */
-    render(r, g, b)
+    render()
     {
         // set this context to be active, in case we switched it (we probably did)
         this.#setContextActive(this.#ctxHandle);
-        this.#canvasInstance.render(r, g, b);
+        this.#canvasInstance.render();
     }
+    
 
     /**
      * Get the underlying HTMLCanvasElement
@@ -102,7 +108,7 @@ export default class CanvasWrapper
 
     /**
      * @see https://github.com/google/skia/blob/main/modules/canvaskit/webgl.js#L166
-     * @param {HTMLCanvasElement} canvas
+     * @param {HTMLCanvasElement | OffscreenCanvas} canvas
      * @param {WebGLContextAttributes} attrs
      * @returns {WebGLContextHandle} 
      */
