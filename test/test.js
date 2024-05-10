@@ -56,12 +56,15 @@ const canvas2 = new CanvasWrapper(offscreen, attrs);
 canvas1.render();
 canvas2.render();
 
-const image = await offscreen.convertToBlob({ type: "image/png" });
-const uri = URL.createObjectURL(image);
+canvas1.getPixel(canvas1.width / 2, canvas1.height / 2);
+canvas2.getPixel(canvas2.width / 2, canvas2.height / 2);
 
-const img = document.createElement("img");
-img.src = uri;
-document.body.appendChild(img);
+// const image = await offscreen.convertToBlob({ type: "image/png" });
+// const uri = URL.createObjectURL(image);
+
+// const img = document.createElement("img");
+// img.src = uri;
+// document.body.appendChild(img);
 
 canvas1.delete();
 canvas2.delete();

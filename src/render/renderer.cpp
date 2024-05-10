@@ -140,15 +140,13 @@ void renderer::SkiaLowLevelRenderer::render()
     // flush the surface so we have all the pixels available for reading
     auto surfacePtr = this->surface.get();
     skgpu::ganesh::FlushAndSubmit(surfacePtr);
-    
-    
-    auto x = this->width / 4;
-    auto y = this->height / 2;
-    uint8_t pixel[4];
-
-    glReadPixels(x, y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &pixel);
-
-    CORE_LOG("({}, {}): R {}, G {}, B {}", x, y, pixel[0], pixel[1], pixel[2]);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+renderer::ILowLevelRenderer::RGBAPixel renderer::SkiaLowLevelRenderer::getPixel(uint32_t x, uint32_t y)
+{
+    union renderer::ILowLevelRenderer::RGBAPixel pixel;
+    glReadPixels(x, y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &pixel.pixel);
+    return pixel;
 }

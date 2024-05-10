@@ -64,6 +64,17 @@ export default class CanvasWrapper
         this.#canvasInstance.delete();
         this.#destroyContext();
     }
+    
+    get width()
+    {
+        return this.#canvas.width;
+    }
+    
+    get height()
+    {
+        return this.#canvas.height;
+    }
+
 
     /**
      * 
@@ -73,7 +84,19 @@ export default class CanvasWrapper
     {
         // set this context to be active, in case we switched it (we probably did)
         this.#setContextActive(this.#ctxHandle);
-        this.#canvasInstance.render();
+        this.#canvasInstance.render()
+    }
+    
+    
+    /**
+     * 
+     * @param {number} x 
+     * @param {number} y 
+    */
+    getPixel(x, y)
+    {
+        this.#setContextActive(this.#ctxHandle);
+        this.#canvasInstance.getPixel(x, y);
     }
     
 

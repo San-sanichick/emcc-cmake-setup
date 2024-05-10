@@ -4,6 +4,7 @@
 #include <iostream>
 #include "dyn_array_wrapper.hpp"
 #include "gl/glcanvas.hpp"
+#include "logger.hpp"
 // #include "timer.hpp"
 
 
@@ -54,6 +55,12 @@ public:
     {
         this->canvas.render();
     }
+    
+    void getPixel(uint32_t x, uint32_t y)
+    {
+        auto pixel = this->canvas.getPixel(x, y);
+        CORE_LOG("({}, {}): R {}, G {}, B {}", x, y, pixel.components.r, pixel.components.g, pixel.components.b);
+    }
 };
 
 
@@ -64,5 +71,6 @@ EMSCRIPTEN_BINDINGS(module)
     
     emsc::class_<SkiaCanvas>("Canvas")
         .constructor<uint32_t, int32_t, int32_t>()
-        .function("render", &SkiaCanvas::render);
+        .function("render", &SkiaCanvas::render)
+        .function("getPixel", &SkiaCanvas::getPixel);
 }
