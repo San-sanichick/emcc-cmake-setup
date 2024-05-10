@@ -144,9 +144,9 @@ void renderer::SkiaLowLevelRenderer::render()
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-renderer::ILowLevelRenderer::RGBAPixel renderer::SkiaLowLevelRenderer::getPixel(uint32_t x, uint32_t y)
+renderer::RGBAPixel renderer::SkiaLowLevelRenderer::getPixel(uint32_t x, uint32_t y)
 {
-    union renderer::ILowLevelRenderer::RGBAPixel pixel;
+    union renderer::RGBAPixel pixel;
     glReadPixels(x, y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &pixel.pixel);
     return pixel;
 }

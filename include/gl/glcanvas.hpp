@@ -40,7 +40,7 @@ namespace gl
             }
         }
         
-        renderer::ILowLevelRenderer::RGBAPixel getPixel(uint32_t x, uint32_t y)
+        renderer::RGBAPixel getPixel(uint32_t x, uint32_t y)
         {
             return this->renderer->getPixel(x, y);
         }

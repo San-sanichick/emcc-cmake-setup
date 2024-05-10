@@ -23,6 +23,19 @@
 
 namespace renderer
 {
+    union RGBAPixel
+    {
+        uint8_t pixel[4];
+        struct RGBA
+        {
+            uint8_t r;
+            uint8_t g;
+            uint8_t b;
+            uint8_t a;
+        } components;
+    };
+
+
     class ILowLevelRenderer
     {
     public:
@@ -31,18 +44,6 @@ namespace renderer
         virtual void resize() = 0;
         virtual void render() = 0;
         
-        union RGBAPixel
-        {
-            uint8_t pixel[4];
-            struct RGBA
-            {
-                uint8_t r;
-                uint8_t g;
-                uint8_t b;
-                uint8_t a;
-            } components;
-        };
-
         virtual RGBAPixel getPixel(uint32_t x, uint32_t y) = 0;
     };
 
