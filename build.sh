@@ -128,6 +128,10 @@ fi
 
 tput sgr0
 
+if [[ ! -d build ]]; then
+    mkdir build
+fi
+
 cd build
 # run make
 if [ "$native" = true ]; then
