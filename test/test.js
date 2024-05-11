@@ -22,7 +22,7 @@ CanvasWrapper.init(module);
 // console.time("allocator")
 // for (let i = 0; i < 20; i++)
 // {
-//     const [ptr, size] = Allocator.malloc(buffer);
+//     const { ptr, size } = Allocator.malloc(buffer);
 //     module.getBuffer(ptr, size);
 // }
 // console.timeEnd("allocator")

@@ -1,5 +1,6 @@
 /**
  * @typedef {import("./index").Module} Module
+ * @typedef {{ ptr: number, size: number }} HeapBuffer
  */
 
 
@@ -21,7 +22,7 @@ export default class Allocator
      * Allocates
      * @param {Module} module 
      * @param {Uint8Array} buffer 
-     * @returns {[ number, number ]}
+     * @returns {HeapBuffer}
      */
     static malloc(buffer)
     {
@@ -33,6 +34,9 @@ export default class Allocator
         const heapData = new Uint8Array(Allocator.#module.HEAPU8.buffer, ptr, bytes);
         heapData.set(buffer);
         
-        return [ptr, buffer.length];
+        return {
+            ptr: ptr,
+            size: buffer.length
+        };
     }
 }

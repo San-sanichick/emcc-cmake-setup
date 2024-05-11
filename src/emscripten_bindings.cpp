@@ -24,22 +24,7 @@ void getBuffer(const intptr_t data, size_t size)
     std::cout << std::endl;
 }
 
-void getBufferVector(const emsc::val &v)
-{
-    // Timer timer;
-    std::vector<uint8_t> rv;
-    const auto len = v["length"].as<unsigned>();
-    rv.resize(len);
 
-    emsc::val view(emsc::typed_memory_view(len, rv.data()));
-    view.call<void>("set", v);
-
-    for (auto el : rv)
-    {
-        std::cout << unsigned(el) << ' ';
-    }
-    std::cout << std::endl;
-}
 
 class SkiaCanvas
 {
@@ -47,8 +32,8 @@ private:
     gl::GLCanvas<renderer::SkiaLowLevelRenderer> canvas;
     
 public:
-    SkiaCanvas(uint32_t id, int32_t w, int32_t h)
-        : canvas(gl::GLCanvas<renderer::SkiaLowLevelRenderer>(id, w, h))
+    SkiaCanvas(uint32_t ctx, int32_t w, int32_t h)
+        : canvas(gl::GLCanvas<renderer::SkiaLowLevelRenderer>(ctx, w, h))
     {}
     
     void render()
@@ -67,7 +52,6 @@ public:
 EMSCRIPTEN_BINDINGS(module)
 {
     emsc::function("getBuffer", &getBuffer);
-    emsc::function("getBufferVector", &getBufferVector);
     
     emsc::class_<SkiaCanvas>("Canvas")
         .constructor<uint32_t, int32_t, int32_t>()

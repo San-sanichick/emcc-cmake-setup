@@ -17,11 +17,11 @@ namespace gl
     class GLCanvas
     {
     public:
-        GLCanvas(uint32_t id, int32_t w, int32_t h)
-            : ctx(id)
+        GLCanvas(uint32_t ctx, int32_t w, int32_t h)
+            : ctx(ctx)
             , width(w)
             , height(h)
-            , vb(id)
+            , vb(ctx)
         {
             this->renderer = std::make_unique<R>(this->width, this->height);
         }
