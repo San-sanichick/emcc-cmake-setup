@@ -12,6 +12,9 @@
 
 namespace gl
 {
+    /**
+     * @brief Class that takes care of OpenGL initialization and manages the canvas
+    */
     template<class R>
     requires Extends<R, renderer::ILowLevelRenderer>
     class GLCanvas
@@ -21,7 +24,6 @@ namespace gl
             : ctx(ctx)
             , width(w)
             , height(h)
-            , vb(ctx)
         {
             this->renderer = std::make_unique<R>(this->width, this->height);
         }
@@ -49,7 +51,6 @@ namespace gl
         EMSCRIPTEN_WEBGL_CONTEXT_HANDLE ctx;
         
         uint32_t width, height;
-        uint32_t vb;
         
         std::unique_ptr<R> renderer;
     };

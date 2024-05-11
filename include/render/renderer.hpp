@@ -23,6 +23,9 @@
 
 namespace renderer
 {
+    /**
+     * @brief Represents a singular RGBA pixel with values 0-255
+    */
     union RGBAPixel
     {
         uint8_t data[4];
@@ -33,6 +36,9 @@ namespace renderer
     };
 
 
+    /**
+     * @brief Base class for rendering
+    */
     class ILowLevelRenderer
     {
     public:
@@ -45,7 +51,9 @@ namespace renderer
     };
 
 
-
+    /**
+     * @brief Derived class that does actual rendering
+    */
     class SkiaLowLevelRenderer : public ILowLevelRenderer
     {
     public:
@@ -60,6 +68,7 @@ namespace renderer
         void draw(SkCanvas* canvas);
         
         RGBAPixel getPixel(uint32_t x, uint32_t y) override;
+
     private:
         void remakeSurface();
         
