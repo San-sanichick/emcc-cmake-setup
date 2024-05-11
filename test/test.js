@@ -49,22 +49,15 @@ const attrs = {
     minorVersion: 1
 }
 
-const canvas1 = new CanvasWrapper("#canvas-1", attrs);
-const offscreen = new OffscreenCanvas(400, 400);
-const canvas2 = new CanvasWrapper(offscreen, attrs);
+const c1 = document.querySelector("#canvas-1");
+const canvas1 = new CanvasWrapper(c1, attrs);
 
 canvas1.render();
-canvas2.render();
 
-canvas1.getPixel(canvas1.width / 2, canvas1.height / 2);
-canvas2.getPixel(canvas2.width / 2, canvas2.height / 2);
+c1.addEventListener("click", (e) =>
+{
+    const { clientX, clientY } = e;
+    canvas1.getPixel(clientX, clientY);
+});
 
-// const image = await offscreen.convertToBlob({ type: "image/png" });
-// const uri = URL.createObjectURL(image);
-
-// const img = document.createElement("img");
-// img.src = uri;
-// document.body.appendChild(img);
-
-canvas1.delete();
-canvas2.delete();
+// canvas1.delete();
