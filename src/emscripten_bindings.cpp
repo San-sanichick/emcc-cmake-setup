@@ -59,7 +59,7 @@ public:
     void getPixel(uint32_t x, uint32_t y)
     {
         auto pixel = this->canvas.getPixel(x, y);
-        CORE_LOG("({}, {}): R {}, G {}, B {}", x, y, pixel.components.r, pixel.components.g, pixel.components.b);
+        CORE_LOG("({}, {}): R {}, G {}, B {}", x, y, pixel.r, pixel.g, pixel.b);
     }
 };
 

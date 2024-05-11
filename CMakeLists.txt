@@ -85,6 +85,7 @@ target_compile_options(native PRIVATE
     -pedantic 
     -Wall 
     -Wextra
+    -Wno-no-gnu-anonymous-struct
     # -Wcast-align 
     # -Wcast-qual 
     # -Wctor-dtor-privacy 
@@ -109,6 +110,7 @@ target_compile_options(index PRIVATE
     -pedantic 
     -Wall 
     -Wextra
+    -Wno-gnu-anonymous-struct
 )
 
 
