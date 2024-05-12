@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 import Module from "./index.mjs";
 import CanvasWrapper from "./canvas.js";
@@ -47,17 +47,23 @@ const attrs = {
     failIfMajorPerformanceCaveat: true,
     majorVersion: 2,
     minorVersion: 1
-}
+};
 
 const c1 = document.querySelector("#canvas-1");
 const canvas1 = new CanvasWrapper(c1, attrs);
 
-canvas1.render();
+const offscreen = new OffscreenCanvas(canvas1.width, canvas1.height);
+const offscreenCanvas = new CanvasWrapper(offscreen, attrs);
 
-c1.addEventListener("click", (e) =>
+canvas1.render();
+offscreenCanvas.render();
+
+
+c1.addEventListener("click", (/**@type {MouseEvent}*/e) => 
 {
+    const rect = c1.getBoundingClientRect();
     const { clientX, clientY } = e;
-    canvas1.getPixel(clientX, clientY);
+    offscreenCanvas.getPixel(clientX - rect.left, clientY - rect.top);
 });
 
 // canvas1.delete();

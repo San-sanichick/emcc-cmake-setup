@@ -2,6 +2,7 @@
 #include "logger.hpp"
 
 
+
 namespace renderer
 {
     SkiaLowLevelRenderer::ColorSettings::ColorSettings()
