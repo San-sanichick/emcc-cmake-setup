@@ -73,6 +73,11 @@ fi
 
 # Run CMAKE
 build="Release"
+
+
+if [[ ! -d build ]]; then
+    mkdir build
+fi
 cd build
 
 if [ "$native" = true ]; then
@@ -128,9 +133,6 @@ fi
 
 tput sgr0
 
-if [[ ! -d build ]]; then
-    mkdir build
-fi
 
 cd build
 # run make

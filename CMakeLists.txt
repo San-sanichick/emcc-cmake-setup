@@ -119,7 +119,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
     # build this as a js module
     set(CMAKE_EXECUTABLE_SUFFIX .mjs)
 
-    target_compile_options(index PRIVATE -pthread)
+    target_compile_options(index PRIVATE -pthread -flto)
     
     target_link_options(index PRIVATE 
         --bind
@@ -136,7 +136,6 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
         -sUSE_WEBGL2=1
         -sFULL_ES2
         -sFULL_ES3 
-        -flto
         -sALLOW_MEMORY_GROWTH=1
         -sEXPORTED_FUNCTIONS=['_malloc']
         -sEXPORTED_RUNTIME_METHODS=['GL'] 
@@ -146,11 +145,12 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
     )
 
 else ()
+
+    target_compile_options(native PRIVATE -flto)
         
     target_link_options(native PRIVATE
         -fno-exceptions
         -fanalyzer
-        -flto
         $<$<CONFIG:Release>:-O3 -g0>
         $<$<CONFIG:Debug>:-Og -g3>
     )
