@@ -49,7 +49,22 @@ export default class CanvasWrapper
         }
         
         this.#ctxHandle = this.#makeContext(this.#canvas, attrs);
-        this.#canvasInstance = new CanvasWrapper.#module.Canvas(this.#ctxHandle, this.#canvas.width, this.#canvas.height);
+
+        //* fixes the "invalid parameter name, WEBGL_debug_renderer_info not enabled" error
+        //! generates a warning on Firefox, no idea what to do with that
+        const ctx = CanvasWrapper.#module.GL.getContext(this.#ctxHandle);
+        if (ctx)
+        {
+            const gl = ctx.GLctx;
+            gl.getExtension('WEBGL_debug_renderer_info');
+            gl.getParameter(gl.RENDERER);
+        }
+
+        this.#canvasInstance = new CanvasWrapper.#module.Canvas(
+            this.#ctxHandle,
+            this.#canvas.width,
+            this.#canvas.height
+        );
     }
 
     /**
@@ -131,18 +146,6 @@ export default class CanvasWrapper
     #makeContext(canvas, attrs)
     {
         if (!canvas) throw new Error("Canvas is null!");
-        const handle = CanvasWrapper.#module.GL.createContext(canvas, attrs);
-        
-        //* fixes the "invalid parameter name, WEBGL_debug_renderer_info not enabled" error
-        //! generates a warning on Firefox, no idea what to do with that
-        const ctx = CanvasWrapper.#module.GL.getContext(handle);
-        if (ctx)
-        {
-            const gl = ctx.GLctx;
-            gl.getExtension('WEBGL_debug_renderer_info');
-            gl.getParameter(gl.RENDERER);
-        }
-        
-        return handle;
+        return CanvasWrapper.#module.GL.createContext(canvas, attrs);
     }
 }
