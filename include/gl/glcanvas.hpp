@@ -55,6 +55,7 @@ namespace gl
                 
                 this->renderer->render();
             }
+            emscripten_webgl_commit_frame();
         }
         
         renderer::RGBAPixel getPixel(uint32_t x, uint32_t y)
