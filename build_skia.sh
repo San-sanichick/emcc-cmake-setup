@@ -51,6 +51,7 @@ main()
             "is_official_build=true"
             "is_debug=false"
             "target_cpu=\"wasm\""
+            "extra_cflags=[\"-pthread\"]"
             "skia_enable_tools=false"
             "third_party_isystem=false"
             "skia_use_webgpu=false"

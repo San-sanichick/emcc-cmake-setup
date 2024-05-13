@@ -118,10 +118,16 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
 
     # build this as a js module
     set(CMAKE_EXECUTABLE_SUFFIX .mjs)
+
+    target_compile_options(index PRIVATE -pthread)
     
     target_link_options(index PRIVATE 
         --bind
         -lembind
+        -pthread
+        -sOFFSCREENCANVAS_SUPPORT=1
+        # -sOFFSCREEN_FRAMEBUFFER=1
+        -sPTHREAD_POOL_SIZE=2
         -sMODULARIZE=1
         -sEXPORT_ES6=1
         -sNODEJS_CATCH_EXIT=0
