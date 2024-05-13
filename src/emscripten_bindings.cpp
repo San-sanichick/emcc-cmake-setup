@@ -1,21 +1,18 @@
 #include <emscripten/bind.h>
-#include <emscripten/threading.h>
 
-// #include <emscripten/val.h>
 #include <iostream>
-// #include <thread>
 
 #include "dyn_array_wrapper.hpp"
 #include "gl/glcanvas.hpp"
+#include "util/thread.hpp"
 #include "logger.hpp"
-// #include "timer.hpp"
+
 
 
 namespace emsc = emscripten;
 
 void getBuffer(const intptr_t data, size_t size)
 {
-    // Timer timer;
     const auto ptr = reinterpret_cast<uint8_t*>(data);
 
     utils::ReadonlyDynArrayWrapper buffer(ptr, size);
@@ -52,15 +49,8 @@ public:
 };
 
 
-void threaded(std::string canvas1)
+void threaded(std::string canvas1, std::string canvas2)
 {
-    pthread_t thread;
-
-    pthread_attr_t attr;
-    pthread_attr_init(&attr);
-
-    emscripten_pthread_attr_settransferredcanvases(&attr, canvas1.c_str());
-
     auto foo = [](void* arg) -> void*
     {
         EmscriptenWebGLContextAttributes attrs {
@@ -84,20 +74,26 @@ void threaded(std::string canvas1)
 
         auto canvas = static_cast<std::string*>(arg);
 
-        uint32_t ctx1 = emscripten_webgl_create_context(canvas->c_str(), &attrs);
-        SkiaCanvas c(ctx1, 800, 600);
+        uint32_t ctx = emscripten_webgl_create_context(canvas->c_str(), &attrs);
+        CORE_LOG("{}", ctx);
+        SkiaCanvas c(ctx, 800, 600);
         c.render();
         c.getPixel(400, 300);
 
         return 0;
     };
 
-    pthread_create(&thread, &attr, foo, &canvas1);
-    pthread_attr_destroy(&attr);
+    util::Thread t1(foo, &canvas1);
+    emscripten_pthread_attr_settransferredcanvases(&(t1.attr), canvas1.c_str()); //! this is important
+    t1.run();
 
-    // pthread_join(thread, 0);
 
-    // std::thread t1();
+    util::Thread t2(foo, &canvas2);
+    emscripten_pthread_attr_settransferredcanvases(&(t2.attr), canvas2.c_str()); //! this is important
+    t2.run();
+
+    
+    // t.join();
 
     // std::thread t2([&canvas2]()
     // {

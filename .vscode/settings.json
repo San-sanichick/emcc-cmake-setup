@@ -65,6 +65,11 @@
         "map": "cpp",
         "memory": "cpp",
         "algorithm": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "*.inc": "c",
+        "pthread_impl.h": "c",
+        "thread": "cpp",
+        "*.ipp": "cpp",
+        "system_error": "cpp"
     }
 }
