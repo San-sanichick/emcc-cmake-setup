@@ -10,6 +10,10 @@
 #include "gl/program.hpp"
 #include "utils.hpp"
 
+namespace emsc = emscripten;
+
+
+
 namespace gl
 {
     /**
@@ -25,12 +29,23 @@ namespace gl
             , width(w)
             , height(h)
         {
+            // set this context to be active, in case we switched it (we probably did)
+            this->setCurrentContext();
             this->renderer = std::make_unique<R>(this->width, this->height);
+        }
+
+        ~GLCanvas()
+        {
+            this->setCurrentContext();
+            emscripten_webgl_destroy_context(this->ctx);
         }
 
         
         void render()
         {
+            // again, in case we switched contexts, we need to make this one current
+            this->setCurrentContext();
+
             glViewport(0, 0, this->width, this->height);
             glDisable(GL_DEPTH_TEST);
 
@@ -44,8 +59,16 @@ namespace gl
         
         renderer::RGBAPixel getPixel(uint32_t x, uint32_t y)
         {
+            this->setCurrentContext();
             return this->renderer->getPixel(x, y);
         }
+
+    private:
+        inline void setCurrentContext()
+        {
+            emscripten_webgl_make_context_current(this->ctx);
+        }
+
 
     private:
         EMSCRIPTEN_WEBGL_CONTEXT_HANDLE ctx;

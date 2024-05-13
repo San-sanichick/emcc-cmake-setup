@@ -67,3 +67,4 @@ c1.addEventListener("click", (/**@type {MouseEvent}*/e) =>
 });
 
 // canvas1.delete();
+// offscreenCanvas.delete();

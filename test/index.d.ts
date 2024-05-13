@@ -28,6 +28,7 @@ export interface Canvas
 {
     new (ctx: number, w: number, h: number): Canvas;
     render(r: number, g: number, b: number): void;
+    getPixel(x: number, y: number): void;
     delete(): void;
 }
 

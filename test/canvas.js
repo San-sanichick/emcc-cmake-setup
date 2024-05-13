@@ -49,7 +49,6 @@ export default class CanvasWrapper
         }
         
         this.#ctxHandle = this.#makeContext(this.#canvas, attrs);
-        this.#setContextActive(this.#ctxHandle);
         this.#canvasInstance = new CanvasWrapper.#module.Canvas(this.#ctxHandle, this.#canvas.width, this.#canvas.height);
     }
 
@@ -59,10 +58,7 @@ export default class CanvasWrapper
      */
     delete()
     {
-        // again, in case we switched contexts, we need to make this one current
-        this.#setContextActive(this.#ctxHandle);
         this.#canvasInstance.delete();
-        this.#destroyContext();
     }
     
     get width()
@@ -82,8 +78,6 @@ export default class CanvasWrapper
      */
     render()
     {
-        // set this context to be active, in case we switched it (we probably did)
-        this.#setContextActive(this.#ctxHandle);
         this.#canvasInstance.render()
     }
     
@@ -95,7 +89,6 @@ export default class CanvasWrapper
     */
     getPixel(x, y)
     {
-        this.#setContextActive(this.#ctxHandle);
         this.#canvasInstance.getPixel(x, y);
     }
     
@@ -141,6 +134,7 @@ export default class CanvasWrapper
         const handle = CanvasWrapper.#module.GL.createContext(canvas, attrs);
         
         //* fixes the "invalid parameter name, WEBGL_debug_renderer_info not enabled" error
+        //! generates a warning on Firefox, no idea what to do with that
         const ctx = CanvasWrapper.#module.GL.getContext(handle);
         if (ctx)
         {
@@ -149,26 +143,6 @@ export default class CanvasWrapper
             gl.getParameter(gl.RENDERER);
         }
         
-        CanvasWrapper.#module.GL.makeContextCurrent(handle);
         return handle;
-    }
-
-    /**
-     * 
-     * @param {WebGLContextHandle} handle
-     * @returns {void} 
-     */
-    #setContextActive(handle)
-    {
-        CanvasWrapper.#module.GL.makeContextCurrent(handle)
-    }
-
-    /**
-     * 
-     * @param {WebGLContextHandle} ctx 
-     */
-    #destroyContext(ctx)
-    {
-        CanvasWrapper.#module.GL.deleteContext(ctx);
     }
 }
