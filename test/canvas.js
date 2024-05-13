@@ -48,6 +48,8 @@ export default class CanvasWrapper
             this.#canvas = canvas;
         }
         
+        //* context has to be made in JS, since in C++ emscripten API only allows
+        //* making context based on a HTML selector, which is silly
         this.#ctxHandle = this.#makeContext(this.#canvas, attrs);
 
         //* fixes the "invalid parameter name, WEBGL_debug_renderer_info not enabled" error
