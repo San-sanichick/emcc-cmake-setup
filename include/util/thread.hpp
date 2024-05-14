@@ -14,7 +14,8 @@ namespace util
     {
     public:
         Thread(std::function<void*(void*)> body, void* args);
-        Thread(const Thread& o);
+        Thread(const Thread& o) = delete;
+        Thread(Thread&& o) = delete;
 
         static void exit();
         
@@ -30,6 +31,9 @@ namespace util
 
         bool operator==(const Thread& o);
         bool operator!=(const Thread& o);
+
+        Thread& operator=(const Thread& o) = delete;
+        Thread& operator=(Thread&& o) = delete;
 
 
     public:

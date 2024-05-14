@@ -9,16 +9,12 @@ namespace util
         pthread_attr_init(&this->attr);
     }
 
-    Thread::Thread(const Thread& o)
-        : ptid(o.ptid)
-        , attr(o.attr)
-        , caller(o.caller)
-    {};
 
     void Thread::exit()
     {
         pthread_exit(nullptr);
     }
+
 
     void Thread::run()
     {
@@ -40,6 +36,8 @@ namespace util
     {
         return pthread_detach(this->ptid);
     }
+
+
 
     bool Thread::operator==(const Thread& o)
     {
