@@ -4,7 +4,7 @@
 
 #include "dyn_array_wrapper.hpp"
 #include "gl/glcanvas.hpp"
-#include "util/thread.hpp"
+#include "util/threading.hpp"
 #include "logger.hpp"
 
 
@@ -74,7 +74,7 @@ void threaded(std::string canvas1, std::string canvas2)
             
             .enableExtensionsByDefault = 0,
             .explicitSwapControl = 0,
-            .proxyContextToMainThread = EMSCRIPTEN_WEBGL_CONTEXT_PROXY_DISALLOW, // disallow
+            .proxyContextToMainThread = EMSCRIPTEN_WEBGL_CONTEXT_PROXY_DISALLOW,
             .renderViaOffscreenBackBuffer = 1,
         };
 
@@ -89,12 +89,12 @@ void threaded(std::string canvas1, std::string canvas2)
         return 0;
     };
 
-    util::Thread t1(foo, &canvas1);
+    util::threading::Thread t1(foo, &canvas1);
     emscripten_pthread_attr_settransferredcanvases(&(t1.attr), canvas1.c_str()); //! this is important
     t1.run();
 
 
-    util::Thread t2(foo, &canvas2);
+    util::threading::Thread t2(foo, &canvas2);
     emscripten_pthread_attr_settransferredcanvases(&(t2.attr), canvas2.c_str()); //! this is important
     t2.run();
 
@@ -103,12 +103,38 @@ void threaded(std::string canvas1, std::string canvas2)
     // t2.join();
 }
 
+void test()
+{
+    util::threading::Mutex mutex;
+
+    auto foo = [&mutex](void* arg) -> void*
+    {
+        auto num = static_cast<int*>(arg);
+
+        mutex.lock();
+
+        *num = 69;
+        CORE_LOG("from thread: {}", *num);
+
+        mutex.unlock();
+        return 0;
+    };
+
+    int num = 32;
+    util::threading::Thread t(foo, &num);
+
+    CORE_LOG("before thread: {}", num);
+    t.run();
+    t.join();
+    CORE_LOG("after thread: {}", num);
+}
 
 
 EMSCRIPTEN_BINDINGS(module)
 {
     emsc::function("getBuffer", &getBuffer);
     emsc::function("threaded", &threaded);
+    emsc::function("test", &test);
     
     emsc::class_<SkiaCanvas>("Canvas")
         .constructor<uint32_t, int32_t, int32_t>()
