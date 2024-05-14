@@ -6,8 +6,6 @@
 #include <memory>
 
 #include "render/renderer.hpp"
-#include "gl/shader.hpp"
-#include "gl/program.hpp"
 #include "utils.hpp"
 
 namespace emsc = emscripten;
@@ -31,6 +29,12 @@ namespace gl
         {
             // set this context to be active, in case we switched it (we probably did)
             this->setCurrentContext();
+
+            //* fixes the "invalid parameter name, WEBGL_debug_renderer_info not enabled" error
+            //! generates a warning on Firefox, no idea what to do with that
+            emscripten_webgl_enable_extension(this->ctx, "WEBGL_debug_renderer_info");
+            emscripten_webgl_enable_extension(this->ctx, "EXT_texture_filter_anisotropic");
+
             this->renderer = std::make_unique<R>(this->width, this->height);
         }
 

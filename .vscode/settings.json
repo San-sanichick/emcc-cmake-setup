@@ -70,6 +70,13 @@
         "pthread_impl.h": "c",
         "thread": "cpp",
         "*.ipp": "cpp",
-        "system_error": "cpp"
+        "system_error": "cpp",
+        "list": "cpp",
+        "__debug": "cpp",
+        "__errc": "cpp",
+        "__mutex_base": "cpp",
+        "atomic": "cpp",
+        "exception": "cpp",
+        "coroutine": "cpp"
     }
 }

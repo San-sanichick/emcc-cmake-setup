@@ -49,8 +49,8 @@ const attrs = {
     minorVersion: 1
 };
 
-const c1 = document.querySelector("#canvas-1");
-const c2 = document.querySelector("#canvas-2");
+// const c1 = document.querySelector("#canvas-1");
+// const c2 = document.querySelector("#canvas-2");
 
 // const c2 = new OffscreenCanvas(800, 600);
 

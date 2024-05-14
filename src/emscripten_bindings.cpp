@@ -49,6 +49,12 @@ public:
 };
 
 
+// EM_JS(intptr_t, createContext, (emsc::val GL, emsc::val canvas, emsc::val attrs), 
+// {
+//     return GL.createContext(canvas, attrs);
+// });
+
+//! can only create context from canvases that are in the DOM
 void threaded(std::string canvas1, std::string canvas2)
 {
     auto foo = [](void* arg) -> void*
@@ -60,7 +66,7 @@ void threaded(std::string canvas1, std::string canvas2)
             .antialias = 1,
             .premultipliedAlpha = 0,
             .preserveDrawingBuffer = 0,
-            .powerPreference = 0,
+            .powerPreference = EM_WEBGL_POWER_PREFERENCE_DEFAULT,
             .failIfMajorPerformanceCaveat = 1,
 
             .majorVersion = 2,
@@ -68,14 +74,14 @@ void threaded(std::string canvas1, std::string canvas2)
             
             .enableExtensionsByDefault = 0,
             .explicitSwapControl = 0,
-            .proxyContextToMainThread = 0, // disallow
+            .proxyContextToMainThread = EMSCRIPTEN_WEBGL_CONTEXT_PROXY_DISALLOW, // disallow
             .renderViaOffscreenBackBuffer = 1,
         };
 
         auto canvas = static_cast<std::string*>(arg);
 
         uint32_t ctx = emscripten_webgl_create_context(canvas->c_str(), &attrs);
-        CORE_LOG("{}", ctx);
+
         SkiaCanvas c(ctx, 800, 600);
         c.render();
         c.getPixel(400, 300);
@@ -93,35 +99,8 @@ void threaded(std::string canvas1, std::string canvas2)
     t2.run();
 
     
-    // t.join();
-
-    // std::thread t2([&canvas2]()
-    // {
-    //     EmscriptenWebGLContextAttributes attrs {
-    //         .alpha = 1,
-    //         .depth = 1,
-    //         .stencil = 1,
-    //         .antialias = 1,
-    //         .premultipliedAlpha = 0,
-    //         .preserveDrawingBuffer = 0,
-    //         .powerPreference = 0,
-    //         .failIfMajorPerformanceCaveat = 1,
-
-    //         .majorVersion = 2,
-    //         .minorVersion = 1,
-            
-    //         .enableExtensionsByDefault = 0,
-    //         .explicitSwapControl = 0,
-    //         .proxyContextToMainThread = 0, // disallow
-    //         .renderViaOffscreenBackBuffer = 1,
-    //     };
-
-    //     uint32_t ctx2 = emscripten_webgl_create_context(canvas2.c_str(), &attrs);
-
-    //     SkiaCanvas c(ctx2, 800, 600);
-    //     c.render();
-    //     c.getPixel(400, 300);
-    // });
+    // t1.join();
+    // t2.join();
 }
 
 

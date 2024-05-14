@@ -10,9 +10,9 @@ namespace util
     }
 
     Thread::Thread(const Thread& o)
-        : caller(o.caller)
+        : ptid(o.ptid)
         , attr(o.attr)
-        , ptid(o.ptid)
+        , caller(o.caller)
     {};
 
     void Thread::exit()

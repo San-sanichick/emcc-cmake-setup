@@ -8,7 +8,9 @@
  */
 
 
-
+/**
+ * Wrapper for a WASM wrapper (lol) around WebGL and Canvas
+ */
 export default class CanvasWrapper
 {
     /** @type {Module} */
@@ -51,16 +53,6 @@ export default class CanvasWrapper
         //* context has to be made in JS, since in C++ emscripten API only allows
         //* making context based on a HTML selector, which is silly
         this.#ctxHandle = this.#makeContext(this.#canvas, attrs);
-
-        //* fixes the "invalid parameter name, WEBGL_debug_renderer_info not enabled" error
-        //! generates a warning on Firefox, no idea what to do with that
-        const ctx = CanvasWrapper.#module.GL.getContext(this.#ctxHandle);
-        if (ctx)
-        {
-            const gl = ctx.GLctx;
-            gl.getExtension('WEBGL_debug_renderer_info');
-            gl.getParameter(gl.RENDERER);
-        }
 
         this.#canvasInstance = new CanvasWrapper.#module.Canvas(
             this.#ctxHandle,

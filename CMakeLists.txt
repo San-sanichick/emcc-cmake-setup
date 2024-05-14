@@ -119,7 +119,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
     # build this as a js module
     set(CMAKE_EXECUTABLE_SUFFIX .mjs)
 
-    target_compile_options(index PRIVATE -pthread -flto)
+    target_compile_options(index PRIVATE -pthread)
     
     target_link_options(index PRIVATE 
         --bind
@@ -146,8 +146,6 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
 
 else ()
 
-    target_compile_options(native PRIVATE -flto)
-        
     target_link_options(native PRIVATE
         -fno-exceptions
         -fanalyzer
