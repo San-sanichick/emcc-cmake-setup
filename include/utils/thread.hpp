@@ -6,7 +6,7 @@
 #include "logger.hpp"
 
 
-namespace util
+namespace utils
 {
     namespace threading
     {

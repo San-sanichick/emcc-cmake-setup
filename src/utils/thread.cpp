@@ -1,7 +1,7 @@
-#include "util/thread.hpp"
+#include "utils/thread.hpp"
 
 
-namespace util
+namespace utils
 {
     namespace threading
     {

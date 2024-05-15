@@ -1,6 +1,7 @@
 #include "render/renderer.hpp"
 #include "logger.hpp"
 #include "debug.hpp"
+#include "utils/timer.hpp"
 
 
 namespace renderer
@@ -156,6 +157,7 @@ namespace renderer
 
     void SkiaLowLevelRenderer::draw(SkCanvas* canvas)
     {
+        utils::Timer t;
         canvas->clear(SK_ColorBLACK);
 
         auto ctx = canvas->recordingContext()->asDirectContext();

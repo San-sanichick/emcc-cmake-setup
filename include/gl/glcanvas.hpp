@@ -7,7 +7,7 @@
 
 #include "render/renderer.hpp"
 #include "logger.hpp"
-#include "utils.hpp"
+#include "utils/concept_utils.hpp"
 
 namespace emsc = emscripten;
 
@@ -16,10 +16,10 @@ namespace emsc = emscripten;
 namespace gl
 {
     /**
-     * @brief Class that takes care of OpenGL initialization and manages the canvas
+     * @brief Class that takes care of OpenGL initialization and manages the WebGL context
     */
     template<class R>
-    requires Extends<R, renderer::ILowLevelRenderer>
+    requires utils::Extends<R, renderer::ILowLevelRenderer>
     class GLCanvas
     {
     public:

@@ -4,7 +4,7 @@
 
 #include "dyn_array_wrapper.hpp"
 #include "gl/glcanvas.hpp"
-#include "util/threading.hpp"
+#include "utils/threading.hpp"
 #include "logger.hpp"
 
 
@@ -89,12 +89,12 @@ void threaded(std::string canvas1, std::string canvas2)
         return 0;
     };
 
-    util::threading::Thread t1(foo, &canvas1);
+    utils::threading::Thread t1(foo, &canvas1);
     emscripten_pthread_attr_settransferredcanvases(&t1.getAttr(), canvas1.c_str()); //! this is important
     t1.run();
 
 
-    util::threading::Thread t2(foo, &canvas2);
+    utils::threading::Thread t2(foo, &canvas2);
     emscripten_pthread_attr_settransferredcanvases(&t2.getAttr(), canvas2.c_str()); //! this is important
     t2.run();
 
@@ -105,7 +105,7 @@ void threaded(std::string canvas1, std::string canvas2)
 
 void test()
 {
-    util::threading::Mutex mutex;
+    utils::threading::Mutex mutex;
 
     auto foo = [&mutex](void* arg) -> void*
     {
@@ -121,7 +121,7 @@ void test()
     };
 
     int num = 32;
-    util::threading::Thread t(foo, &num);
+    utils::threading::Thread t(foo, &num);
 
     CORE_LOG("before thread: {}", num);
     t.run();
