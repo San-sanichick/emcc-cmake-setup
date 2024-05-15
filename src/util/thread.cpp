@@ -52,6 +52,16 @@ namespace util
         }
 
 
+        const pthread_t& Thread::getID()
+        {
+            return this->ptid;
+        }
+
+        pthread_attr_t& Thread::getAttr()
+        {
+            return this->attr;
+        }
+
 
         Thread::Caller::Caller(std::function<void*(void*)> body, void* arg)
             : body(body)

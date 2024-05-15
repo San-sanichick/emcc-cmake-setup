@@ -38,12 +38,14 @@ namespace util
             Thread& operator=(const Thread& o) = delete;
             Thread& operator=(Thread&& o) = delete;
 
+            const pthread_t& getID();
+            pthread_attr_t& getAttr();
+            
 
-        public:
+        private:
             pthread_t ptid;
             pthread_attr_t attr;
 
-        private:
             struct Caller
             {
                 Caller(std::function<void*(void*)> body, void* arg);

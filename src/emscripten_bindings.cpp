@@ -90,12 +90,12 @@ void threaded(std::string canvas1, std::string canvas2)
     };
 
     util::threading::Thread t1(foo, &canvas1);
-    emscripten_pthread_attr_settransferredcanvases(&(t1.attr), canvas1.c_str()); //! this is important
+    emscripten_pthread_attr_settransferredcanvases(&t1.getAttr(), canvas1.c_str()); //! this is important
     t1.run();
 
 
     util::threading::Thread t2(foo, &canvas2);
-    emscripten_pthread_attr_settransferredcanvases(&(t2.attr), canvas2.c_str()); //! this is important
+    emscripten_pthread_attr_settransferredcanvases(&t2.getAttr(), canvas2.c_str()); //! this is important
     t2.run();
 
     
