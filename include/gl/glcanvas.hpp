@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "render/renderer.hpp"
+#include "logger.hpp"
 #include "utils.hpp"
 
 namespace emsc = emscripten;
@@ -27,20 +28,21 @@ namespace gl
             , width(w)
             , height(h)
         {
+            CORE_LOG("context handle: {}", ctx);
             // set this context to be active, in case we switched it (we probably did)
-            this->setCurrentContext();
+            // this->setCurrentContext();
 
             //* fixes the "invalid parameter name, WEBGL_debug_renderer_info not enabled" error
             //! generates a warning on Firefox, no idea what to do with that
-            emscripten_webgl_enable_extension(this->ctx, "WEBGL_debug_renderer_info");
-            emscripten_webgl_enable_extension(this->ctx, "EXT_texture_filter_anisotropic");
+            // emscripten_webgl_enable_extension(this->ctx, "WEBGL_debug_renderer_info");
+            // emscripten_webgl_enable_extension(this->ctx, "EXT_texture_filter_anisotropic");
 
             this->renderer = std::make_unique<R>(this->width, this->height);
         }
 
         ~GLCanvas()
         {
-            this->setCurrentContext();
+            // this->setCurrentContext();
             emscripten_webgl_destroy_context(this->ctx);
         }
 
@@ -48,7 +50,7 @@ namespace gl
         void render()
         {
             // again, in case we switched contexts, we need to make this one current
-            this->setCurrentContext();
+            // this->setCurrentContext();
 
             glViewport(0, 0, this->width, this->height);
             glDisable(GL_DEPTH_TEST);
@@ -59,12 +61,12 @@ namespace gl
                 
                 this->renderer->render();
             }
-            emscripten_webgl_commit_frame();
+            // emscripten_webgl_commit_frame();
         }
         
         renderer::RGBAPixel getPixel(uint32_t x, uint32_t y)
         {
-            this->setCurrentContext();
+            // this->setCurrentContext();
             return this->renderer->getPixel(x, y);
         }
 

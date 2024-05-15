@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include "logger.hpp"
 
-#define DEBUG_BUILD
-
 
 #ifdef DEBUG_BUILD
     #define CORE_DEBUG_BLOCK(...) do { __VA_ARGS__ } while(0)

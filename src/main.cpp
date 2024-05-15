@@ -22,7 +22,7 @@ void print(const std::span<T> s)
 }
 
 template<typename T>
-void printBuf(const T* buffer, const int size)
+void printBuf(const T* buffer, const size_t size)
 {
     for (size_t i = 0; i < size; i++)
     {

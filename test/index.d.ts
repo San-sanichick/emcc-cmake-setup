@@ -19,6 +19,7 @@ export interface GL
     shaders: Array<unknown>;
     calcBufLength: (size: number, type: unknown, stride: unknown, count: number) => unknown;
     createContext: (canvas: HTMLCanvasElement, attrs: WebGLContextAttributes) => number;
+    makeContextCurrent: (ctxHandle: number) => void;
     deleteContext: (ctxHandle: number) => void;
     getContext: (ctxHandle: number) => Context | null;
 }

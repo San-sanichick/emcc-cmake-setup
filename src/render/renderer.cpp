@@ -1,6 +1,11 @@
 #include "render/renderer.hpp"
 #include "logger.hpp"
+#include "debug.hpp"
 
+#include "include/gpu/GrRecordingContext.h"
+#include "include/private/gpu/ganesh/GrTypesPriv.h"
+#include "src/gpu/ganesh/GrDirectContextPriv.h"
+#include "src/gpu/ganesh/GrCaps.h"
 
 
 namespace renderer
@@ -30,7 +35,7 @@ namespace renderer
         : width(w), height(h)
     {
         auto interface = GrGLInterfaces::MakeWebGL();
-        auto context = GrDirectContexts::MakeGL();
+        auto context = GrDirectContexts::MakeGL(interface);
         
         glGenRenderbuffers(1, &this->FBO);
         glBindFramebuffer(GL_FRAMEBUFFER, this->FBO);
@@ -85,7 +90,7 @@ namespace renderer
     void SkiaLowLevelRenderer::remakeSurface()
     {
         auto interface = GrGLInterfaces::MakeWebGL();
-        auto context = GrDirectContexts::MakeGL();
+        auto context = GrDirectContexts::MakeGL(interface);
         
         context->resetContext(kRenderTarget_GrGLBackendState | kMisc_GrGLBackendState);
         
@@ -124,10 +129,43 @@ namespace renderer
     {
         canvas->clear(SK_ColorBLACK);
 
+        //! make texture
+        GrGLint sampleCount;
+        glGetIntegerv(GL_SAMPLES, &sampleCount);
+
+        auto props = this->surface->props();
+        auto ctx = canvas->recordingContext()->asDirectContext();
+        auto tex = ctx->createBackendTexture(200, 100, SkColorType::kRGBA_8888_SkColorType, skgpu::Mipmapped::kNo, GrRenderable::kYes);
+        //! end make texture
+
+        //! get surface from the created texture
+        auto surf = SkSurfaces::WrapBackendTexture(
+            ctx,
+            tex,
+            GrSurfaceOrigin::kBottomLeft_GrSurfaceOrigin,
+            sampleCount,
+            this->colorSettings.colorType,
+            SkColorSpace::MakeSRGB(),
+            &props
+        );
+
+        CORE_ASSERT(surf.get() != nullptr, "Surface creation silently failed");
+
+        //! grab the canvas and render on it
+        auto cv = surf->getCanvas();
+        
+        SkPaint p0;
+        p0.setColor(SK_ColorGREEN);
+        cv->drawCircle({ 100, 50 }, 50, p0);
+        //! make the surface into an image
+        auto img = surf->makeImageSnapshot();
+
         SkPaint p;
         p.setAntiAlias(true);
         p.setColor(SK_ColorCYAN);
 
+        //! draw the image
+        canvas->drawImage(img, 10, 10);
         canvas->drawCircle({ this->width / 2.0f, this->height / 2.0f }, 20, p);
     }
 

@@ -34,9 +34,9 @@ CanvasWrapper.init(module);
 // }
 // console.timeEnd("vector")
 
-/**
- * @type {WebGLContextAttributes}
- */
+// /**
+//  * @type {WebGLContextAttributes}
+//  */
 const attrs = {
     alpha: false,
     depth: true,
@@ -49,24 +49,20 @@ const attrs = {
     minorVersion: 1
 };
 
-// const c1 = document.querySelector("#canvas-1");
+const c1 = document.querySelector("#canvas-1");
 // const c2 = document.querySelector("#canvas-2");
 
 // const c2 = new OffscreenCanvas(800, 600);
 
 
-// const ctx1 = module.GL.createContext(c1, attrs);
-// const ctx2 = module.GL.createContext(c1, attrs);
-
-module.test();
+// module.test();
 // module.threaded("#canvas-1", "#canvas-2");
-// const c1 = document.querySelector("#canvas-1");
-// const canvas1 = new CanvasWrapper(c1, attrs);
+const canvas1 = new CanvasWrapper(c1, attrs);
 
 // const offscreen = new OffscreenCanvas(canvas1.width, canvas1.height);
 // const offscreenCanvas = new CanvasWrapper(offscreen, attrs);
 
-// canvas1.render();
+canvas1.render();
 // offscreenCanvas.render();
 
 
