@@ -119,15 +119,15 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
     # build this as a js module
     set(CMAKE_EXECUTABLE_SUFFIX .mjs)
 
-    # target_compile_options(index PRIVATE -pthread)
+    target_compile_options(index PRIVATE -pthread)
     
     target_link_options(index PRIVATE 
         --bind
         -lembind
-        # -pthread
-        # -sOFFSCREENCANVAS_SUPPORT=1
+        -pthread
+        -sOFFSCREENCANVAS_SUPPORT=1
         # -sOFFSCREEN_FRAMEBUFFER=1
-        # -sPTHREAD_POOL_SIZE=2
+        -sPTHREAD_POOL_SIZE=2
         -sMODULARIZE=1
         -sEXPORT_ES6=1
         -sNODEJS_CATCH_EXIT=0
@@ -139,7 +139,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
         -sALLOW_MEMORY_GROWTH=1
         -sEXPORTED_FUNCTIONS=['_malloc']
         -sEXPORTED_RUNTIME_METHODS=['GL'] 
-        ${PROJECT_SOURCE_DIR}/vendors/skia/out/wasm/libskia.a 
+        ${PROJECT_SOURCE_DIR}/vendors/skia/out/wasm_thread/libskia.a 
         $<$<CONFIG:Release>:-O3 -g0>
         $<$<CONFIG:Debug>:-Og -g3 -sASSERTIONS=2 --memoryprofiler>
     )

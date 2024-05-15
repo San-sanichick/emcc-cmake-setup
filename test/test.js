@@ -49,20 +49,20 @@ const attrs = {
     minorVersion: 1
 };
 
-const c1 = document.querySelector("#canvas-1");
+// const c1 = document.querySelector("#canvas-1");
 // const c2 = document.querySelector("#canvas-2");
 
 // const c2 = new OffscreenCanvas(800, 600);
 
 
 // module.test();
-// module.threaded("#canvas-1", "#canvas-2");
-const canvas1 = new CanvasWrapper(c1, attrs);
+module.threaded("#canvas-1", "#canvas-2");
+// const canvas1 = new CanvasWrapper(c1, attrs);
 
 // const offscreen = new OffscreenCanvas(canvas1.width, canvas1.height);
 // const offscreenCanvas = new CanvasWrapper(offscreen, attrs);
 
-canvas1.render();
+// canvas1.render();
 // offscreenCanvas.render();
 
 

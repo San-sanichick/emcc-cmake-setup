@@ -133,7 +133,7 @@ void test()
 EMSCRIPTEN_BINDINGS(module)
 {
     emsc::function("getBuffer", &getBuffer);
-    // emsc::function("threaded", &threaded);
+    emsc::function("threaded", &threaded);
     // emsc::function("test", &test);
     
     emsc::class_<SkiaCanvas>("Canvas")
