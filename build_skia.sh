@@ -24,7 +24,7 @@ main()
         shift
     done
     
-    if ([ "$native" = false ] && [ "$wasm" = false ]); then
+    if ([ "$native" = false ] && [ "$wasm_thread" = false ] && [ "$wasm" = false ]); then
         echo "Incorrect flags"     
         exit 1
     fi
