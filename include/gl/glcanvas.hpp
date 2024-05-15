@@ -28,7 +28,6 @@ namespace gl
             , width(w)
             , height(h)
         {
-            CORE_LOG("context handle: {}", ctx);
             // set this context to be active, in case we switched it (we probably did)
             this->setCurrentContext();
 
@@ -61,7 +60,7 @@ namespace gl
                 
                 this->renderer->render();
             }
-            // emscripten_webgl_commit_frame();
+            emscripten_webgl_commit_frame();
         }
         
         renderer::RGBAPixel getPixel(uint32_t x, uint32_t y)
