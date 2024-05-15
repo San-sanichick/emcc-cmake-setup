@@ -2,11 +2,6 @@
 #include "logger.hpp"
 #include "debug.hpp"
 
-#include "include/gpu/GrRecordingContext.h"
-#include "include/private/gpu/ganesh/GrTypesPriv.h"
-#include "src/gpu/ganesh/GrDirectContextPriv.h"
-#include "src/gpu/ganesh/GrCaps.h"
-
 
 namespace renderer
 {
