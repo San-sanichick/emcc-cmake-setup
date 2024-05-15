@@ -54,7 +54,6 @@ export default class CanvasWrapper
         //* making context based on a HTML selector, which is silly
         this.#ctxHandle = this.#makeContext(this.#canvas, attrs);
         
-        this.#setCurrentContext();
         this.#canvasInstance = new CanvasWrapper.#module.Canvas(
             this.#ctxHandle,
             this.#canvas.width,
@@ -68,7 +67,6 @@ export default class CanvasWrapper
      */
     delete()
     {
-        this.#setCurrentContext();
         this.#canvasInstance.delete();
         CanvasWrapper.#module.GL.deleteContext(this.#ctxHandle);
     }
@@ -90,7 +88,6 @@ export default class CanvasWrapper
      */
     render()
     {
-        this.#setCurrentContext();
         this.#canvasInstance.render()
     }
     
@@ -102,7 +99,6 @@ export default class CanvasWrapper
     */
     getPixel(x, y)
     {
-        this.#setCurrentContext();
         this.#canvasInstance.getPixel(x, y);
     }
     
@@ -146,10 +142,5 @@ export default class CanvasWrapper
     {
         if (!canvas) throw new Error("Canvas is null!");
         return CanvasWrapper.#module.GL.createContext(canvas, attrs);
-    }
-
-    #setCurrentContext()
-    {
-        CanvasWrapper.#module.GL.makeContextCurrent(this.#ctxHandle);
     }
 }

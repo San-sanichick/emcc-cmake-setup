@@ -118,19 +118,23 @@ namespace renderer
         );
     }
 
-
-
-    void SkiaLowLevelRenderer::draw(SkCanvas* canvas)
+    sk_sp<SkSurface> SkiaLowLevelRenderer::MakeTextureSurface(
+        GrDirectContext *ctx, 
+        sk_sp<SkSurface>& surface, 
+        SkColorType colorType
+    )
     {
-        canvas->clear(SK_ColorBLACK);
-
         //! make texture
         GrGLint sampleCount;
         glGetIntegerv(GL_SAMPLES, &sampleCount);
 
-        auto props = this->surface->props();
-        auto ctx = canvas->recordingContext()->asDirectContext();
-        auto tex = ctx->createBackendTexture(200, 100, SkColorType::kRGBA_8888_SkColorType, skgpu::Mipmapped::kNo, GrRenderable::kYes);
+        auto props = surface->props();
+        auto tex = ctx->createBackendTexture(
+            200, 100,
+            SkColorType::kRGBA_8888_SkColorType, 
+            skgpu::Mipmapped::kNo,
+            GrRenderable::kYes
+        );
         //! end make texture
 
         //! get surface from the created texture
@@ -139,12 +143,23 @@ namespace renderer
             tex,
             GrSurfaceOrigin::kBottomLeft_GrSurfaceOrigin,
             sampleCount,
-            this->colorSettings.colorType,
+            colorType,
             SkColorSpace::MakeSRGB(),
             &props
         );
 
         CORE_ASSERT(surf.get() != nullptr, "Surface creation silently failed");
+        return surf;
+    }
+
+
+
+    void SkiaLowLevelRenderer::draw(SkCanvas* canvas)
+    {
+        canvas->clear(SK_ColorBLACK);
+
+        auto ctx = canvas->recordingContext()->asDirectContext();
+        auto surf = SkiaLowLevelRenderer::MakeTextureSurface(ctx, this->surface, this->colorSettings.colorType);
 
         //! grab the canvas and render on it
         auto cv = surf->getCanvas();

@@ -71,6 +71,7 @@ namespace renderer
 
     private:
         void remakeSurface();
+        static sk_sp<SkSurface> MakeTextureSurface(GrDirectContext *ctx, sk_sp<SkSurface>& surface, SkColorType colorType);
         
     private:
         sk_sp<SkSurface> surface;
