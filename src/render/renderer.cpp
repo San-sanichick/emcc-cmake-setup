@@ -1,7 +1,6 @@
 #include "render/renderer.hpp"
 #include "logger.hpp"
 #include "debug.hpp"
-#include "utils/timer.hpp"
 
 
 namespace renderer
@@ -157,28 +156,36 @@ namespace renderer
 
     void SkiaLowLevelRenderer::draw(SkCanvas* canvas)
     {
-        utils::Timer t;
         canvas->clear(SK_ColorBLACK);
 
-        auto ctx = canvas->recordingContext()->asDirectContext();
-        auto surf = SkiaLowLevelRenderer::MakeTextureSurface(ctx, this->surface, this->colorSettings.colorType);
+        // auto ctx = canvas->recordingContext()->asDirectContext();
+        // auto surf = SkiaLowLevelRenderer::MakeTextureSurface(ctx, this->surface, this->colorSettings.colorType);
 
         //! grab the canvas and render on it
-        auto cv = surf->getCanvas();
+        // auto cv = surf->getCanvas();
         
-        SkPaint p0;
-        p0.setColor(SK_ColorGREEN);
-        cv->drawCircle({ 100, 50 }, 50, p0);
-        //! make the surface into an image
-        auto img = surf->makeImageSnapshot();
+        // SkPaint p0;
+        // p0.setColor(SK_ColorGREEN);
+        // cv->drawCircle({ 100, 50 }, 50, p0);
+        // //! make the surface into an image
+        // auto img = surf->makeImageSnapshot();
 
         SkPaint p;
         p.setAntiAlias(true);
         p.setColor(SK_ColorCYAN);
 
         //! draw the image
-        canvas->drawImage(img, 10, 10);
-        canvas->drawCircle({ this->width / 2.0f, this->height / 2.0f }, 20, p);
+        // canvas->drawImage(img, 10, 10);
+        this->x = (float)std::fmod(this->x + 10, this->width);
+        this->y = this->height / 2.0f;
+
+        canvas->drawCircle({ this->x, this->y }, 20, p);
+
+        // const SkFont font(nullptr, 20);
+        // SkString str(std::to_string(time));
+
+        // p.setColor(SK_ColorWHITE);
+        // canvas->drawString(str, this->width / 2.0f, 30, font, p);
     }
 
 

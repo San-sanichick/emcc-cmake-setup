@@ -19,6 +19,7 @@
 #include <src/gpu/ganesh/gl/GrGLDefines.h>
 #include <include/core/SkSurface.h>
 #include <include/core/SkCanvas.h>
+#include <include/core/SkFont.h>
 
 
 namespace renderer
@@ -78,6 +79,8 @@ namespace renderer
         uint32_t FBO;
         uint32_t width;
         uint32_t height;
+
+        float x = 0, y = 0;
 
         struct ColorSettings
         {

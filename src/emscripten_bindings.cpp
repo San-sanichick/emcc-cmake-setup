@@ -6,6 +6,7 @@
 #include "gl/glcanvas.hpp"
 #include "utils/threading.hpp"
 #include "logger.hpp"
+#include "utils/timer.hpp"
 
 
 
@@ -57,6 +58,8 @@ public:
 //! can only create context from canvases that are in the DOM
 void threaded(std::string canvas1, std::string canvas2)
 {
+    utils::Timer t;
+
     auto foo = [](void* arg) -> void*
     {
         EmscriptenWebGLContextAttributes attrs {
@@ -82,9 +85,18 @@ void threaded(std::string canvas1, std::string canvas2)
 
         uint32_t ctx = emscripten_webgl_create_context(canvas->c_str(), &attrs);
 
-        SkiaCanvas c(ctx, 800, 600);
-        c.render();
-        c.getPixel(400, 300);
+        auto c = new gl::GLCanvas<renderer::SkiaLowLevelRenderer>(ctx, 800, 600);
+
+        auto render = [](double time, void* data) -> EM_BOOL
+        {
+            auto canvas = static_cast<gl::GLCanvas<renderer::SkiaLowLevelRenderer>*>(data);
+            canvas->render();
+            return EM_TRUE;
+        };
+
+        emscripten_request_animation_frame_loop(render, c);
+        // c.render();
+        // c.getPixel(400, 300);
 
         return 0;
     };
