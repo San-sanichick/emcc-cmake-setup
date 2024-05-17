@@ -12,7 +12,7 @@ namespace utils
     namespace threading
     {
         /**
-         * @brief A wrapper around pthread 
+         * @brief A wrapper around pthread thread
          */
         class Thread
         {

@@ -58,10 +58,11 @@ public:
 //! can only create context from canvases that are in the DOM
 void threaded(std::string canvas1, std::string canvas2)
 {
-    utils::Timer t;
 
     auto foo = [](void* arg) -> void*
     {
+        utils::Timer t;
+
         EmscriptenWebGLContextAttributes attrs {
             .alpha = 1,
             .depth = 1,
