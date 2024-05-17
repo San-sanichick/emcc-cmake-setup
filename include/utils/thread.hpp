@@ -3,6 +3,7 @@
 #include <emscripten/threading.h>
 #include <pthread.h>
 #include <functional>
+#include "utils/caller.hpp"
 #include "logger.hpp"
 
 
@@ -46,18 +47,7 @@ namespace utils
             pthread_t ptid;
             pthread_attr_t attr;
 
-            struct Caller
-            {
-                Caller(std::function<void*(void*)> body, void* arg);
-
-                static void* call_static(void* self);
-                void* call();
-
-            private:
-                std::function<void*(void*)> body;
-                void* arg;
-            };
-            Caller caller;
+            utils::Caller<void, void> caller;
         };
     }
 }

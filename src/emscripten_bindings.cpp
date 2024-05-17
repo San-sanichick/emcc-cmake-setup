@@ -87,7 +87,7 @@ void threaded(std::string canvas1, std::string canvas2)
 
         auto c = new gl::GLCanvas<renderer::SkiaLowLevelRenderer>(ctx, 800, 600);
 
-        auto render = [](double time, void* data) -> EM_BOOL
+        auto render = [](double, void* data) -> EM_BOOL
         {
             auto canvas = static_cast<gl::GLCanvas<renderer::SkiaLowLevelRenderer>*>(data);
             canvas->render();

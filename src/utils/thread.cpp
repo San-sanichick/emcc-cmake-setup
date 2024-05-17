@@ -61,21 +61,5 @@ namespace utils
         {
             return this->attr;
         }
-
-
-        Thread::Caller::Caller(std::function<void*(void*)> body, void* arg)
-            : body(body)
-            , arg(arg)
-        {}
-
-        void* Thread::Caller::call_static(void* self)
-        {
-            return static_cast<Caller*>(self)->call();
-        }
-
-        void* Thread::Caller::call()
-        {
-            return this->body(this->arg);
-        }
     }
 }
