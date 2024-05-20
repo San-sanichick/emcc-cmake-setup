@@ -55,7 +55,7 @@ const attrs = {
 // const c2 = new OffscreenCanvas(800, 600);
 
 
-// module.test();
+module.test();
 module.threaded("#canvas-1", "#canvas-2");
 // const canvas1 = new CanvasWrapper(c1, attrs);
 

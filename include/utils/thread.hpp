@@ -2,7 +2,7 @@
 
 #include <emscripten/threading.h>
 #include <pthread.h>
-#include <unistd.h>
+#include <time.h>
 #include <functional>
 
 #include "utils/caller.hpp"

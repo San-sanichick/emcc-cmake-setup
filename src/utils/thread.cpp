@@ -19,7 +19,10 @@ namespace utils
 
         void Thread::sleep(uint32_t ms)
         {
-            usleep(ms * 1000); // usleep uses microseconds
+            timespec ts;
+            ts.tv_sec = ms * 0.001;
+            ts.tv_nsec = (ms % 1000) * 1000000;
+            nanosleep(&ts, &ts);
         }
 
 

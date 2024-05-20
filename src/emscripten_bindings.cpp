@@ -58,7 +58,6 @@ public:
 //! can only create context from canvases that are in the DOM
 void threaded(std::string canvas1, std::string canvas2)
 {
-
     auto foo = [](void* arg) -> void*
     {
         utils::Timer t;
@@ -98,6 +97,7 @@ void threaded(std::string canvas1, std::string canvas2)
         emscripten_request_animation_frame_loop(render, c);
         // c.render();
         // c.getPixel(400, 300);
+        utils::threading::Thread::sleep(5000);
 
         return 0;
     };
@@ -111,25 +111,25 @@ void threaded(std::string canvas1, std::string canvas2)
     emscripten_pthread_attr_settransferredcanvases(&t2.getAttr(), canvas2.c_str()); //! this is important
     t2.run();
 
-    
+    // t1.cancel();
     // t1.join();
     // t2.join();
 }
 
 void test()
 {
-    utils::threading::Mutex mutex;
+    utils::threading::ReadWriteLock rwlock;
 
-    auto foo = [&mutex](void* arg) -> void*
+    auto foo = [&rwlock](void* arg) -> void*
     {
         auto num = static_cast<int*>(arg);
 
-        mutex.lock();
+        rwlock.writeLock();
 
-        *num = 69;
+        *num *= 2;
         CORE_LOG("from thread: {}", *num);
 
-        mutex.unlock();
+        rwlock.unlock();
         return 0;
     };
 
@@ -147,7 +147,7 @@ EMSCRIPTEN_BINDINGS(module)
 {
     emsc::function("getBuffer", &getBuffer);
     emsc::function("threaded", &threaded);
-    // emsc::function("test", &test);
+    emsc::function("test", &test);
     
     emsc::class_<SkiaCanvas>("Canvas")
         .constructor<uint32_t, int32_t, int32_t>()
