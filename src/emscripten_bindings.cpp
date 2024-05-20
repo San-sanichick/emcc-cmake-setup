@@ -97,7 +97,8 @@ void threaded(std::string canvas1, std::string canvas2)
         emscripten_request_animation_frame_loop(render, c);
         // c.render();
         // c.getPixel(400, 300);
-        utils::threading::Thread::sleep(5000);
+
+        // utils::threading::Thread::sleep(5000);
 
         return 0;
     };
