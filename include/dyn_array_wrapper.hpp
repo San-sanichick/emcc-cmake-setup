@@ -1,5 +1,8 @@
 #pragma once
 
+#include "debug.hpp"
+
+
 namespace utils
 {
     /**
@@ -8,25 +11,26 @@ namespace utils
      * @tparam T array element type
      */
     template<typename T>
-    class ReadonlyDynArrayWeakWrapper
+    class WeakReadonlyDynArrayWrapper
     {
     private:
         T* buf;
         size_t bufSize;
 
     public:
-        ReadonlyDynArrayWeakWrapper(T* ptr, size_t size)
+        WeakReadonlyDynArrayWrapper(T* ptr, size_t size)
             : buf(ptr), bufSize(size)
         {}
 
-        ReadonlyDynArrayWeakWrapper(const ReadonlyDynArrayWeakWrapper& o) = delete;
+        WeakReadonlyDynArrayWrapper(const WeakReadonlyDynArrayWrapper& o) = delete;
 
-        ReadonlyDynArrayWeakWrapper(ReadonlyDynArrayWeakWrapper&& o) noexcept
+        WeakReadonlyDynArrayWrapper(WeakReadonlyDynArrayWrapper&& o) noexcept
             : buf(std::exchange(o.buf, nullptr)), bufSize(std::exchange(o.bufSize, 0))
         {}
 
         const inline constexpr T& operator[](size_t index) const
         {
+            CORE_ASSERT(index < this->bufSize, "index out of bounds");
             return this->data[index];
         }
         
@@ -93,6 +97,7 @@ namespace utils
 
         const inline constexpr T& operator[](size_t index) const
         {
+            CORE_ASSERT(index < this->bufSize, "index out of bounds");
             return this->data[index];
         }
         
