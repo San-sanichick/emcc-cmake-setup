@@ -2,7 +2,9 @@
 
 #include <emscripten/threading.h>
 #include <pthread.h>
+#include <unistd.h>
 #include <functional>
+
 #include "utils/caller.hpp"
 #include "logger.hpp"
 
@@ -22,6 +24,7 @@ namespace utils
             Thread(Thread&& o) = delete;
 
             static void exit();
+            static void sleep(uint32_t ms);
             
 
             /**

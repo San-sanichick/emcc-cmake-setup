@@ -17,6 +17,11 @@ namespace utils
             pthread_exit(nullptr);
         }
 
+        void Thread::sleep(uint32_t ms)
+        {
+            usleep(ms * 1000); // usleep uses microseconds
+        }
+
 
         void Thread::run()
         {
