@@ -23,8 +23,8 @@ namespace utils
              * 
              * @return uint32_t 0 on fail
              */
-            uint32_t readLock();
-            uint32_t tryReadLock();
+            bool readLock();
+            bool tryReadLock();
 
             /**
              * @brief Wait until any other thread is done writing OR reading. Once lock is granted,
@@ -32,10 +32,10 @@ namespace utils
              * 
              * @return uint32_t 0 on fail
              */
-            uint32_t writeLock();
-            uint32_t tryWriteLock();
+            bool writeLock();
+            bool tryWriteLock();
 
-            uint32_t unlock();
+            bool unlock();
 
         private:
             bool locked;

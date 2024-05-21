@@ -26,25 +26,26 @@ namespace utils
         }
 
 
-        void Thread::run()
+        bool Thread::run()
         {
-            pthread_create(&this->ptid, &this->attr, &caller.call_static, &caller);
-            pthread_attr_destroy(&this->attr);
+            bool res = pthread_create(&this->ptid, &this->attr, &caller.call_static, &caller) == 0;
+            if (res) pthread_attr_destroy(&this->attr);
+            return res;
         }
 
-        uint32_t Thread::join()
+        bool Thread::join()
         {
-            return pthread_join(this->ptid, 0);
+            return pthread_join(this->ptid, 0) == 0;
         }
 
-        uint32_t Thread::cancel()
+        bool Thread::cancel()
         {
-            return pthread_cancel(this->ptid);
+            return pthread_cancel(this->ptid) == 0;
         }
 
-        uint32_t Thread::detach()
+        bool Thread::detach()
         {
-            return pthread_detach(this->ptid);
+            return pthread_detach(this->ptid) == 0;
         }
 
 

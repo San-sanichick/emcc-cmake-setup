@@ -30,11 +30,11 @@ namespace utils
             /**
              * @brief Creates and queues the thread to run
              */
-            void run();
+            bool run();
 
-            uint32_t join();
-            uint32_t cancel();
-            uint32_t detach();
+            bool join();
+            bool cancel();
+            bool detach();
 
             bool operator==(const Thread& o);
             bool operator!=(const Thread& o);

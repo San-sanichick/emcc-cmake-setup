@@ -16,38 +16,38 @@ namespace utils
         }
 
 
-        uint32_t ReadWriteLock::readLock()
+        bool ReadWriteLock::readLock()
         {
             this->locked = true;
-            return pthread_rwlock_rdlock(&this->rwlock);
+            return pthread_rwlock_rdlock(&this->rwlock) == 0;
         }
 
-        uint32_t ReadWriteLock::tryReadLock()
+        bool ReadWriteLock::tryReadLock()
         {
-            auto res = pthread_rwlock_tryrdlock(&this->rwlock);
-            if (res != 0) this->locked = true;
+            auto res = pthread_rwlock_tryrdlock(&this->rwlock) == 0;
+            if (res) this->locked = true;
             return res;
         }
 
 
-        uint32_t ReadWriteLock::writeLock()
+        bool ReadWriteLock::writeLock()
         {
             this->locked = true;
-            return pthread_rwlock_wrlock(&this->rwlock);
+            return pthread_rwlock_wrlock(&this->rwlock) == 0;
         }
 
-        uint32_t ReadWriteLock::tryWriteLock()
+        bool ReadWriteLock::tryWriteLock()
         {
-            auto res = pthread_rwlock_trywrlock(&this->rwlock);
-            if (res != 0) this->locked = true;
+            auto res = pthread_rwlock_trywrlock(&this->rwlock) == 0;
+            if (res) this->locked = true;
             return res;
         }
 
 
-        uint32_t ReadWriteLock::unlock()
+        bool ReadWriteLock::unlock()
         {
             this->locked = false;
-            return pthread_rwlock_unlock(&this->rwlock);
+            return pthread_rwlock_unlock(&this->rwlock) == 0;
         }
     }
 }

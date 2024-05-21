@@ -17,28 +17,28 @@ namespace utils
             this->destroy();
         }
 
-        uint32_t Mutex::tryLock()
+        bool Mutex::tryLock()
         {
-            auto res = pthread_mutex_trylock(&this->mutex);
-            if (res != 0) this->locked = true;
+            auto res = pthread_mutex_trylock(&this->mutex) == 0;
+            if (res) this->locked = true;
             return res;
         }
 
-        uint32_t Mutex::lock()
+        bool Mutex::lock()
         {
             this->locked = true;
-            return pthread_mutex_lock(&this->mutex);
+            return pthread_mutex_lock(&this->mutex) == 0;
         }
 
-        uint32_t Mutex::unlock()
+        bool Mutex::unlock()
         {
             this->locked = false;
-            return pthread_mutex_unlock(&this->mutex);
+            return pthread_mutex_unlock(&this->mutex) == 0;
         }
 
-        uint32_t Mutex::destroy()
+        bool Mutex::destroy()
         {
-            return pthread_mutex_destroy(&this->mutex);
+            return pthread_mutex_destroy(&this->mutex) == 0;
         }
     }
 }

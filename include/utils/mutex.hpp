@@ -19,10 +19,10 @@ namespace utils
             ~Mutex();
 
 
-            uint32_t lock();
-            uint32_t tryLock();
-            uint32_t unlock();
-            uint32_t destroy();
+            bool lock();
+            bool tryLock();
+            bool unlock();
+            bool destroy();
 
         private:
             bool locked;
