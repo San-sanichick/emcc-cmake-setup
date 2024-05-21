@@ -19,9 +19,9 @@ namespace utils
 
             /**
              * @brief Wait until any other thread is done writing. Once lock is granted,
-             * no other thread is allowed to write until the lock is released with ```unlock()```
-             * 
-             * @return uint32_t 0 on fail
+             * no other thread is allowed to write until the lock is released with ```unlock()```* 
+             * @return true 
+             * @return false 
              */
             bool readLock();
             bool tryReadLock();
@@ -30,7 +30,8 @@ namespace utils
              * @brief Wait until any other thread is done writing OR reading. Once lock is granted,
              * no other thread is allowed to write OR read until the lock is released with ```unlock()```
              * 
-             * @return uint32_t 0 on fail
+             * @return true 
+             * @return false 
              */
             bool writeLock();
             bool tryWriteLock();

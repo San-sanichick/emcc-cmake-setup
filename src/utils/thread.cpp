@@ -25,24 +25,47 @@ namespace utils
             nanosleep(&ts, &ts);
         }
 
-
+        /**
+         * @brief Creates and queues the thread to run
+         * 
+         * @return true on success;
+         * @return false on failure.
+         */
         bool Thread::run()
         {
             bool res = pthread_create(&this->ptid, &this->attr, &caller.call_static, &caller) == 0;
             if (res) pthread_attr_destroy(&this->attr);
             return res;
         }
-
+        
+        /**
+         * @brief Wait for this thread to execute
+         * 
+         * @return true on success;
+         * @return false on failure.
+         */
         bool Thread::join()
         {
             return pthread_join(this->ptid, 0) == 0;
         }
-
+        
+        /**
+         * @brief Stop the execution of this thread
+         * 
+         * @return true on success;
+         * @return false on failure.
+         */
         bool Thread::cancel()
         {
             return pthread_cancel(this->ptid) == 0;
         }
 
+        /**
+         * @brief Detach this thread 
+         * 
+         * @return true on success;
+         * @return false on failure.
+         */
         bool Thread::detach()
         {
             return pthread_detach(this->ptid) == 0;

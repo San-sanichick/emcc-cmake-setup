@@ -27,11 +27,8 @@ namespace utils
             static void sleep(uint32_t ms);
             
 
-            /**
-             * @brief Creates and queues the thread to run
-             */
-            bool run();
 
+            bool run();
             bool join();
             bool cancel();
             bool detach();
