@@ -3,9 +3,9 @@
 #include <pthread.h>
 #include <time.h>
 #include <functional>
+#include <cstdint>
 
 #include "utils/caller.hpp"
-#include <cstdint>
 
 
 namespace utils
