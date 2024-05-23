@@ -1,3 +1,5 @@
+#ifdef __EMSCRIPTEN__
+
 #include "render/renderer.hpp"
 #include "logger.hpp"
 #include "debug.hpp"
@@ -210,3 +212,5 @@ namespace renderer
         return pixel;
     }
 }
+
+#endif

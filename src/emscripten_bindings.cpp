@@ -1,4 +1,5 @@
 #include <emscripten/bind.h>
+#include <emscripten/threading.h>
 
 #include <iostream>
 
@@ -100,7 +101,7 @@ void threaded(std::string canvas1, std::string canvas2)
 
         // utils::threading::Thread::sleep(5000);
 
-        return 0;
+        return nullptr;
     };
 
     utils::threading::Thread t1(foo, &canvas1);

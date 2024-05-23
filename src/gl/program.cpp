@@ -1,7 +1,7 @@
+#ifdef __EMSCRIPTEN__
 #include "gl/program.hpp"
 #include <iostream>
 
-#ifdef __EMSCRIPTEN__
 
 
 gl::GLProgram::GLProgram(std::string_view name, const std::initializer_list<gl::GLShader>& shaders)

@@ -1,3 +1,5 @@
+#ifdef __EMSCRIPTEN__
+
 #include "gl/shader.hpp"
 
 
@@ -41,3 +43,5 @@ void gl::GLShader::compile(const GLchar* text)
     glShaderSource(this->id, 1, &text, nullptr);
     glCompileShader(this->id);
 }
+
+#endif

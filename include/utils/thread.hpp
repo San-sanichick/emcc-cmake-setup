@@ -1,12 +1,11 @@
 #pragma once
 
-#include <emscripten/threading.h>
 #include <pthread.h>
 #include <time.h>
 #include <functional>
 
 #include "utils/caller.hpp"
-#include "logger.hpp"
+#include <cstdint>
 
 
 namespace utils

@@ -19,13 +19,13 @@ namespace utils
             const auto end = std::chrono::steady_clock::now();
             const auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-            this->mutex.lock();
+            this->rwlock.readLock();
             std::cout << "Execution time: " << time.count() << "ms" << std::endl;
-            this->mutex.unlock();
+            this->rwlock.unlock();
         }
 
     private:
         std::chrono::time_point<std::chrono::steady_clock> start;
-        utils::threading::Mutex mutex;
+        utils::threading::ReadWriteLock rwlock;
     };
 }
