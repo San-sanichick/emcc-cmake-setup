@@ -21,11 +21,16 @@ export default class Allocator
     /**
      * Allocates
      * @param {Module} module 
-     * @param {Uint8Array} buffer 
+     * @param {Uint8Array | ArrayBufferLike} buffer 
      * @returns {HeapBuffer}
      */
     static malloc(buffer)
     {
+        if (!(buffer instanceof Uint8Array))
+        {
+            buffer = new Uint8Array(buffer);
+        }
+
         const bytes = buffer.length * buffer.BYTES_PER_ELEMENT;
 
         /** @type {number} */
@@ -35,7 +40,7 @@ export default class Allocator
         heapData.set(buffer);
         
         return {
-            ptr: ptr,
+            ptr : ptr,
             size: buffer.length
         };
     }
