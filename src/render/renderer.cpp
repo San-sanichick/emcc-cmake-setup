@@ -1,8 +1,14 @@
 #ifdef __EMSCRIPTEN__
 
+// #include <include/ports/SkFontMgr_data.h>
+#include <include/core/SkStream.h>
+#include <src/ports/SkTypeface_FreeType.h>
+
 #include "render/renderer.hpp"
 #include "logger.hpp"
 #include "debug.hpp"
+
+
 
 
 namespace renderer
@@ -155,10 +161,25 @@ namespace renderer
     }
 
 
-
-    void SkiaLowLevelRenderer::draw(SkCanvas* canvas)
+    void SkiaLowLevelRenderer::render(double time)
     {
-        canvas->clear(SK_ColorBLACK);
+        glBindFramebuffer(GL_FRAMEBUFFER, this->FBO);
+
+        auto canvas = this->surface->getCanvas();
+        this->draw(canvas, time);
+        
+        // flush the surface so we have all the pixels available for reading
+        auto surfacePtr = this->surface.get();
+        skgpu::ganesh::FlushAndSubmit(surfacePtr);
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
+
+
+
+    void SkiaLowLevelRenderer::draw(SkCanvas* canvas, double time)
+    {
+        canvas->clear(SK_ColorGRAY);
 
         // auto ctx = canvas->recordingContext()->asDirectContext();
         // auto surf = SkiaLowLevelRenderer::MakeTextureSurface(ctx, this->surface, this->colorSettings.colorType);
@@ -183,26 +204,22 @@ namespace renderer
 
         canvas->drawCircle({ this->x, this->y }, 20, p);
 
-        // const SkFont font(nullptr, 20);
-        // SkString str(std::to_string(time));
+        SkString str(std::to_string(time) + "ms");
 
-        // p.setColor(SK_ColorWHITE);
-        // canvas->drawString(str, this->width / 2.0f, 30, font, p);
+        p.setColor(SK_ColorWHITE);
+        canvas->drawString(str, this->width - 150.0f, 30, this->font, p);
+
+        // canvas->drawCircle({ 450, 200 }, 69, p);
     }
 
-
-    void SkiaLowLevelRenderer::render()
+    void SkiaLowLevelRenderer::getFontData(uint8_t* ptr, size_t size)
     {
-        glBindFramebuffer(GL_FRAMEBUFFER, this->FBO);
+        std::unique_ptr<SkMemoryStream> stream(new SkMemoryStream());
+        stream->setMemoryOwned(ptr, size);
+        auto tf = SkTypeface_FreeType::MakeFromStream(std::move(stream), SkFontArguments());
 
-        auto canvas = this->surface->getCanvas();
-        this->draw(canvas);
-        
-        // flush the surface so we have all the pixels available for reading
-        auto surfacePtr = this->surface.get();
-        skgpu::ganesh::FlushAndSubmit(surfacePtr);
-
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        this->font.setTypeface(tf);
+        this->font.setSize(20);
     }
 
     RGBAPixel renderer::SkiaLowLevelRenderer::getPixel(uint32_t x, uint32_t y)

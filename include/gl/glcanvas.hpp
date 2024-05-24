@@ -46,7 +46,7 @@ namespace gl
         }
 
         
-        void render()
+        void render(double time)
         {
             // again, in case we switched contexts, we need to make this one current
             this->setCurrentContext();
@@ -55,14 +55,17 @@ namespace gl
             glDisable(GL_DEPTH_TEST);
 
             {
-                glClearColor(0, 0, 0, 1);
-                glClear(GL_COLOR_BUFFER_BIT);
-                
-                this->renderer->render();
+                this->renderer->render(time);
             }
             emscripten_webgl_commit_frame();
         }
-        
+
+        void getFontData(uint8_t* ptr, size_t size)
+        {
+            this->renderer->getFontData(ptr, size);
+        }
+
+
         renderer::RGBAPixel getPixel(uint32_t x, uint32_t y)
         {
             this->setCurrentContext();

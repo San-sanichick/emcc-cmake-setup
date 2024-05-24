@@ -3,7 +3,6 @@
 
 #include <iostream>
 
-#include "dyn_array_wrapper.hpp"
 #include "gl/glcanvas.hpp"
 #include "utils/threading.hpp"
 #include "logger.hpp"
@@ -13,34 +12,25 @@
 
 namespace emsc = emscripten;
 
-void getBuffer(const intptr_t data, size_t size)
-{
-    const auto ptr = reinterpret_cast<uint8_t*>(data);
+// utils::WeakReadonlyDynArrayWrapper getBuffer(const intptr_t data, size_t size)
+// {
+//     const auto ptr = reinterpret_cast<uint8_t*>(data);
 
-    utils::ReadonlyDynArrayWrapper buffer(ptr, size);
-    
-    for (auto el : buffer)
-    {
-        std::cout << unsigned(el) << ' ';
-    }
-    std::cout << std::endl;
-}
+//     return utils::WeakReadonlyDynArrayWrapper(ptr, size);
+// }
 
 
 
 class SkiaCanvas
 {
-private:
-    gl::GLCanvas<renderer::SkiaLowLevelRenderer> canvas;
-    
 public:
     SkiaCanvas(uint32_t ctx, int32_t w, int32_t h)
         : canvas(gl::GLCanvas<renderer::SkiaLowLevelRenderer>(ctx, w, h))
     {}
     
-    void render()
+    void render(double time)
     {
-        this->canvas.render();
+        this->canvas.render(time);
     }
     
     void getPixel(uint32_t x, uint32_t y)
@@ -48,6 +38,9 @@ public:
         auto pixel = this->canvas.getPixel(x, y);
         CORE_LOG("({}, {}): R {}, G {}, B {}", x, y, pixel.r, pixel.g, pixel.b);
     }
+
+private:
+    gl::GLCanvas<renderer::SkiaLowLevelRenderer> canvas;
 };
 
 
@@ -57,9 +50,9 @@ public:
 // });
 
 //! can only create context from canvases that are in the DOM
-void threaded(std::string canvas1, std::string canvas2)
+void threaded(std::string canvas1, std::string canvas2, const intptr_t data, size_t size)
 {
-    auto foo = [](void* arg) -> void*
+    auto foo = [&data, size](void* arg) -> void*
     {
         utils::Timer t;
 
@@ -83,23 +76,43 @@ void threaded(std::string canvas1, std::string canvas2)
         };
 
         auto canvas = static_cast<std::string*>(arg);
+        const auto ptr = reinterpret_cast<uint8_t*>(data);
 
         uint32_t ctx = emscripten_webgl_create_context(canvas->c_str(), &attrs);
 
         auto c = new gl::GLCanvas<renderer::SkiaLowLevelRenderer>(ctx, 800, 600);
+        c->getFontData(ptr, size);
 
-        auto render = [](double, void* data) -> EM_BOOL
+
+
+        struct UserData
         {
-            auto canvas = static_cast<gl::GLCanvas<renderer::SkiaLowLevelRenderer>*>(data);
-            canvas->render();
-            return EM_TRUE;
+            double* time;
+            gl::GLCanvas<renderer::SkiaLowLevelRenderer>* canvas;
         };
 
-        emscripten_request_animation_frame_loop(render, c);
-        // c.render();
-        // c.getPixel(400, 300);
+        auto data = new UserData();
 
-        // utils::threading::Thread::sleep(5000);
+        double lastTime = 0;
+        data->time = &lastTime;
+        data->canvas = c;
+
+        auto render = [](double time, void* data) -> EM_BOOL
+        {
+            auto d = static_cast<UserData*>(data);
+            
+            auto lastTime = *d->time;
+            auto canvas = d->canvas;
+
+            auto frameTime = time - lastTime;
+            canvas->render(frameTime);
+
+            *d->time = time;
+            return EM_TRUE;
+        };
+        
+
+        emscripten_request_animation_frame_loop(render, data);
 
         return nullptr;
     };
@@ -147,7 +160,6 @@ void test()
 
 EMSCRIPTEN_BINDINGS(module)
 {
-    emsc::function("getBuffer", &getBuffer);
     emsc::function("threaded", &threaded);
     emsc::function("test", &test);
     

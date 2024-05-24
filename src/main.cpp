@@ -1,77 +1,58 @@
 #include <iostream>
-#include <vector>
-#include <array>
-#include <span>
-#include <ranges>
-
-#include <Logger.h>
-#include "dyn_array_wrapper.hpp"
-#include "vec2/vec2.hpp"
-
-
-
-
-template<typename T>
-void print(const std::span<T> s)
-{
-    for (auto el : s)
-    {
-        std::cout << unsigned(el) << ' ';
-    }
-    std::cout << std::endl;
-}
-
-template<typename T>
-void printBuf(const T* buffer, const size_t size)
-{
-    for (size_t i = 0; i < size; i++)
-    {
-        std::cout << unsigned(buffer[i]) << ' ';
-    }
-    std::cout << std::endl;
-}
-
-
-#define BUFSIZE 10
-
-
+#include "utils/threading.hpp"
 
 
 int main()
 {
-    uint8_t* buffer = new uint8_t[BUFSIZE];
-    
-    for (size_t i = 0; i < BUFSIZE; i++)
+    utils::threading::ReadWriteLock rwlock;
+
+    auto handler1 = [&rwlock](void* data) -> void*
     {
-        buffer[i] = i;
-    }
-    
-    utils::ReadonlyDynArrayWrapper<uint8_t> bufWrapper(buffer, BUFSIZE);
-    utils::ReadonlyDynArrayWrapper<uint8_t> moved(std::move(bufWrapper));
-    
-    // std::span sp(moved);
-    
-    for (auto el : moved)
+        auto a = static_cast<uint32_t*>(data);
+        
+        rwlock.writeLock();
+
+        utils::threading::Thread::sleep(1000);
+
+        *a += 69;
+
+        std::cout << "in thread 1: " << *a << std::endl;
+        rwlock.unlock();
+
+        return nullptr;
+    };
+
+    auto handler2 = [&rwlock](void* data) -> void*
     {
-        std::cout << unsigned(el) << ' ';
-    }
-    std::cout << std::endl;
-    
-    // printBuf(buffer, BUFSIZE);
-    
-    // if (bufWrapper.data() == nullptr)
-    // {
-    //     std::cout << "null" << std::endl;
-    // }
+        auto a = static_cast<uint32_t*>(data);
+        
+        rwlock.writeLock();
+        *a += 42;
 
-    // printBuf(bufWrapper.data(), bufWrapper.size());
-    // printBuf(moved.data(), moved.size());
+        utils::threading::Thread::sleep(500);
 
-    // buffer[5] = 69;
+        std::cout << "in thread 2: " << *a << std::endl;
+        rwlock.unlock();
 
-    // std::cout << std::endl;
-    // printBuf(buffer, BUFSIZE);
-    
-    // // printBuf(bufWrapper.data(), bufWrapper.size());
-    // printBuf(moved.data(), moved.size());
+        return nullptr;
+    };
+
+
+    uint32_t a = 12;
+
+    utils::threading::Thread t1(handler1, &a);
+    utils::threading::Thread t2(handler2, &a);
+
+    std::cout << "before threads: " << a << std::endl;
+
+    t1.run();
+    t2.run();
+
+    t1.join();
+    std::cout << "after thread 1: " << a << std::endl;
+    utils::threading::Thread::sleep(2000);
+    // utils::threading::Thread::exit();
+
+    t2.join();
+    std::cout << "after thread 2: " << a << std::endl;
 }
