@@ -6,17 +6,26 @@
 int main()
 {
     //! Async example
-    auto foo = [](utils::threading::Promise<uint32_t>* promise) -> void*
+    uint32_t v;
+    std::cout << "Input: ";
+    std::cin >> v;
+
+    utils::threading::Async<uint32_t> a([v](utils::threading::Promise<uint32_t>* promise) -> void*
     {
         utils::threading::sleep(2000);
         
-        // promise->resolve(69);
-        promise->reject();
+        if (v == 1)
+        {
+            promise->resolve(69);
+        }
+        else
+        {
+            promise->reject();
+        }
         
         return nullptr;
-    };
+    });
 
-    utils::threading::Async<uint32_t> a(foo);
     auto res = a.await();
 
     if (res.has_value())

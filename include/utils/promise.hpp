@@ -4,6 +4,7 @@
 
 #include "mutex.hpp"
 #include "thread.hpp"
+#include "cond.hpp"
 
 
 
@@ -24,7 +25,6 @@ namespace utils
 
         public:
             Promise()
-                : cond(PTHREAD_COND_INITIALIZER)
             { }
 
 
@@ -38,7 +38,7 @@ namespace utils
                 this->done = true;
                 this->success = true;
 
-                pthread_cond_signal(&this->cond);
+                this->cond.signal();
                 this->mutex.unlock();
             }
 
@@ -51,7 +51,7 @@ namespace utils
                 this->done = true;
                 this->success = false;
 
-                pthread_cond_signal(&this->cond);
+                this->cond.signal();
                 this->mutex.unlock();
             }
 
@@ -61,14 +61,19 @@ namespace utils
 
                 while(!this->done)
                 {
-                    pthread_cond_wait(&this->cond, this->mutex.getMutex());
+                    this->cond.wait(mutex);
                 }
 
                 this->mutex.unlock();
 
-                return this->success 
-                            ? this->result 
-                            : cpp::fail(PromiseError::Reject);
+                if (this->success)
+                {
+                    return this->result;
+                }
+                else
+                {
+                    return cpp::fail(PromiseError::Reject);
+                }
             }
 
             bool isDone()
@@ -80,16 +85,24 @@ namespace utils
                 return done;
             }
 
+            bool isSuccessful()
+            {
+                this->mutex.lock();
+                bool success = this->success;
+                this->mutex.unlock();
+                
+                return success;
+            }
+
             void close()
             {
                 this->mutex.destroy();
-                pthread_cond_destroy(&this->cond);
             }
 
         private:
             T result;
             utils::threading::Mutex mutex;
-            pthread_cond_t cond;
+            utils::threading::Condition cond;
 
             bool success = false;
             bool done = false;
