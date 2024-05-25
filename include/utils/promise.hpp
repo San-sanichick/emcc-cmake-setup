@@ -1,34 +1,61 @@
 #pragma once
 
+#include <result.hpp>
+
 #include "mutex.hpp"
 #include "thread.hpp"
+
 
 
 namespace utils
 {
     namespace threading
     {
+        enum class PromiseError
+        {
+            Reject                
+        };
+
+
         template<typename T>
         class Promise
         {
+        public:
+
         public:
             Promise()
                 : cond(PTHREAD_COND_INITIALIZER)
             { }
 
 
-            void set(T res)
+            void resolve(T res)
             {
+                if (this->done) return;
+
                 this->mutex.lock();
 
                 this->result = res;
                 this->done = true;
+                this->success = true;
 
                 pthread_cond_signal(&this->cond);
                 this->mutex.unlock();
             }
 
-            T await()
+            void reject()
+            {
+                if (this->done) return;
+
+                this->mutex.lock();
+
+                this->done = true;
+                this->success = false;
+
+                pthread_cond_signal(&this->cond);
+                this->mutex.unlock();
+            }
+
+            cpp::result<T, PromiseError> await()
             {
                 this->mutex.lock();
 
@@ -38,7 +65,10 @@ namespace utils
                 }
 
                 this->mutex.unlock();
-                return this->result;
+
+                return this->success 
+                            ? this->result 
+                            : cpp::fail(PromiseError::Reject);
             }
 
             bool isDone()
@@ -60,8 +90,12 @@ namespace utils
             T result;
             utils::threading::Mutex mutex;
             pthread_cond_t cond;
+
+            bool success = false;
             bool done = false;
         };
+
+
 
         template<typename T>
         class Future
@@ -86,6 +120,7 @@ namespace utils
         };
 
 
+
         template<typename T>
         class Async
         {
@@ -100,7 +135,7 @@ namespace utils
                 this->promise.close();
             }
 
-            T await()
+            cpp::result<T, PromiseError> await()
             {
                 this->future.start();
                 return this->promise.await();
