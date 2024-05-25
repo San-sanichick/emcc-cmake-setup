@@ -7,9 +7,8 @@ namespace utils
     {
         Mutex::Mutex()
             : locked(false)
-        {
-            pthread_mutex_init(&this->mutex, nullptr);
-        }
+            , mutex(PTHREAD_MUTEX_INITIALIZER)
+        {}
 
         Mutex::~Mutex()
         {
@@ -39,6 +38,11 @@ namespace utils
         bool Mutex::destroy()
         {
             return pthread_mutex_destroy(&this->mutex) == 0;
+        }
+
+        pthread_mutex_t* Mutex::getMutex()
+        {
+            return &this->mutex;
         }
     }
 }

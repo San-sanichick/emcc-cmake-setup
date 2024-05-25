@@ -10,7 +10,7 @@ namespace utils
             , arg(arg)
         {}
 
-        static Ret* call_static(Arg* self)
+        static Ret* call_static(void* self)
         {
             return static_cast<Caller*>(self)->call();
         }
@@ -23,6 +23,6 @@ namespace utils
 
     private:
         std::function<Ret*(Arg*)> body;
-        void* arg;
+        Arg* arg;
     };
 }

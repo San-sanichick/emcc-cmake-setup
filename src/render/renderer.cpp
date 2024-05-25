@@ -214,8 +214,9 @@ namespace renderer
 
     void SkiaLowLevelRenderer::getFontData(uint8_t* ptr, size_t size)
     {
-        std::unique_ptr<SkMemoryStream> stream(new SkMemoryStream());
+        auto stream = std::make_unique<SkMemoryStream>();
         stream->setMemoryOwned(ptr, size);
+
         auto tf = SkTypeface_FreeType::MakeFromStream(std::move(stream), SkFontArguments());
 
         this->font.setTypeface(tf);

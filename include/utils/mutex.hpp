@@ -24,6 +24,8 @@ namespace utils
             bool unlock();
             bool destroy();
 
+            pthread_mutex_t* getMutex();
+
         private:
             bool locked;
             pthread_mutex_t mutex;
