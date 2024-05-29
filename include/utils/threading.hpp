@@ -1,7 +1,7 @@
 #pragma once
 
-#include "thread.hpp"
-#include "mutex.hpp"
-#include "rwlock.hpp"
-#include "promise.hpp"
-#include "cond.hpp"
+#include "threading/thread.hpp"
+#include "threading/mutex.hpp"
+#include "threading/rwlock.hpp"
+#include "threading/promise.hpp"
+#include "threading/cond.hpp"

@@ -1,26 +1,26 @@
-#include "utils/cond.hpp"
+#include "utils/threading/cond.hpp"
 
 
 namespace utils
 {
     namespace threading
     {
-        Condition::Condition()
+        ConditionVariable::ConditionVariable()
             : cond(PTHREAD_COND_INITIALIZER)
         { }
 
-        Condition::~Condition()
+        ConditionVariable::~ConditionVariable()
         {
             pthread_cond_destroy(&this->cond);
         }
 
 
-        bool Condition::wait(utils::threading::Mutex& mutex)
+        bool ConditionVariable::wait(utils::threading::Mutex& mutex)
         {
             return pthread_cond_wait(&this->cond, mutex.getMutex()) == 0;
         }
 
-        bool Condition::waitTime(utils::threading::Mutex& mutex, uint32_t ms)
+        bool ConditionVariable::waitTime(utils::threading::Mutex& mutex, uint32_t ms)
         {
             timespec ts;
             ts.tv_sec = ms * 0.001;
@@ -29,12 +29,12 @@ namespace utils
         }
 
 
-        bool Condition::broadcast()
+        bool ConditionVariable::broadcast()
         {
             return pthread_cond_broadcast(&this->cond) == 0;
         }
 
-        bool Condition::signal()
+        bool ConditionVariable::signal()
         {
             return pthread_cond_signal(&this->cond) == 0;
         }

@@ -7,11 +7,11 @@ namespace utils
 {
     namespace threading
     {
-        class Condition
+        class ConditionVariable
         {
         public:
-            Condition();
-            ~Condition();
+            ConditionVariable();
+            ~ConditionVariable();
 
 
             bool wait(utils::threading::Mutex& mutex);

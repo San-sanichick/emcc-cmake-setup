@@ -102,7 +102,7 @@ namespace utils
         private:
             T result;
             utils::threading::Mutex mutex;
-            utils::threading::Condition cond;
+            utils::threading::ConditionVariable cond;
 
             bool success = false;
             bool done = false;
