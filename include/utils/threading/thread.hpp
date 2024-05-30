@@ -1,5 +1,9 @@
 #pragma once
 
+#ifdef __EMSCRIPTEN__
+    #include <emscripten.h>
+#endif
+
 #include <pthread.h>
 #include <time.h>
 #include <functional>
@@ -19,10 +23,14 @@ namespace utils
 
         void sleep(uint32_t ms)
         {
-            timespec ts;
-            ts.tv_sec = ms * 0.001;
-            ts.tv_nsec = (ms % 1000) * 1000000;
-            nanosleep(&ts, &ts);
+#ifdef __EMSCRIPTEN__
+        emscripten_sleep(ms);
+#else
+        timespec ts;
+        ts.tv_sec = ms * 0.001;
+        ts.tv_nsec = (ms % 1000) * 1000000;
+        nanosleep(&ts, &ts);
+#endif
         }
 
         /**

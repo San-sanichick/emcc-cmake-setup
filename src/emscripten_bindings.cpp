@@ -110,6 +110,8 @@ void threaded(std::string canvas1, std::string canvas2, const intptr_t data, siz
             *d->time = time;
             return EM_TRUE;
         };
+
+        utils::threading::sleep(2000);
         
 
         emscripten_request_animation_frame_loop(render, data);
@@ -117,12 +119,12 @@ void threaded(std::string canvas1, std::string canvas2, const intptr_t data, siz
         return nullptr;
     };
 
-    utils::threading::Thread t1(foo, &canvas1);
+    utils::threading::Thread<void> t1(foo, &canvas1);
     emscripten_pthread_attr_settransferredcanvases(&t1.getAttr(), canvas1.c_str()); //! this is important
     t1.run();
 
 
-    utils::threading::Thread t2(foo, &canvas2);
+    utils::threading::Thread<void> t2(foo, &canvas2);
     emscripten_pthread_attr_settransferredcanvases(&t2.getAttr(), canvas2.c_str()); //! this is important
     t2.run();
 
@@ -149,7 +151,7 @@ void test()
     };
 
     int num = 32;
-    utils::threading::Thread t(foo, &num);
+    utils::threading::Thread<void> t(foo, &num);
 
     CORE_LOG("before thread: {}", num);
     t.run();

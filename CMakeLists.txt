@@ -126,6 +126,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL Emscripten)
         -lembind
         -pthread
         -sOFFSCREENCANVAS_SUPPORT=1
+        -sASYNCIFY
         # -sOFFSCREEN_FRAMEBUFFER=1
         -sPTHREAD_POOL_SIZE=2
         -sMODULARIZE=1
