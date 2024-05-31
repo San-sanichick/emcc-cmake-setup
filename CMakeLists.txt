@@ -43,10 +43,12 @@ target_include_directories(index PUBLIC include)
 # !add libs
 target_include_directories(native SYSTEM PUBLIC 
     vendors/simple-cpp-logger/include 
+    vendors/sole
 )
 
 target_include_directories(index SYSTEM PUBLIC 
     vendors/simple-cpp-logger/include 
+    vendors/sole
     vendors/skia 
     vendors/skia/src
     vendors/skia/include 

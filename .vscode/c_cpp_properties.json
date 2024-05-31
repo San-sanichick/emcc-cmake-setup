@@ -8,7 +8,8 @@
                 "${workspaceFolder}/vendors/emsdk/upstream/emscripten/system/include",
                 "${workspaceFolder}/vendors/simple-cpp-logger/include",
                 "${workspaceFolder}/vendors/result/include",
-                "${workspaceFolder}/vendors/skia/**"
+                "${workspaceFolder}/vendors/skia/**",
+                "${workspaceFolder}/vendors/sole/*",
             ],
             "defines": [],
             "cStandard": "c17",
