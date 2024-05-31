@@ -137,7 +137,7 @@ tput sgr0
 cd build
 # run make
 if [ "$native" = true ]; then
-    make index
+    make native
 else
     emmake make index
 fi

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./target/native/index
+./target/native/native
