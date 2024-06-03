@@ -1,6 +1,5 @@
 #ifdef __EMSCRIPTEN__
 
-// #include <include/ports/SkFontMgr_data.h>
 #include <include/core/SkStream.h>
 #include <src/ports/SkTypeface_FreeType.h>
 
