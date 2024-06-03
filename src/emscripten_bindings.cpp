@@ -2,7 +2,6 @@
 #include <emscripten/threading.h>
 
 #include <iostream>
-#include <sole.hpp>
 
 
 #include "gl/glcanvas.hpp"
@@ -54,9 +53,6 @@ private:
 //! can only create context from canvases that are in the DOM
 void threaded(std::string canvas1, std::string canvas2, const intptr_t data, size_t size)
 {
-    sole::uuid id = sole::uuid4();
-    std::cout << id.ab << std::endl;
-
     auto foo = [&data, size](void* arg) -> void*
     {
         utils::Timer t;

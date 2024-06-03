@@ -1,13 +1,9 @@
 #include <iostream>
-#include <sole.hpp>
 #include "utils/threading.hpp"
 
 
 int main()
 {
-    sole::uuid id = sole::uuid4();
-    std::cout << id << std::endl;
-
     //! Async example
     uint32_t v;
     std::cout << "Input: ";
