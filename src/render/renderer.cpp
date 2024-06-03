@@ -161,12 +161,12 @@ namespace renderer
     }
 
 
-    void SkiaLowLevelRenderer::render(double time)
+    void SkiaLowLevelRenderer::render(double deltaTime)
     {
         glBindFramebuffer(GL_FRAMEBUFFER, this->FBO);
 
         auto canvas = this->surface->getCanvas();
-        this->draw(canvas, time);
+        this->draw(canvas, deltaTime);
         
         // flush the surface so we have all the pixels available for reading
         auto surfacePtr = this->surface.get();

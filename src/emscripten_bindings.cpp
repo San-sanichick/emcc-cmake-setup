@@ -29,9 +29,9 @@ public:
         : canvas(gl::GLCanvas<renderer::SkiaLowLevelRenderer>(ctx, w, h))
     {}
     
-    void render(double time)
+    void render(double dt)
     {
-        this->canvas.render(time);
+        this->canvas.render(dt);
     }
     
     void getPixel(uint32_t x, uint32_t y)
@@ -105,8 +105,8 @@ void threaded(std::string canvas1, std::string canvas2, const intptr_t data, siz
             auto lastTime = *d->time;
             auto canvas = d->canvas;
 
-            auto frameTime = time - lastTime;
-            canvas->render(frameTime);
+            auto deltaTime = time - lastTime;
+            canvas->render(deltaTime);
 
             *d->time = time;
             return EM_TRUE;

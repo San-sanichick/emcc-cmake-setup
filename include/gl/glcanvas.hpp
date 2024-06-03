@@ -46,7 +46,7 @@ namespace gl
         }
 
         
-        void render(double time)
+        void render(double deltaTime)
         {
             // again, in case we switched contexts, we need to make this one current
             this->setCurrentContext();
@@ -55,7 +55,7 @@ namespace gl
             glDisable(GL_DEPTH_TEST);
 
             {
-                this->renderer->render(time);
+                this->renderer->render(deltaTime);
             }
             emscripten_webgl_commit_frame();
         }

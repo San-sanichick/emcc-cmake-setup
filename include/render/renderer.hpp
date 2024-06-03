@@ -50,7 +50,7 @@ namespace renderer
         virtual void updateWidth(uint32_t w) = 0;
         virtual void updateHeight(uint32_t h) = 0;
         virtual void resize() = 0;
-        virtual void render(double time) = 0;
+        virtual void render(double deltaTime) = 0;
         
         virtual void getFontData(uint8_t* ptr, size_t size) = 0;
         virtual RGBAPixel getPixel(uint32_t x, uint32_t y) = 0;
@@ -70,7 +70,7 @@ namespace renderer
         void updateHeight(uint32_t h) override;
         void resize() override;
         
-        void render(double time) override;
+        void render(double deltaTime) override;
         void draw(SkCanvas* canvas, double time);
         
         void getFontData(uint8_t* ptr, size_t size) override;
