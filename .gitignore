@@ -4,6 +4,7 @@ CMakeFiles
 build
 Makefile
 target
+.cache
 test/*
 
 # Exclude from ignore

@@ -7,6 +7,8 @@ message("Enviroment: ${CMAKE_SYSTEM_NAME}")
 add_definitions(-std=c++20)
 set(CMAKE_CXX_STANDARD 20)
 
+# set the amount threads to build
+set(CMAKE_BUILD_PARALLEL_LEVEL 12)
 
 # set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CMAKE_COMMAND} -E time")
 # set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "${CMAKE_COMMAND} -E time")
